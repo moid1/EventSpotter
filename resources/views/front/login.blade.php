@@ -60,13 +60,13 @@
                                 <input type="password" class="headerSearchColor ml-3" name="password"
                                     placeholder="Password" id="password">
                             </div>
-                            <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="ml-4 float-right ">
+                            {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="ml-4 float-right "> --}}
                         </div>
                         <a href="{{ url('forgot') }}">
                             <p class="lightGreenTeal font-weight-light textUnderline mt-3">Forget Password?</p>
                         </a>
                         <button type="submit" class="upcoming mt-3 w-100">
-                            <a href="" style="color: white;"> Login</a>
+                            Login
                         </button>
                 </form>
                 <button class="past mt-3 w-100">

@@ -3,6 +3,8 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,11 +27,17 @@ Route::view('forgot', 'front.forgot');
 Route::view('left', 'front.left');
 Route::view('right', 'front.right');
 Route::view('header', 'front.header');
+Route::get('profile', [ProfileController::class, 'create'])->middleware('auth');
 Route::view('/', 'front.home')->middleware('auth');
 
-Route::post('login',[AuthController::class,'login'])->name('login');
-Route::post('user',[UserController::class,'store'])->name('user');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('user', [UserController::class, 'store'])->name('user');
 // Route::get('/',[HomeController::class,'create']);
 // Route::get('/post', [PostController::class, 'create'])->name('home');
 // Route::post('/add-post',[PostController::class,'store'])->name('add-post');
-Route::get('/logout',[AuthController::class,'logout'])->name('/logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('/logout');
+
+
+Route::post('password/email', [ForgotPasswordController::class, 'forgot'])->name('forget-password');
+
+Route::post('password/reset',  [ForgotPasswordController::class, 'reset'])->name('reset-password');

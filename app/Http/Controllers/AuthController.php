@@ -2,27 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
-        $credentials =[
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        // dd($credentials);
-       if( Auth::attempt($credentials)){
-        return redirect()->intended('/');
-       }else
-       return redirect()->back();
-           
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/');
+        } else {
+            return redirect()->back();
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
-    public function logout(){
+    public function logout()
+    {
+        $user = User::find(Auth::user()->id);
+        $user->is_online = false;
+        $user->update();
         Auth::logout();
-        return redirect()->back();
+        return redirect()->intended('/login');
     }
 }
-

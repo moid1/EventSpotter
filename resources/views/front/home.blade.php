@@ -17,7 +17,6 @@
     <div class="container-fluid">
         <div class="row">
           @include('front.left_side')
-
             <div class="col-md-6 mx-auto">
                 <div class="createEventBG">
                     <a class="create_account text-white" href="#" data-toggle="modal" data-target="#createEventModal"><img src="assets/images/plus.png" alt=""> Create a new event</a>

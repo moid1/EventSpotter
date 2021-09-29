@@ -96,6 +96,7 @@
                             @if ($errors->has('password'))
                                 <span class="text-danger errorAlignment">{{ $errors->first('password') }}</span>
                             @endif
+
                             <div
                                 class="inputFieldGreenBG d-flex mt-2 clearfix {{ $errors->has('confirm_password') ? 'has-error' : '' }} ">
                                 <div class="float-left">
@@ -112,10 +113,13 @@
                                     toggle-confirm-password"></span>
 
                             </div>
+
                             @if ($errors->has('confirm_password'))
                                 <span
                                     class="text-danger errorAlignment">{{ $errors->first('confirm_password') }}</span>
                             @endif
+
+
                             <div
                                 class="inputFieldGreenBG d-flex mt-2 clearfix {{ $errors->has('phone_number') ? 'has-error' : '' }} ">
                                 <div class="float-left">
@@ -123,12 +127,15 @@
                                     <input type="text" class="headerSearchColor ml-3" name="phone_number"
                                         placeholder="Phone Number" value="{{ old('phone_number') }}" id="phoneNo"
                                         required>
-                                    @if ($errors->has('phone_number'))
-                                        <span class="text-danger">{{ $errors->first('phone_number') }}</span>
-                                    @endif
+        
                                 </div>
                                 {{-- <img src="{{url('assets/images/icons/eyeDark.png')}}" class="ml-4 float-right "> --}}
                             </div>
+
+                            @if ($errors->has('phone_number'))
+                                <span
+                                    class="text-danger errorAlignment">{{ $errors->first('phone_number') }}</span>
+                            @endif
                         </div>
                     </div>
                     <br>

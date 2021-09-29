@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventSpotter</title>
-    <link rel="stylesheet" href="{{url('assets/style/style.css')}}">
+    <link rel="stylesheet" href="{{ url('assets/style/style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <link rel="shortcut icon" href="{{url('assets//images/logo.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url('assets//images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="assets/libraries/css/bootstrap.min.css">
     <script src="assets/libraries/js/fontawesome.js"></script>
 
@@ -23,34 +23,60 @@
                 <span class="right-bottom"></span>
 
                 <div class="text-center bottomPostion ">
-                    <img src="{{url('assets/images/Explore Events around.png')}}" alt="" srcset="">
+                    <img src="{{ url('assets/images/Explore Events around.png') }}" alt="" srcset="">
                     <br>
-                    <img src="{{url('assets/images/You.png')}}" alt="" srcset="">
+                    <img src="{{ url('assets/images/You.png') }}" alt="" srcset="">
                 </div>
             </div>
         </div>
+        {{-- <input name="password" class="headerSearchColor ml-3" placeholder="Enter new password">
+        <input name="password_confirmation" class="headerSearchColor ml-3"
+            placeholder="Confirm new password">
+        <input hidden name="token" placeholder="token" value="{{ request()->get('token') }}"> --}}
         <div class="col-md-6 align-items-center justify-content-center centerAnyThing right-col">
             <span class="right-top"></span>
             <span class="left-bottom"></span>
             <div class="text-center">
-                <img class="sign_log" src="{{url('assets/images/logo.png')}}" alt="" srcset="">
+                <img class="sign_log" src="{{ url('assets/images/logo.png') }}" alt="" srcset="">
                 <h6 class="medium-heading-green mt-3">Forgot Password?</h6>
-                <div class="mt-4 d-inline-block">
-                    <div class="inputFieldGreenBG d-flex ">
-                        <img src="{{url('assets/images/emailDark.png')}}" class="ml-3" alt="" srcset="">
-                        <input type="email" class="headerSearchColor ml-3" name="Enter your email" placeholder="Enter your email" id="email">
-                    </div>
-                    <button class="upcoming mt-3 w-100">
-                        Reset Password
-                    </button>
-                    <a href="{{url('login')}}">
-                        <button class="past mt-3 w-100">
+                <form action="{{ url('/reset-password') }}" method="POST">
+                    @csrf
+                    <div class="mt-4 d-inline-block">
+                        <div class="inputFieldGreenBG d-flex mt-1">
+                            <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
+                                srcset="">
+                            <input type="email" class="headerSearchColor ml-3" name="Enter your email"
+                                placeholder="Enter your email" id="email">
+                        </div>
+
+                        <div class="inputFieldGreenBG d-flex mt-1">
+                            <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
+                                srcset="">
+                            <input name="password" class="headerSearchColor ml-3" placeholder="Enter new password">
+                        </div>
+
+
+                        <div class="inputFieldGreenBG d-flex mt-1">
+                            <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
+                                srcset="">
+                            <input name="password_confirmation" placeholder="Enter Confirm Password" class="headerSearchColor ml-3">
+                        </div>
+
+                        <input hidden name="token" placeholder="token" value="{{ request()->get('token') }}">
+                        <button type="submit" class="upcoming mt-3 w-100">
+                            Reset Password
+                        </button>
+                </form>
+
+                <a href="{{ url('login') }}">
+                    <button class="past mt-3 w-100">
                         Or Login instead
                     </button>
-                    </a>
-                </div>
+                </a>
             </div>
         </div>
     </div>
+    </div>
 </body>
+
 </html>

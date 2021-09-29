@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Stevebauman\Location\Facades\Location;
 
 class UserController extends Controller
 {
@@ -49,7 +51,12 @@ class UserController extends Controller
 
         $input = request()->except('password', 'confirm_password');
         $user = new User($input);
-        $user->password = bcrypt(request()->password);
+        $user->password = ($request->password);
+        $position = Location::get();
+        if ($position){
+            $user->lat_lng = $position->latitude . ',' . $position->longitude;
+            $user->ip_address = $position->ip;
+        }
         $user->save();
 
         return redirect('/login')->with('success', 'You have successfully signed up, please login');
