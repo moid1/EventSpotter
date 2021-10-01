@@ -50,18 +50,26 @@
                         <div class="inputFieldGreenBG d-flex ">
                             <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
                                 srcset="">
-                            <input  type="email" class="headerSearchColor ml-3 w-100" name="email" placeholder="Email"
+                            <input type="email" class="headerSearchColor ml-3 w-100" name="email" placeholder="Email"
                                 id="email">
                         </div>
 
+                        @if ($errors->has('email'))
+                            <span class="text-danger errorAlignment">{{ $errors->first('email') }}</span>
+                        @endif
+
                         <div class="inputFieldGreenBG d-flex mt-4 clearfix ">
-                            <div class="float-left">
+                            <div class="float-left d-flex justify-content-center align-items-center">
                                 <img src="{{ asset('assets/images/icons/lockDark.png') }}" class="ml-3">
                                 <input type="password" class="headerSearchColor ml-3" name="password"
                                     placeholder="Password" id="password">
                             </div>
                             {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="ml-4 float-right "> --}}
                         </div>
+                        @if ($errors->has('password'))
+                            <span class="text-danger errorAlignment">{{ $errors->first('password') }}</span>
+                        @endif
+
                         <a href="{{ url('forgot') }}">
                             <p class="lightGreenTeal font-weight-light textUnderline mt-3">Forget Password?</p>
                         </a>

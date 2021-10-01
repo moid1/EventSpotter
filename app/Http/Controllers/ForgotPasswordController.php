@@ -4,36 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
-
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
-    public function forgot() {
-        $credentials = request()->validate(['email' => 'required|email']);
+    public function getEmail()
+    {
 
-        Password::sendResetLink($credentials);
-
-        return response()->json(["msg" => 'Reset password link sent on your email id.']);
+       return view('auth.password.email');
     }
 
-    public function reset() {
-        
-        $credentials = request()->validate([
-            'email' => 'required|email',
-            'token' => 'required|string',
-            'password' => 'required|string|confirmed'
+    public function postEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
         ]);
 
-        $reset_password_status = Password::reset($credentials, function ($user, $password) {
-            $user->password = $password;
-            $user->save();
-        });
+        $token = Str::random(60);
 
-        if ($reset_password_status == Password::INVALID_TOKEN) {
-            return response()->json(["msg" => "Invalid token provided"], 400);
-        }
+        DB::table('password_resets')->insert(
+            ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
+        );
 
-        return response()->json(["msg" => "Password has been successfully changed"]);
+        Mail::send('front.auth.password.verify',['token' => $token], function($message) use ($request) {
+                  $message->from($request->email);
+                  $message->to($request->email);
+                  $message->subject('Reset Password Notification');
+               });
+
+        return back()->with('message', 'We have e-mailed your password reset link!');
     }
 
 }

@@ -17,9 +17,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/');
-        } else {
-            return redirect()->back();
-        }
+        } 
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

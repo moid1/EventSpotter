@@ -29,50 +29,46 @@
                 </div>
             </div>
         </div>
-        {{-- <input name="password" class="headerSearchColor ml-3" placeholder="Enter new password">
-        <input name="password_confirmation" class="headerSearchColor ml-3"
-            placeholder="Confirm new password">
-        <input hidden name="token" placeholder="token" value="{{ request()->get('token') }}"> --}}
         <div class="col-md-6 align-items-center justify-content-center centerAnyThing right-col">
             <span class="right-top"></span>
             <span class="left-bottom"></span>
             <div class="text-center">
                 <img class="sign_log" src="{{ url('assets/images/logo.png') }}" alt="" srcset="">
                 <h6 class="medium-heading-green mt-3">Forgot Password?</h6>
-                <form action="{{ url('/reset-password') }}" method="POST">
+                <form method="POST" action="/forget-password">
                     @csrf
+                    <div class="text-center mb-2 mt-2">
+                        <p>Enter your email address and an email with instructions will be sent to you.</p>
+                    </div>
+                    @if (session('message'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('message') }}
+                        </div>
+                    @endif
                     <div class="mt-4 d-inline-block">
                         <div class="inputFieldGreenBG d-flex mt-1">
                             <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
                                 srcset="">
-                            <input type="email" class="headerSearchColor ml-3" name="Enter your email"
+                            <input type="email" class="headerSearchColor ml-3" name="email"
                                 placeholder="Enter your email" id="email">
                         </div>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
-                        <div class="inputFieldGreenBG d-flex mt-1">
-                            <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
-                                srcset="">
-                            <input name="password" class="headerSearchColor ml-3" placeholder="Enter new password">
-                        </div>
 
-
-                        <div class="inputFieldGreenBG d-flex mt-1">
-                            <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3" alt=""
-                                srcset="">
-                            <input name="password_confirmation" placeholder="Enter Confirm Password" class="headerSearchColor ml-3">
-                        </div>
-
-                        <input hidden name="token" placeholder="token" value="{{ request()->get('token') }}">
                         <button type="submit" class="upcoming mt-3 w-100">
                             Reset Password
                         </button>
+                        <a href="{{ url('login') }}">
+                            <button class="past mt-3 w-100">
+                                Or Login instead
+                            </button>
+                        </a>
+                    </div>
                 </form>
-
-                <a href="{{ url('login') }}">
-                    <button class="past mt-3 w-100">
-                        Or Login instead
-                    </button>
-                </a>
             </div>
         </div>
     </div>
