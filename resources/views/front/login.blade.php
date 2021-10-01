@@ -86,10 +86,10 @@
     <div class="footer">
         <footer class="w-100">
             <div class="container">
-                <div class="row ">
+                <div class="row align-items-center ">
                     <div class="col-lg-4 col-md-6">
-                        <h5 class="h1 text-white"><img src="{{url('assets/images/moid1.png')}}" alt=""></h5>
-                        <h1 class="text-white" style="font-size: 33px;">Event Spotter</h1>
+                        <h5 class="h1 text-white text-center"><img src="{{url('assets/images/moid1.png')}}" alt=""></h5>
+                        <h1 class="text-white text-center" style="font-size: 33px;">Event Spotter</h1>
                         <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                         <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">Bootstrapious.com</a></p> -->
                     </div>
@@ -122,7 +122,7 @@
                         </ul>
                     </div> -->
                     <div class="col-lg-4 col-md-6">
-                        <h5 class=" mb-3" style="color: #74ABB0;">Also Contact</h5>
+                        <h5 class=" mb-3" style="color: #74ABB0;">Contact Us</h5>
                         <a href=""><img class="mb-3" src="{{url('assets/images/df.JPEG')}}" alt=""></a><br>
                         <a href="" class=""><img src="{{url('assets/images/apple2.JPEG')}}" alt=""></a>
                         <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p> -->
@@ -135,6 +135,9 @@
                     </div>
                 </div>
             </div>
+            <div class="w-100 text-center">
+            <span class="text-muted text-center w-100 ">Copyrights 2021. EventSpotter </br>All rights reserved</span>
+        </div>
         </footer>
     </div>
 </div>
