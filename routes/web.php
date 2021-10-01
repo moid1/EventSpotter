@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthResetPasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,8 @@ Route::post('user', [UserController::class, 'store'])->name('user');
 // Route::post('/add-post',[PostController::class,'store'])->name('add-post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('/logout');
 
+Route::get('forget-password', [ForgotPasswordController::class, 'getEmail']);
+Route::post('forget-password', [ForgotPasswordController::class, 'postEmail']);
 
-Route::post('password/email', [ForgotPasswordController::class, 'forgot'])->name('forget-password');
-
-Route::post('password/reset',  [ForgotPasswordController::class, 'reset'])->name('reset-password');
+Route::get('reset-password/{token}', [AuthResetPasswordController::class, 'getPassword']);
+Route::post('reset-password', [AuthResetPasswordController::class, 'updatePassword']);
