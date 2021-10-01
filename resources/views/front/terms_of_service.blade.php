@@ -100,10 +100,10 @@
         </p>
         <h5 class="mt-4 policy">Changes To Our Terms & Conditions</h5>
         <p>You acknowledge and agree that
-            <?=Event Spotter;?> may stop (permanently or temporarily) providing the Service (or any features within the Service) to you or to users generally at
-                <?=Event Spotter;?>’s sole discretion, without prior notice to you. You may stop using the Service at any time. You do not need to specifically inform
-                    <?=Event Spotter;?> when you stop using the Service. You acknowledge and agree that if
-                        <?=Event Spotter;?>
+            Event Spotter may stop (permanently or temporarily) providing the Service (or any features within the Service) to you or to users generally at
+                Event Spotter sole discretion, without prior notice to you. You may stop using the Service at any time. You do not need to specifically inform
+                    Event Spotter when you stop using the Service. You acknowledge and agree that if
+                        Event Spotter
                             disables access to your account, you may be prevented from accessing the Service, your account details or any files or other materials which is contained in your account.</p>
         If we decide to change our Terms & Conditions, we will post those changes on this page, and/or update the Terms & Conditions modification date below.
 
