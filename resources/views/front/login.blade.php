@@ -75,7 +75,61 @@
             </div>
         </div>
     </div>
+    <div class="footer">
+        <footer class="w-100">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class="h1 text-white"><img src="{{url('assets/images/moid1.png')}}" alt=""></h5>
+                        <h1 class="text-white" style="font-size: 33px;">Event Spotter</h1>
+                        <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                        <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">Bootstrapious.com</a></p> -->
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class=" mb-3" style="color: #74ABB0;">Quick links</h5>
+                        <ul class="list-unstyled text-muted">
+                            <li class="mb-2">
+                                <a target="_blank"  href="{{url('terms_of_service')}}" style="color: white; ">Terms of Services
+
+                            </a>
+                            </li>
+
+                            <li class="mb-2"><a target="_blank" href="{{url('privacy_policy')}}" style="color: white;">Privacy Policy</a></li>
+                            <li class="mb-2"><a target="_blank" href="{{url('refund')}}" style="color: white;">Refund Policy</a></li>
+                            <li class="mb-2">
+                                <a target="_blank" href="{{url('cookie_policy')}}" style="color: white;">Cookie Policy</a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="{{url('disclamier')}}" style="color: white;">Disclamier </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-3">Quick links</h5>
+                        <ul class="list-unstyled text-muted">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Get started</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div> -->
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class=" mb-3" style="color: #74ABB0;">Also Contact</h5>
+                        <a href=""><img class="mb-3" src="{{url('assets/images/df.JPEG')}}" alt=""></a><br>
+                        <a href="" class=""><img src="{{url('assets/images/apple2.JPEG')}}" alt=""></a>
+                        <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p> -->
+                        <!-- <form action="#">
+                            <div class="input-group mb-3">
+                                <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form> -->
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+</div>
     <script>
         setTimeout(function() {
             $('#success').addClass('d-none');
