@@ -57,19 +57,21 @@
                     @csrf
                     <div class="mt-2 ">
                         <div class="signupCenter">
-                            <div class="inputFieldGreenBG d-flex {{ $errors->has('name') ? 'has-error' : '' }}">
-                                <img src="{{ url('assets/images/pro.png') }}" class="ml-3" alt="" srcset="">
-                                <input type="text" class="headerSearchColor ml-3" name="name" required
-                                    value="{{ old('name') }}" placeholder="Fullname" id="Fullname">
-
+                            <div class="inputFieldGreenBG d-flex  {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <div class="float-left d-flex justify-content-center align-items-center">
+                                    <img src="{{ url('assets/images/pro.png') }}" class="ml-3" alt=""
+                                        srcset="">
+                                    <input type="text" class="headerSearchColor ml-3" name="name" required
+                                        value="{{ old('name') }}" placeholder="Fullname" id="Fullname">
+                                </div>
                             </div>
                             @if ($errors->has('name'))
                                 <span class="text-danger errorAlignment">{{ $errors->first('name') }}</span>
                             @endif
 
                             <div
-                                class="inputFieldGreenBG d-flex mt-2 clearfix {{ $errors->has('email') ? 'has-error' : '' }}">
-                                <div class="float-left">
+                                class="inputFieldGreenBG d-flex   mt-2 {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <div class="float-left d-flex align-items-center">
                                     <img src="{{ url('assets/images/emailDark.png') }}" class="ml-3">
                                     <input type="email" value="{{ old('email') }}" class="headerSearchColor ml-3"
                                         required name="email" placeholder="Email" id="email">
@@ -81,8 +83,8 @@
                                 <span class="text-danger errorAlignment">{{ $errors->first('email') }}</span>
                             @endif
                             <div
-                                class="inputFieldGreenBG d-flex mt-2 clearfix {{ $errors->has('password') ? 'has-error' : '' }} ">
-                                <div class="float-left">
+                                class="inputFieldGreenBG d-flex mt-2 {{ $errors->has('password') ? 'has-error' : '' }} ">
+                                <div class="float-left  d-flex justify-content-center align-items-center">
                                     <img src="{{ url('assets/images/icons/lockDark.png') }}" class="ml-3">
                                     <input type="password" class="headerSearchColor ml-3" name="password" required
                                         placeholder="Password" id="password">
@@ -98,8 +100,8 @@
                             @endif
 
                             <div
-                                class="inputFieldGreenBG d-flex mt-2 clearfix {{ $errors->has('confirm_password') ? 'has-error' : '' }} ">
-                                <div class="float-left">
+                                class="inputFieldGreenBG d-flex mt-2  {{ $errors->has('confirm_password') ? 'has-error' : '' }} ">
+                                <div class="float-left  d-flex justify-content-center align-items-center">
                                     <img src="{{ url('assets/images/icons/lockDark.png') }}" class="ml-3">
                                     <input type="password" class="headerSearchColor  ml-3" name="confirm_password"
                                         required placeholder="Confirm Password" id="confirmPassword">
@@ -121,20 +123,19 @@
 
 
                             <div
-                                class="inputFieldGreenBG d-flex mt-2 clearfix {{ $errors->has('phone_number') ? 'has-error' : '' }} ">
-                                <div class="float-left">
+                                class="inputFieldGreenBG d-flex mt-2 {{ $errors->has('phone_number') ? 'has-error' : '' }} ">
+                                <div class="float-left a d-flex justify-content-center align-items-center">
                                     <img src="{{ url('assets/images/pho.png') }}" class="ml-3">
                                     <input type="text" class="headerSearchColor ml-3" name="phone_number"
                                         placeholder="Phone Number" value="{{ old('phone_number') }}" id="phoneNo"
                                         required>
-        
+
                                 </div>
                                 {{-- <img src="{{url('assets/images/icons/eyeDark.png')}}" class="ml-4 float-right "> --}}
                             </div>
 
                             @if ($errors->has('phone_number'))
-                                <span
-                                    class="text-danger errorAlignment">{{ $errors->first('phone_number') }}</span>
+                                <span class="text-danger errorAlignment">{{ $errors->first('phone_number') }}</span>
                             @endif
                         </div>
                     </div>
