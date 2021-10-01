@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::view('cookie_policy', 'front.cookie_policy');
+Route::view('disclamier', 'front.disclamier');
+Route::view('privacy_policy', 'front.privacy_policy');
+Route::view('refund', 'front.refund');
+Route::view('terms_of_service', 'front.terms_of_service ');
 Route::view('login', 'front.login');
 Route::view('signup', 'front.signup');
 Route::view('forgot', 'front.forgot');
