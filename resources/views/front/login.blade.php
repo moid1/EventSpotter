@@ -123,8 +123,8 @@
                     </div> -->
                     <div class="col-lg-4 col-md-6">
                         <h5 class=" mb-3" style="color: #74ABB0;">Contact Us</h5>
-                        <a href=""><img class="mb-3" src="{{url('assets/images/df.JPEG')}}" alt=""></a><br>
-                        <a href="" class=""><img src="{{url('assets/images/apple2.JPEG')}}" alt=""></a>
+                        <a href=""><img class="mb-3" src="{{url('assets/images/df.jpeg')}}" alt=""></a><br>
+                        <a href="" class=""><img src="{{url('assets/images/apple2.jpeg')}}" alt=""></a>
                         <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p> -->
                         <!-- <form action="#">
                             <div class="input-group mb-3">
