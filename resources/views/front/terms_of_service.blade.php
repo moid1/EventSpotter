@@ -249,7 +249,7 @@
         </p>
         <h5 class="mt-4 policy">Contact Us
         </h5>
-        <p>Don't hesitate to contact us if you have any questions. <br> Via Email: <a href="contact@theeventspotter.com"> contact@theeventspotter.co</a>
+        <p>Don't hesitate to contact us if you have any questions. <br> Via Email: <a href="contact@theeventspotter.com"> contact@theeventspotter.com</a>
         </p>
     </div>
     <script src="https://use.fontawesome.com/382f336cbc.js"></script>

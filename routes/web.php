@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('cookie_policy', 'front.cookie_policy');
 Route::view('disclamier', 'front.disclamier');
 Route::view('privacy_policy', 'front.privacy_policy');
-Route::view('refund', 'front.refund');
+Route::view('refund', 'front.refund_policy');
 Route::view('terms_of_service', 'front.terms_of_service ');
 Route::view('login', 'front.login');
 Route::view('signup', 'front.signup');
@@ -48,3 +48,7 @@ Route::post('forget-password', [ForgotPasswordController::class, 'postEmail']);
 
 Route::get('reset-password/{token}', [AuthResetPasswordController::class, 'getPassword']);
 Route::post('reset-password', [AuthResetPasswordController::class, 'updatePassword']);
+
+//saving latlng after login
+
+Route::post('/save-lat-lng', [UserController::class, 'saveLatLng']);
