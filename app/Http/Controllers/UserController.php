@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProfileImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class UserController extends Controller
 {
     /**
@@ -50,7 +53,7 @@ class UserController extends Controller
         $input = request()->except('password', 'confirm_password');
         $user = new User($input);
         $user->password = ($request->password);
-        $user->ip_address= $request->ip();
+        $user->ip_address = $request->ip();
         $user->save();
         return redirect('/login')->with('success', 'You have successfully signed up, please login');
     }
@@ -107,6 +110,44 @@ class UserController extends Controller
         $user = User::find($user->id);
         $user->lat_lng = $request->lat . ',' . $request->lng;
         $user->update();
+    }
 
+    public function uploadProfilePicture(Request $request)
+    {
+        if ($request->has('image')) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(('images'), $imageName);
+            ProfileImage::where('user_id', Auth::id())->delete();
+            //saving image to db
+            $profileImage =  ProfileImage::create([
+                'user_id' => Auth::id(),
+                'image' => ('images') . '/' . $imageName,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $profileImage,
+                'message' => 'Profile Image Updated Successfully',
+            ]);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        // get the search term
+        $text = $request->input('text');
+        $query = "%" . $text . "%";
+
+        // search the members table
+        $users = User::whereRaw('email = ? or name like ?', [$text, "%{$text}%"])->with('profilePicture')->get();
+
+        // $users = DB::table('users')->where('name', 'LIKE', $query)->with('profilePicture')->get();
+
+
+        // return the results
+        return response()->json($users);
     }
 }

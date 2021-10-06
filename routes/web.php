@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthResetPasswordController;
@@ -35,20 +35,19 @@ Route::view('right', 'front.right');
 Route::view('header', 'front.header');
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth');
 Route::view('/', 'front.home')->middleware('auth');
-
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('user', [UserController::class, 'store'])->name('user');
 // Route::get('/',[HomeController::class,'create']);
 // Route::get('/post', [PostController::class, 'create'])->name('home');
 // Route::post('/add-post',[PostController::class,'store'])->name('add-post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('/logout');
-
 Route::get('forget-password', [ForgotPasswordController::class, 'getEmail']);
 Route::post('forget-password', [ForgotPasswordController::class, 'postEmail']);
-
 Route::get('reset-password/{token}', [AuthResetPasswordController::class, 'getPassword']);
 Route::post('reset-password', [AuthResetPasswordController::class, 'updatePassword']);
-
 //saving latlng after login
-
 Route::post('/save-lat-lng', [UserController::class, 'saveLatLng']);
+Route::post('/save-address', [AddressController::class, 'store']);
+Route::post('/update-profile-picture', [UserController::class, 'uploadProfilePicture']);
+//searching
+Route::get('/search',[UserController::class,'search']);

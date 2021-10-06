@@ -3,15 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
-use App\Models\Follower;
-use App\Models\Following;
-use App\Models\Profile;
-use App\Models\ProfileImage;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ProfileController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,12 +25,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        $followers = Follower::where('user_id', $user->id)->count();
-        $following = Following::where('user_id', $user->id)->count();
-        $address = Address::where('user_id', $user->id)->latest()->first();
-        $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
-        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'profilePicture'));
+        //
     }
 
     /**
@@ -46,15 +36,24 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'user_id'=>Auth::user()->id,
+        ]);
+        $address = Address::create($request->all());
+        return response()->json([
+            'success' => true,
+            'data' => $address,
+            'message' => 'Address Saved Successfully',
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function show(Profile $profile)
+    public function show(Address $address)
     {
         //
     }
@@ -62,10 +61,10 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profile $profile)
+    public function edit(Address $address)
     {
         //
     }
@@ -74,10 +73,10 @@ class ProfileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, Address $address)
     {
         //
     }
@@ -85,10 +84,10 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profile $profile)
+    public function destroy(Address $address)
     {
         //
     }

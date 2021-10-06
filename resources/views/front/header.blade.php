@@ -16,7 +16,7 @@
 <body>
 
     <div class="header">
-        <div class="row align-items-center">
+        <div class="row ">
             <div class="col-md-2">
                 <div class="headerlogo">
                     <a href="index.html"><img class="img-fluid" src="{{ url('assets/images/headerLogo.png') }}"
@@ -24,14 +24,19 @@
                 </div>
             </div>
             <div class="col-md-1"></div>
-            <div class=" col-md-7 mx-auto ">
-                <div class="d-flex   align-items-center headerSearchBColor ">
+            <div class=" col-md-7 ">
+
+                <div class="d-flex    headerSearchBColor ">
                     <img class="img-fluid ml-2 mr-2 " src="{{ url('assets/images/icons/searechIcon.png') }}"
                         alt="search">
-                    <input class="headerSearchColor" type="text" placeholder="Search">
+                    <input class="" id="search" name="search" type="text" placeholder="Search">
 
                 </div>
+                <div class="searchResults"></div>
+
+                
             </div>
+
             <div class="col-md-2 topMargin ">
                 <div class="row align-items-center tools">
                     <div class="col-md-3 col-sm-4 col-4">
@@ -63,6 +68,39 @@
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('#search').on('keyup', function() {
+                var text = $('#search').val();
+                if (text == '') {
+                    $('.searchResults').addClass('d-none');
+                }else{
+                    $('.searchResults').removeClass('d-none');
+
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: '/search',
+                    data: {
+                        text: text,
+                    },
+                    success: function(data) {
+                        var img = "<img class='circularImage' src='" + data[0].profile_picture.image + "' />"
+                        $.each(data, function(key, value) {
+                            $('.searchResults').html(
+                                '<div class="w-100 headerSearchBColor ">' + img+ value
+                                .name + '</div>');
+                        })
+                    }
+                }).done(function() {
+                    // $('.searchResults').addClass('d-none');
+                })
+            });
+        });
+    </script>
 </body>
 
 </html>
