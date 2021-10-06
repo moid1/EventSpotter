@@ -88,7 +88,12 @@
                         text: text,
                     },
                     success: function(data) {
+                        if(data.profile_picture!=null)
                         var img = "<img class='circularImage' src='" + data[0].profile_picture.image + "' />"
+                        else
+                        var img = "<img class='circularImage' src='assets/images/usersImages/userPlaceHolder.png' />"
+
+
                         $.each(data, function(key, value) {
                             $('.searchResults').html(
                                 '<div class="w-100 headerSearchBColor ">' + img+ value
