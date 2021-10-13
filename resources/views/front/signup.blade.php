@@ -38,7 +38,7 @@
             <span class="right-top"></span>
             <span class="left-bottom"></span>
             <div class="text-center">
-                <img class="sign_log" src="{{ asset('assets/images/logo.png') }}" alt="" srcset="">
+                <img class="sign_log" src="{{ asset('assets/images/logo.png') }}" width="50%" height="auto" alt="" srcset="">
                 <h6 class="medium-heading-green mt-2">Sign UP</h6>
 
                 {{-- @if (count($errors) > 0)

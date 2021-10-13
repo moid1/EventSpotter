@@ -15,3 +15,7 @@ function showToaster(msg, type) {
     });
 
 }
+
+const isEmpty = inputObject => {
+    return Object.keys(inputObject).length === 0;
+  };

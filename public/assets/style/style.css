@@ -3491,3 +3491,13 @@ CUSTOM UTILS CLASSES
     color: #74ABB0;
     text-decoration: underline;
 }
+.pic{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.searchResults{
+    position: fixed;
+    background: white;
+    z-index: 999;
+    width: 50%;
+}

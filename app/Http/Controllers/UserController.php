@@ -139,15 +139,10 @@ class UserController extends Controller
     {
         // get the search term
         $text = $request->input('text');
-        $query = "%" . $text . "%";
-
         // search the members table
         $users = User::whereRaw('email = ? or name like ?', [$text, "%{$text}%"])->with('profilePicture')->get();
-
-        // $users = DB::table('users')->where('name', 'LIKE', $query)->with('profilePicture')->get();
-
-
-        // return the results
+        $users = $users->except(Auth::id());
+    
         return response()->json($users);
     }
 }

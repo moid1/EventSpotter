@@ -5,13 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventSpotter</title>
-    <link rel="stylesheet" href="{{ url('assets/style/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/style/style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <link rel="shortcut icon" href="{{ url('assets//images/logo.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="assets/libraries/css/bootstrap.min.css">
-    <script src="assets/libraries/js/fontawesome.js"></script>
+    <link rel="shortcut icon" href="{{ asset('assets//images/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{asset("assets/libraries/css/bootstrap.min.css")}}">
+    <script src="{{asset("assets/libraries/js/fontawesome.js")}}"></script>
+    <script>
+        var user = {!! json_encode((array) auth()->user()) !!};
+    </script>
 
 </head>
+
+<style>
+    
+</style>
 
 <body>
 
@@ -19,7 +26,7 @@
         <div class="row ">
             <div class="col-md-2">
                 <div class="headerlogo">
-                    <a href="index.html"><img class="img-fluid" src="{{ url('assets/images/headerLogo.png') }}"
+                    <a href="{{url('/')}}"><img class="img-fluid" src="{{ url('assets/images/headerLogo.png') }}"
                             alt=""></a>
                 </div>
             </div>
@@ -47,10 +54,11 @@
                     </div>
                     <div class="col-md-4 col-sm-4 col-4">
                         <div class="iconsBackgroundBox ">
-                            <a href="notification.html"><img class="img-fluid "
-                                    src="{{ url('assets/images/icons/notificationBellIcon.png') }}" /></a>
+                            <a href="{{url('notifications')}}"><img class="img-fluid "
+                                    src="{{ asset('assets/images/icons/notificationBellIcon.png') }}" /></a>
                             <div class="notificationDot"></div>
                         </div>
+                        
                     </div>
                     <div class="col-md-4 col-sm-4 col-4">
                         @if (Auth::user()->profile_image != null)
@@ -71,16 +79,36 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="application/javascript">
+    $(document).ready(function(){
+   var down = false;
+
+    $('#bell').click(function(e){
+
+            var color = $(this).text();
+            if(down){
+
+            $('#box').css('height','0px');
+            $('#box').css('opacity','0');
+            down = false;
+            }else{
+
+            $('#box').css('height','auto');
+            $('#box').css('opacity','1');
+            down = true;
+
+            }
+
+            });
+
+});
         $(document).ready(function() {
             $('#search').on('keyup', function() {
                 var text = $('#search').val();
-                if (text == '') {
+                if (text == '') 
                     $('.searchResults').addClass('d-none');
-                }else{
+                else
                     $('.searchResults').removeClass('d-none');
-
-                }
-
+                if(text.length>=3){
                 $.ajax({
                     type: "GET",
                     url: '/search',
@@ -88,21 +116,21 @@
                         text: text,
                     },
                     success: function(data) {
+                        $('.searchResults').html("");
                         if(data.profile_picture!=null)
-                        var img = "<img class='circularImage' src='" + data[0].profile_picture.image + "' />"
+                        var img = "<img class='circularImage pic mr-3' src='" + data[0].profile_picture.image + "' />"
                         else
-                        var img = "<img class='circularImage' src='assets/images/usersImages/userPlaceHolder.png' />"
-
-
+                        var img = "<img class='circularImage pic mr-3 mb-3' src='assets/images/usersImages/userPlaceHolder.png' />"
+                        if(data.length==0)
+                            $('.searchResults').append('<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>');
                         $.each(data, function(key, value) {
-                            $('.searchResults').html(
-                                '<div class="w-100 headerSearchBColor ">' + img+ value
-                                .name + '</div>');
+                            $('.searchResults').append(
+                                '<a href="profile/' + value.id + '"> <div class="w-100 justify-content-center " style="background:white">' + img+ value
+                                .name + '</a></div> ');
                         })
                     }
                 }).done(function() {
-                    // $('.searchResults').addClass('d-none');
-                })
+                })}
             });
         });
     </script>

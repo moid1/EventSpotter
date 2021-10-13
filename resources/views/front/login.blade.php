@@ -36,7 +36,7 @@
 
             <div class="text-center">
 
-                <img src="{{ url('assets/images/logo.png') }}" alt="" srcset="">
+                <img src="{{ url('assets/images/logo.png') }}" width="50%" height="auto" alt="" srcset="">
                 <h6 class="medium-heading-green mt-3">Login</h6>
                 @if ($message = Session::get('success'))
                     <div id="success" class="alert alert-success">

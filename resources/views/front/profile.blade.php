@@ -1,20 +1,4 @@
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventSpotter</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-    <link rel="stylesheet" href="{{ url('assets/style/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <link rel="shortcut icon" href="{{ url('assets//images/logo.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="assets/libraries/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/dist/jquery.toast.min.css">
-    <script src="assets/libraries/js/fontawesome.js"></script>
-    <script src="assets/dist/customToast.js"></script>
-</head>
+@include('layouts.head')
 
 <body>
     @include('front.header')
@@ -25,7 +9,7 @@
                     <h6 class="mb-3 medium-text ml-4">Profile</h6>
                     <div class="profileInfo d-flex align-items-center mt-2 ml-3">
                         <img class="circularImage" id="profileImage"
-                            src={{ $profilePicture ? $profilePicture->image : url('assets/images/usersImages/userPlaceHolder.png') }} />
+                            src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
                         <input type="file" name="image" id="ownProfilePic" class="d-none" />
                         <div class="personInfo ml-3 ">
                             <span>{{ $user->name }}</span>
@@ -49,10 +33,17 @@
                                 <br>
                                 <span class="notifications-primary-text">Events</span>
                             </div>
-                            <button class="logout" onclick="window.location='{{ url('/logout') }}'">
-                                <img src="/assets/images/logout.png" alt="logout" srcset="">
-                                <span class="ml-2">Logout</span>
-                            </button>
+                            @if (Auth::User()->id == $user->id)
+                                <button class="logout" onclick="window.location='{{ url('/logout') }}'">
+                                    <img src="/assets/images/logout.png" alt="logout" srcset="">
+                                    <span class="ml-2">Logout</span>
+                                </button>
+                            @else
+                                <button class="logout" id="followBtn">
+                                    <span id="isFollowing" class="followClass ml-2"> Follow</span>
+                                </button>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -66,40 +57,40 @@
                     <div class="d-flex scroll">
                         <div class="eventsCard">
                             <div class="mx-auto d-flex  align-items-center justify-content-center">
-                                <img class="profileEvents " src="assets/images/favourit1.png" alt="">
+                                <img class="profileEvents " src="{{ asset('assets/images/favourit1.png') }}" alt="">
                                 <div class="ml-3">
                                     <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="assets/images/date.png" alt=""><span
+                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}" alt=""><span
                                         class="smallTextGrey"> Tomorrow</span>
                                     <br>
-                                    <img class="fav_title" src="assets/images/location.png" alt=""> <span
-                                        class="smallTextGrey"> 5km away</span>
+                                    <img class="fav_title" src="{{ url('assets/images/location.png') }}" alt="">
+                                    <span class="smallTextGrey"> 5km away</span>
                                 </div>
                             </div>
                         </div>
                         <div class="eventsCard">
                             <div class="mx-auto d-flex  align-items-center justify-content-center">
-                                <img class="profileEvents " src="assets/images/favourit2.png" alt="">
+                                <img class="profileEvents " src="{{ asset('assets/images/favourit2.png') }}" alt="">
                                 <div class="ml-3">
                                     <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="assets/images/date.png" alt=""><span
-                                        class="smallTextGrey"> Tomorrow</span>
+                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
+                                        alt=""><span class="smallTextGrey"> Tomorrow</span>
                                     <br>
-                                    <img class="fav_title" src="assets/images/location.png" alt=""> <span
-                                        class="smallTextGrey"> 5km away</span>
+                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}" alt="">
+                                    <span class="smallTextGrey"> 5km away</span>
                                 </div>
                             </div>
                         </div>
                         <div class="eventsCard">
                             <div class="mx-auto d-flex  align-items-center justify-content-center">
-                                <img class="profileEvents" src="assets/images/favourit3.png" alt="">
+                                <img class="profileEvents " src="{{ asset('assets/images/favourit3.png') }}" alt="">
                                 <div class="ml-3">
                                     <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="assets/images/date.png" alt=""><span
-                                        class="smallTextGrey"> Tomorrow</span>
+                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
+                                        alt=""><span class="smallTextGrey"> Tomorrow</span>
                                     <br>
-                                    <img class="fav_title" src="assets/images/location.png" alt=""> <span
-                                        class="smallTextGrey"> 5km away</span>
+                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}" alt="">
+                                    <span class="smallTextGrey"> 5km away</span>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +100,9 @@
                     <div class="ml-4 mb-5">
                         <div class="mt-3">
                             <button class="upcomingProfile ml-3  medium-text">Personal Details</button>
-                            <button class="pastOutlineButton ml-3">Settings</button>
+                            @if (Auth::User()->id == $user->id)
+                                <button class="pastOutlineButton ml-3">Settings</button>
+                            @endif
                         </div>
                         <div class="w-100 d-flex justify-content-center ">
                             <div id="editSuccessMsg" class="alert alert-success w-50 mt-3 text-center d-none "
@@ -154,9 +147,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <Button id="edit" class="upcoming mt-5 mb-5">
-                                Edit Details
-                            </Button>
+                            @if (Auth::User()->id == $user->id)
+                                <Button id="edit" class="upcoming mt-5 mb-5">
+                                    Edit Details
+                                </Button>
+                            @endif
+
                             <Button id="saveBtn" class="upcoming mt-5 mb-5 d-none">
                                 Save Details
                             </Button>
@@ -169,7 +165,7 @@
                     <p class="margin-left-20">Live Notifications</p>
                     <div class="d-flex align-items-center margin-5 side">
                         <div class="iconsBackgroundBox">
-                            <img src="assets/images/video.png" alt="">
+                            <img src="{{ asset('assets/images/video.png') }}" alt="">
                         </div>
                         <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
                             event</span>
@@ -178,7 +174,7 @@
                     <hr>
                     <div class="d-flex align-items-center margin-5 side">
                         <div class="iconsBackgroundBox">
-                            <img src="assets/images/camera_enhance.png" alt="">
+                            <img src="{{ asset('assets/images/camera_enhance.png') }}" alt="">
                         </div>
                         <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
                             event</span>
@@ -187,7 +183,7 @@
                     <hr>
                     <div class="d-flex align-items-center margin-5 side">
                         <div class="iconsBackgroundBox">
-                            <img src="assets/images/video.png" alt="">
+                            <img src="{{ asset('assets/images/video.png') }}" alt="">
                         </div>
                         <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
                             event</span>
@@ -196,7 +192,7 @@
                     <hr>
                     <div class="d-flex align-items-center margin-5 side">
                         <div class="iconsBackgroundBox">
-                            <img src="assets/images/camera_enhance.png" alt="">
+                            <img src="{{ asset('assets/images/camera_enhance.png') }}" alt="">
                         </div>
                         <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
                             event</span>
@@ -210,9 +206,20 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="assets/dist/jquery.toast.min.js"></script>
+    <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
 
     <script>
+        var user = {!! json_encode($user->toArray()) !!};
+        // var isFollowing = {!! json_encode($isFollowing) !!};
+        var isFollowing = {!! json_encode($isFollowing? $isFollowing->toArray():null) !!};
+        if(isFollowing!=null){
+                if (isFollowing.is_accepted == true)
+                    $('#isFollowing').html('Un-Follow');
+                else
+                    $('#isFollowing').html('Pending');
+            
+        }
+
         $("#edit").click(function(event) {
 
 
@@ -264,7 +271,9 @@
         });
 
         $('#profileImage').click(function(event) {
-            $('#ownProfilePic').click();
+            var currUser = {!! auth()->user()->toJson() !!};
+            if (currUser.id == user.id)
+                $('#ownProfilePic').click();
         });
 
         $('#saveBtn').click(function(event) {
@@ -288,6 +297,27 @@
                 $('#editSuccessMsg').addClass('d-none');
                 showToaster('Information has been updated successfully', 'success');
             })
+        });
+
+        $('#followBtn').click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                    type: 'POST',
+                    url: '/following',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "following_id": user.id,
+                    },
+                    success: function(response) {
+                        showToaster(response.message, 'success');
+                        $('.followClass').html(response.ButtonText);
+                    }
+                })
+                .done(function() {
+
+                })
         });
     </script>
 

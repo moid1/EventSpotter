@@ -32,10 +32,12 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $followers = Follower::where('user_id', $user->id)->count();
-        $following = Following::where('user_id', $user->id)->count();
+        $following = Following::where('user_id', $user->id)->where('is_accepted',true)->count();
         $address = Address::where('user_id', $user->id)->latest()->first();
         $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
-        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'profilePicture'));
+        $isFollowing = [];
+
+        return view('front.profile')->with(compact('user', 'followers', 'following', 'address','isFollowing', 'profilePicture'));
     }
 
     /**
@@ -91,5 +93,17 @@ class ProfileController extends Controller
     public function destroy(Profile $profile)
     {
         //
+    }
+
+    public function userProfile($id)
+    {
+        $user = User::find($id);
+        $currentUser = Auth::id();
+        $followers = Follower::where('user_id', $user->id)->count();
+        $following = Following::where('user_id', $user->id)->count();
+        $address = Address::where('user_id', $user->id)->latest()->first();
+        $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
+        $isFollowing = Following::where('user_id', $currentUser)->where('following_id', $user->id)->first();
+        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'profilePicture', 'isFollowing'));
     }
 }
