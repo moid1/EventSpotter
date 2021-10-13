@@ -118,14 +118,16 @@
                     success: function(data) {
                         $('.searchResults').html("");
                         if(data.profile_picture!=null)
-                        var img = "<img class='circularImage pic mr-3' src='" + data[0].profile_picture.image + "' />"
+                        var img = "<img class='circularImage pic mr-3' src='{{asset(" + data[0].profile_picture.image + ")}}' />"
                         else
-                        var img = "<img class='circularImage pic mr-3 mb-3' src='assets/images/usersImages/userPlaceHolder.png' />"
+                        var img = "<img class='circularImage pic mr-3 mb-3' src='{{asset('assets/images/usersImages/userPlaceHolder.png')}}' />"
                         if(data.length==0)
                             $('.searchResults').append('<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>');
                         $.each(data, function(key, value) {
+                          var url = "{{url('profile')}}"+"/"+value.id;
+
                             $('.searchResults').append(
-                                '<a href="profile/' + value.id + '"> <div class="w-100 justify-content-center " style="background:white">' + img+ value
+                                '<a href="'+url+'"> <div class="w-100 justify-content-center " style="background:white">' + img+ value
                                 .name + '</a></div> ');
                         })
                     }
