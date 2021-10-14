@@ -18,16 +18,20 @@
                                 class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
                         </div>
                         <div class="personFollowersInfo d-flex mx-auto justify-content-center align-items-center">
-                            <div class="grey-background margin-left-20 borderRadius5 text-center pl-3 pr-3">
-                                <span class="large-text">{{ $followers }}</span>
-                                <br>
-                                <span class="notifications-primary-text">Followers</span>
-                            </div>
-                            <div class="grey-background borderRadius5 margin-left-20 text-center pl-3 pr-3 ">
-                                <span class="large-text">{{ $following }}</span>
-                                <br>
-                                <span class="notifications-primary-text">Following</span>
-                            </div>
+                            <a href="{{ url('/follower') }}">
+                                <div class="grey-background margin-left-20 borderRadius5 text-center pl-3 pr-3">
+                                    <span class="large-text">{{ $followers }}</span>
+                                    <br>
+                                    <span class="notifications-primary-text">Followers</span>
+                                </div>
+                            </a>
+                            <a href="{{ url('/following') }}">
+                                <div class="grey-background borderRadius5 margin-left-20 text-center pl-3 pr-3 ">
+                                    <span class="large-text">{{ $following }}</span>
+                                    <br>
+                                    <span class="notifications-primary-text">Following</span>
+                                </div>
+                            </a>
                             <div class="grey-background borderRadius5  margin-left-20 text-center pl-3 pr-3">
                                 <span class="large-text">4</span>
                                 <br>
@@ -60,8 +64,8 @@
                                 <img class="profileEvents " src="{{ asset('assets/images/favourit1.png') }}" alt="">
                                 <div class="ml-3">
                                     <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}" alt=""><span
-                                        class="smallTextGrey"> Tomorrow</span>
+                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
+                                        alt=""><span class="smallTextGrey"> Tomorrow</span>
                                     <br>
                                     <img class="fav_title" src="{{ url('assets/images/location.png') }}" alt="">
                                     <span class="smallTextGrey"> 5km away</span>
@@ -76,7 +80,8 @@
                                     <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
                                         alt=""><span class="smallTextGrey"> Tomorrow</span>
                                     <br>
-                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}" alt="">
+                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}"
+                                        alt="">
                                     <span class="smallTextGrey"> 5km away</span>
                                 </div>
                             </div>
@@ -89,7 +94,8 @@
                                     <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
                                         alt=""><span class="smallTextGrey"> Tomorrow</span>
                                     <br>
-                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}" alt="">
+                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}"
+                                        alt="">
                                     <span class="smallTextGrey"> 5km away</span>
                                 </div>
                             </div>
@@ -211,13 +217,13 @@
     <script>
         var user = {!! json_encode($user->toArray()) !!};
         // var isFollowing = {!! json_encode($isFollowing) !!};
-        var isFollowing = {!! json_encode($isFollowing? $isFollowing->toArray():null) !!};
-        if(isFollowing!=null){
-                if (isFollowing.is_accepted == true)
-                    $('#isFollowing').html('Un-Follow');
-                else
-                    $('#isFollowing').html('Pending');
-            
+        var isFollowing = {!! json_encode($isFollowing ? $isFollowing->toArray() : null) !!};
+        if (isFollowing != null) {
+            if (isFollowing.is_accepted == true)
+                $('#isFollowing').html('Un-Follow');
+            else
+                $('#isFollowing').html('Pending');
+
         }
 
         $("#edit").click(function(event) {

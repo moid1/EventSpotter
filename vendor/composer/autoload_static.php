@@ -552,6 +552,7 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\AuthResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthResetPasswordController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\FollowerController' => __DIR__ . '/../..' . '/app/Http/Controllers/FollowerController.php',
         'App\\Http\\Controllers\\FollowingController' => __DIR__ . '/../..' . '/app/Http/Controllers/FollowingController.php',
         'App\\Http\\Controllers\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/ForgotPasswordController.php',
         'App\\Http\\Controllers\\NotificationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationsController.php',

@@ -32,7 +32,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $followers = Follower::where('user_id', $user->id)->count();
-        $following = Following::where('user_id', $user->id)->where('is_accepted',true)->count();
+        $following = Following::where('user_id', $user->id)->where('is_accepted',1)->count();
         $address = Address::where('user_id', $user->id)->latest()->first();
         $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
         $isFollowing = [];

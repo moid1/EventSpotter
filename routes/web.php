@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthResetPasswordController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -37,7 +38,7 @@ Route::view('left', 'front.left');
 Route::view('right', 'front.right');
 Route::view('header', 'front.header');
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth');
-Route::get('profile/{id}',[ProfileController::class,'userProfile']);
+Route::get('profile/{id}', [ProfileController::class, 'userProfile']);
 Route::view('/', 'front.home')->middleware('auth');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('user', [UserController::class, 'store'])->name('user');
@@ -54,10 +55,18 @@ Route::post('/save-lat-lng', [UserController::class, 'saveLatLng']);
 Route::post('/save-address', [AddressController::class, 'store']);
 Route::post('/update-profile-picture', [UserController::class, 'uploadProfilePicture']);
 //searching
-Route::get('/search',[UserController::class,'search']);
+Route::get('/search', [UserController::class, 'search']);
 //Following
-Route::post('/following',[FollowingController::class,'store']);
+Route::post('/following', [FollowingController::class, 'store']);
+Route::get('following', [FollowingController::class, 'create']);
+Route::post('/unfollowing',[FollowingController::class,'unfollow']); //from followingtable
+//Followers
+Route::post('/follower', [FollowerController::class, 'store']);
+Route::get('follower', [FollowerController::class, 'create']);
+Route::post('/acceptFollowingRequest', [FollowingController::class, 'acceptFollowingRequest']);
+Route::post('/cancelPendingRequest',[FollowerController::class,'cancelPendingRequest']);
+Route::post('unfollow',[FollowerController::class,'unfollow']);
 
 //Notifications
 
-Route::get('notifications',[NotificationsController::class,'create']);
+Route::get('notifications', [NotificationsController::class, 'create']);

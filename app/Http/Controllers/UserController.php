@@ -27,7 +27,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        // $user = Auth::user();
+        // $profileImage = ProfileImage::where('user_id',$user->id)->first();
+        // return view('front.home')->with(compact('user','profileImage'));
+        
     }
 
     /**

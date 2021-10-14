@@ -12,6 +12,7 @@ return array(
     'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
     'App\\Http\\Controllers\\AuthResetPasswordController' => $baseDir . '/app/Http/Controllers/AuthResetPasswordController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\FollowerController' => $baseDir . '/app/Http/Controllers/FollowerController.php',
     'App\\Http\\Controllers\\FollowingController' => $baseDir . '/app/Http/Controllers/FollowingController.php',
     'App\\Http\\Controllers\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/ForgotPasswordController.php',
     'App\\Http\\Controllers\\NotificationsController' => $baseDir . '/app/Http/Controllers/NotificationsController.php',

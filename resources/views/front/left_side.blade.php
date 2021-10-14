@@ -32,12 +32,12 @@
                     <hr>
                     <div>
                         <i class="fa fa-user-plus mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="followers.html">Followers</a>
+                        <a class="side_tag" href="{{url('follower')}}">Followers</a>
                     </div>
                     <hr>
                     <div>
                         <i class="fa fa-user mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="following.html">Following</a>
+                        <a class="side_tag" href="{{url('following')}}">Following</a>
                     </div>
                     <hr>
                     <div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Notifications;
 use Illuminate\Http\Request;
@@ -26,7 +27,10 @@ class FollowingController extends Controller
      */
     public function create()
     {
-        //
+        $currentUser = Auth::user();
+        $following = Following::where('user_id', $currentUser->id)->where('is_accepted', 1)->with('followingUser')->get();
+        $pendingRequest = Following::where('user_id', $currentUser->id)->with('user')->where('is_accepted', 0)->get();
+        return view('front.following')->with(compact('following', 'currentUser', 'pendingRequest'));
     }
 
     /**
@@ -41,13 +45,24 @@ class FollowingController extends Controller
         $followingId = $request->following_id;
         $isAny =   Following::where('user_id', $userId)->where('following_id', $followingId)->first();
         if ($isAny) {
-            Following::where('user_id', $userId)->where('following_id', $followingId)->delete();
-            return response()->json([
-                'success' => true,
-                'data' => [],
-                'message' => 'Follow Request has been canceled',
-                'ButtonText' => 'Follow'
-            ]);
+            if ($isAny->is_accepted == 2 || $isAny->is_accepted == 0) {
+                Following::where('user_id', $userId)->where('following_id', $followingId)->delete();
+                return response()->json([
+                    'success' => true,
+                    'data' => [],
+                    'message' => 'Follow Request has been canceled',
+                    'ButtonText' => 'Follow'
+                ]);
+            } else if ($isAny->is_accepted == 1) {
+                Following::where('user_id', $userId)->where('following_id', $followingId)->delete();
+                Follower::where('following_id', $isAny->id)->delete;
+                return response()->json([
+                    'success' => true,
+                    'data' => [],
+                    'message' => 'You unfollowed this person',
+                    'ButtonText' => 'Follow'
+                ]);
+            }
         } else {
             $followingResponse =   Following::create([
                 'user_id' => $userId,
@@ -59,15 +74,16 @@ class FollowingController extends Controller
                 'user_id' => $followingId,
                 'sent_by' => $userId,
             ]);
+
+
+            return response()->json([
+                'success' => true,
+                'data' => $followingResponse,
+                'message' => 'Following request has been sent',
+                'ButtonText' => 'Pending'
+
+            ]);
         }
-
-        return response()->json([
-            'success' => true,
-            'data' => $followingResponse,
-            'message' => 'Following request has been sent',
-            'ButtonText' => 'Pending'
-
-        ]);
     }
 
     /**
@@ -113,5 +129,43 @@ class FollowingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acceptFollowingRequest(Request $request)
+    {
+        $following = Following::find($request->id);
+        $currentUser = Auth::user();
+        $following->is_accepted = true;
+        $following->update();
+
+        Follower::create([
+            'user_id' => $currentUser->id,
+            'follower_id' => $following->user_id,
+            'following_id' => $following->id, // foreign key of following table
+        ]);
+        $notification = Notifications::create([
+            'title' => 'Follow Request Accepted',
+            'message' =>  $currentUser->name . ' accepted your following request',
+            'user_id' => $following->user_id,
+            'sent_by' => $currentUser->id,
+        ]);
+        return response()->json([
+            'success' => true,
+            'data' => $following,
+            'message' => 'Following Request has been accepted',
+        ]);
+    }
+//this will unfollow from followingTable
+    public function unfollow(Request $request)
+    {
+        $following = Following::with('user')->find($request->id);
+        $user = $following->user;
+        $following->delete();
+        $follower = Follower::where('following_id',$following->id)->first();
+        $follower->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'You unfollow' . $user->name,
+        ]);
     }
 }

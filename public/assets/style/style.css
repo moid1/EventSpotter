@@ -2,9 +2,10 @@
             margin: 0;
             font-family: 'Poppins', sans-serif;
             padding: 0;
-            text-decoration: none;
+            text-decoration: none !important;
         }
 
+       
         html,
         body {
             min-height: 100vh;
@@ -479,8 +480,7 @@
         }
 
         .description {
-            margin-left: 65px;
-            margin-top: -17px;
+
             font-size: 13px;
             font-weight: 400;
             color: #6D6D6D;
@@ -3448,56 +3448,81 @@
                 display: none;
             }
         }
+
         /* ==========================================
     FOR DEMO PURPOSE
   ========================================== */
-        
-  .text-small {
-    font-size: 0.9rem;
-}
 
-a {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
-}
+        .text-small {
+            font-size: 0.9rem;
+        }
 
-a:hover,
-a:focus {
-    text-decoration: none;
-}
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
 
-.form-control {
-    background: #212529;
-    border-color: #545454;
-}
+        a:hover,
+        a:focus {
+            text-decoration: none;
+        }
 
-.form-control:focus {
-    background: #212529;
-}
+        .form-control {
+            background: #212529;
+            border-color: #545454;
+        }
 
-footer {
-    background: #2c2e2e;
-    padding: 30px;
-}
+        .form-control:focus {
+            background: #212529;
+        }
 
-.footer {
-    width: 100%;
-}
-/* ==========================================
+        footer {
+            background: #2c2e2e;
+            padding: 30px;
+        }
+
+        .footer {
+            width: 100%;
+        }
+
+        /* ==========================================
 CUSTOM UTILS CLASSES
 ========================================== */
-.policy {
-    color: #74ABB0;
-    text-decoration: underline;
-}
-.pic{
-    margin-left: 20px;
-    margin-top: 20px;
-}
-.searchResults{
-    position: fixed;
-    background: white;
-    z-index: 999;
-    width: 50%;
-}
+        .policy {
+            color: #74ABB0;
+            text-decoration: underline;
+        }
+
+        .pic {
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .searchResults {
+            position: fixed;
+            background: white;
+            z-index: 999;
+            width: 50%;
+        }
+
+        .cancelBG {
+            background-color: #850707;
+        }
+
+        .d-grid {
+            display: grid !important;
+        }
+
+        .personFollowersInfo a {
+            color: black !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        i:hover {
+            cursor: pointer;
+        }

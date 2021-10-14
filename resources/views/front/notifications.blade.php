@@ -13,8 +13,12 @@
 
                             <div class="row notifiy">
                                 <div class="col-2">
-                                    <img class="notify_prfile  circularImage" 
-                                        src="{{ asset($item->user->profilePicture->image) }}" alt="">
+                                    @if ($item->user->profilePicture !=null)
+                                    <img src="{{$item->user->profilePicture->image}}" class="notify_prfile circularImage">
+                                    @else
+                                    <img src="{{asset('assets/images/usersImages/userPlaceHolder.png')}}"  class="notify_prfile circularImage" alt="" srcset="">
+                                    @endif
+                      
                                 </div>
                                 <div class="col-8">
                                     {{-- <p class="notify_description"><span class="notify_title">Joana Karg</span> started

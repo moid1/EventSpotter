@@ -21,7 +21,9 @@
 </style>
 
 <body>
-
+@php
+    $userWithImage =Auth::user()->load('profilePicture');
+@endphp
     <div class="header">
         <div class="row ">
             <div class="col-md-2">
@@ -61,9 +63,9 @@
                         
                     </div>
                     <div class="col-md-4 col-sm-4 col-4">
-                        @if (Auth::user()->profile_image != null)
+                        @if ($userWithImage->profilePicture != null)
                             <a href="{{ url('/profile') }}"> <img class="circularImage"
-                                    src="{{ url('assets/images/profile.png') }}" /></a>
+                                    src="{{ asset($userWithImage->profilePicture->image) }}" /></a>
                         @else
                             <a href="{{ url('/profile') }}"> <img class="circularImage"
                                     src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" /></a>
