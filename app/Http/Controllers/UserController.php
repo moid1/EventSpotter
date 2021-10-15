@@ -30,7 +30,7 @@ class UserController extends Controller
         // $user = Auth::user();
         // $profileImage = ProfileImage::where('user_id',$user->id)->first();
         // return view('front.home')->with(compact('user','profileImage'));
-        
+
     }
 
     /**
@@ -145,7 +145,20 @@ class UserController extends Controller
         // search the members table
         $users = User::whereRaw('email = ? or name like ?', [$text, "%{$text}%"])->with('profilePicture')->get();
         $users = $users->except(Auth::id());
-    
+
         return response()->json($users);
+    }
+
+    public function makeNoPrivate(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->mobile_is_private = $request->isPrivate;
+        $user->update();
+
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Phone No Status Changed Successfully',
+        ]);
     }
 }

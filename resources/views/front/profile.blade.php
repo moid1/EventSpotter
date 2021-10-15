@@ -122,11 +122,25 @@
                                 <input type="email" class="headerSearchColor ml-3" name="email"
                                     value={{ $user->email }} id="email" disabled>
                             </div>
-                            <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
-                            <div class="inputFieldGreenBG d-flex ">
-                                <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
-                                    value={{ $user->phone_number }} id="phoneNumber" disabled>
-                            </div>
+                            @if ($user->mobile_is_private == 0)
+                                <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
+                                <div class="inputFieldGreenBG d-flex ">
+                                    <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
+                                        value={{ $user->phone_number }} id="phoneNumber" disabled>
+                                </div>
+                            @endif
+
+                            @if (Auth::User()->id == $user->id)
+                                <div class=" w-50">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="makePhonePrivate">
+                                        <label class="form-check-label" for="makePhonePrivate">Make
+                                            Private</label>
+                                    </div>
+                                </div>
+                            @endif
+
+
                             <div class="d-flex">
                                 <div class="field">
                                     <label for="address" class="normal-text mt-3">Address</label>
@@ -216,6 +230,12 @@
 
     <script>
         var user = {!! json_encode($user->toArray()) !!};
+        if (user.mobile_is_private == 1)
+            $('#makePhonePrivate').prop("checked", true);
+        else
+            $('#makePhonePrivate').prop("checked", false);
+
+
         // var isFollowing = {!! json_encode($isFollowing) !!};
         var isFollowing = {!! json_encode($isFollowing ? $isFollowing->toArray() : null) !!};
         if (isFollowing != null) {
@@ -319,6 +339,24 @@
                     success: function(response) {
                         showToaster(response.message, 'success');
                         $('.followClass').html(response.ButtonText);
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+        $('#makePhonePrivate').change(function() {
+            $.ajax({
+                    type: 'POST',
+                    url: '/makeNoPrivate',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "isPrivate": this.checked ? 1 : 0,
+                    },
+                    success: function(response) {
+                        showToaster(response.message, 'success');
                     }
                 })
                 .done(function() {

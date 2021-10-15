@@ -70,3 +70,7 @@ Route::post('unfollow',[FollowerController::class,'unfollow']);
 //Notifications
 
 Route::get('notifications', [NotificationsController::class, 'create']);
+
+
+//Make Priate No
+Route::post('/makeNoPrivate',[UserController::class,'makeNoPrivate']);
