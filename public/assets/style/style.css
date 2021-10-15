@@ -3527,3 +3527,40 @@ CUSTOM UTILS CLASSES
         i:hover {
             cursor: pointer;
         }
+
+        input[type="checkbox"] {
+            visibility: hidden;
+       }
+        input[type="checkbox"]:checked + .labelSwitch {
+            transform: rotate(360deg);
+            background-color: #314648;
+       }
+        input[type="checkbox"]:checked + .labelSwitch:before {
+            transform: translateX(50px);
+            background-color: #fff;
+       }
+        .labelSwitch {
+            display: flex;
+            width: 100px;
+            height: 40px;
+            border: 3px solid;
+            border-radius: 99em;
+            position: relative;
+            transition: transform 0.75s ease-in-out;
+            transform-origin: 50% 50%;
+            cursor: pointer;
+       }
+        .labelSwitch:before {
+            transition: transform 0.75s ease;
+            transition-delay: 0.5s;
+            content: "";
+            display: block;
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #000;
+            border-radius: 50%;
+            top: 12px;
+            left: 12px;
+       }
+        

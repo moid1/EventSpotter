@@ -122,7 +122,7 @@
                                 <input type="email" class="headerSearchColor ml-3" name="email"
                                     value={{ $user->email }} id="email" disabled>
                             </div>
-                            @if ($user->mobile_is_private == 0)
+                            @if (Auth::User()->id == $user->id||$user->mobile_is_private == 0)
                                 <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
                                 <div class="inputFieldGreenBG d-flex ">
                                     <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
@@ -131,11 +131,11 @@
                             @endif
 
                             @if (Auth::User()->id == $user->id)
-                                <div class=" w-50">
+                                <div class=" w-50 d-flex align-items-center mt-2">
+                                    Make Private
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="makePhonePrivate">
-                                        <label class="form-check-label" for="makePhonePrivate">Make
-                                            Private</label>
+                                        <label class="labelSwitch" for="makePhonePrivate"></label>
                                     </div>
                                 </div>
                             @endif
