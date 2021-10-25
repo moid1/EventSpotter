@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Event;
 use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Profile;
@@ -32,12 +33,12 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $followers = Follower::where('user_id', $user->id)->count();
-        $following = Following::where('user_id', $user->id)->where('is_accepted',1)->count();
+        $following = Following::where('user_id', $user->id)->where('is_accepted', 1)->count();
         $address = Address::where('user_id', $user->id)->latest()->first();
         $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
         $isFollowing = [];
-
-        return view('front.profile')->with(compact('user', 'followers', 'following', 'address','isFollowing', 'profilePicture'));
+        $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'isFollowing', 'profilePicture', 'upcomingEvents'));
     }
 
     /**

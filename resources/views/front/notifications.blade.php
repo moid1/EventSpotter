@@ -1,6 +1,7 @@
 @include('layouts.head')
 
 <body>
+
     @include('front.header')
     <div class="container-fluid">
         <div class="row">
@@ -9,27 +10,31 @@
                     <div class="not_title">Notifications </div>
                     @if (count($notifications) > 0)
                         @foreach ($notifications as $item)
-
-
-                            <div class="row notifiy">
-                                <div class="col-2">
-                                    @if ($item->user->profilePicture !=null)
-                                    <img src="{{$item->user->profilePicture->image}}" class="notify_prfile circularImage">
-                                    @else
-                                    <img src="{{asset('assets/images/usersImages/userPlaceHolder.png')}}"  class="notify_prfile circularImage" alt="" srcset="">
-                                    @endif
-                      
-                                </div>
-                                <div class="col-8">
-                                    {{-- <p class="notify_description"><span class="notify_title">Joana Karg</span> started
+                        @php
+                            $url=$item->id.'/'.$item->route_name;
+                        @endphp
+                            <a href="{{ url('notificationReadable/'.$url) }}" class="aWithoutDec">
+                                <div class="row notifiy">
+                                    <div class="col-2">
+                                        @if ($item->user->profilePicture != null)
+                                            <img src="{{ $item->user->profilePicture->image }}"
+                                                class="notify_prfile circularImage">
+                                        @else
+                                            <img src="{{ asset('assets/images/usersImages/userPlaceHolder.png') }}"
+                                                class="notify_prfile circularImage" alt="" srcset="">
+                                        @endif
+                                    </div>
+                                    <div class="col-8">
+                                        {{-- <p class="notify_description"><span class="notify_title">Joana Karg</span> started
                                 following
                                 you</p> --}}
-                                    <p class="notify_description">{{ $item->message }}</p>
+                                        <p class="notify_description">{{ $item->message }}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <p class="notify_time">{{ $item->created_at->diffForHumans() }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <p class="notify_time">{{$item->created_at->diffForHumans()}}</p>
-                                </div>
-                            </div>
+                            </a>
                             <div class="last_notify"></div>
                         @endforeach
                     @else

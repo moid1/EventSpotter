@@ -2,8 +2,8 @@
 function showToaster(msg, type) {
     $.toast({
         text: msg,
-        heading: type == 'success' ? 'Success' : 'failed', // Optional heading to be shown on the toast
-        icon: type, // Type of toast icon
+        heading: type == 'success' ? 'Success' : 'Error', // Optional heading to be shown on the toast
+        icon: type == 'success' ? 'success' : 'error', // Type of toast icon
         showHideTransition: 'fade', // fade, slide or plain
         allowToastClose: true, // Boolean value true or false
         hideAfter: 3000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden

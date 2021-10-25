@@ -36,12 +36,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = Hash::make($value);
     }
 
     public function profilePicture()
     {
         return $this->hasOne(ProfileImage::class);
+    }
+
+    public function followers()
+    {
+        return $this->hasMany(Follower::class);
+    }
+
+    public function following()
+    {
+        return $this->hasMany(Following::class);
     }
 }

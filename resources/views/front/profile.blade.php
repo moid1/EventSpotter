@@ -5,7 +5,7 @@
     <div class="container-fluid ">
         <div class="row ">
             <div class="col-md-9 col-sm-12 col-12 mx-auto ">
-                <div class="profileSection ">
+                <div class="profileSection">
                     <h6 class="mb-3 medium-text ml-4">Profile</h6>
                     <div class="profileInfo d-flex align-items-center mt-2 ml-3">
                         <img class="circularImage" id="profileImage"
@@ -51,57 +51,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="yourEvents">
-                    <div class="d-flex align-items-center">
-                        <h6 class=" medium-text ml-4 mt-2">Your Events</h6>
-                        <button class="upcomingProfile ml-3">Upcoming</button>
-                        <button class="pastOutlineButton ml-3">Past Events</button>
-                        <button class="pastOutlineButton ml-3">Drafts</button>
+                @if (Auth::User()->id == $user->id)
+
+                    <div class="yourEvents">
+                        <div class="d-flex align-items-center">
+                            <h6 class=" medium-text ml-4 mt-2">Your Events</h6>
+                            <button id="upcomingEventsBtn" class="upcomingProfile ml-3">Upcoming</button>
+                            <button id="pastEventsBtn" class="pastOutlineButton ml-3">Past Events</button>
+                            <button id="draftEventsBtn" class="pastOutlineButton ml-3">Drafts</button>
+                        </div>
+
+                        <div class="d-flex scroll " id="events">
+
+
+                        </div>
+
                     </div>
-                    <div class="d-flex scroll">
-                        <div class="eventsCard">
-                            <div class="mx-auto d-flex  align-items-center justify-content-center">
-                                <img class="profileEvents " src="{{ asset('assets/images/favourit1.png') }}" alt="">
-                                <div class="ml-3">
-                                    <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
-                                        alt=""><span class="smallTextGrey"> Tomorrow</span>
-                                    <br>
-                                    <img class="fav_title" src="{{ url('assets/images/location.png') }}" alt="">
-                                    <span class="smallTextGrey"> 5km away</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="eventsCard">
-                            <div class="mx-auto d-flex  align-items-center justify-content-center">
-                                <img class="profileEvents " src="{{ asset('assets/images/favourit2.png') }}" alt="">
-                                <div class="ml-3">
-                                    <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
-                                        alt=""><span class="smallTextGrey"> Tomorrow</span>
-                                    <br>
-                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}"
-                                        alt="">
-                                    <span class="smallTextGrey"> 5km away</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="eventsCard">
-                            <div class="mx-auto d-flex  align-items-center justify-content-center">
-                                <img class="profileEvents " src="{{ asset('assets/images/favourit3.png') }}" alt="">
-                                <div class="ml-3">
-                                    <h6 class="eventsTitleProfile">New year party at local park</h6>
-                                    <img class="fav_title" src="{{ asset('assets/images/date.png') }}"
-                                        alt=""><span class="smallTextGrey"> Tomorrow</span>
-                                    <br>
-                                    <img class="fav_title" src="{{ asset('assets/images/location.png') }}"
-                                        alt="">
-                                    <span class="smallTextGrey"> 5km away</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endif
                 <div class="personalDetailsBg mb-5 ">
                     <div class="ml-4 mb-5">
                         <div class="mt-3">
@@ -122,7 +88,7 @@
                                 <input type="email" class="headerSearchColor ml-3" name="email"
                                     value={{ $user->email }} id="email" disabled>
                             </div>
-                            @if (Auth::User()->id == $user->id||$user->mobile_is_private == 0)
+                            @if (Auth::User()->id == $user->id || $user->mobile_is_private == 0)
                                 <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
                                 <div class="inputFieldGreenBG d-flex ">
                                     <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
@@ -180,47 +146,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="notifications mx-auto">
-                    <p class="margin-left-20">Live Notifications</p>
-                    <div class="d-flex align-items-center margin-5 side">
-                        <div class="iconsBackgroundBox">
-                            <img src="{{ asset('assets/images/video.png') }}" alt="">
-                        </div>
-                        <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
-                            event</span>
-                        <span class="agoColor">3s ago</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex align-items-center margin-5 side">
-                        <div class="iconsBackgroundBox">
-                            <img src="{{ asset('assets/images/camera_enhance.png') }}" alt="">
-                        </div>
-                        <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
-                            event</span>
-                        <span class="agoColor">3s ago</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex align-items-center margin-5 side">
-                        <div class="iconsBackgroundBox">
-                            <img src="{{ asset('assets/images/video.png') }}" alt="">
-                        </div>
-                        <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
-                            event</span>
-                        <span class="agoColor">3s ago</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex align-items-center margin-5 side">
-                        <div class="iconsBackgroundBox">
-                            <img src="{{ asset('assets/images/camera_enhance.png') }}" alt="">
-                        </div>
-                        <span class=" ml-2  notifications-primary-text"> John Doe started streaming of their
-                            event</span>
-                        <span class="agoColor">3s ago</span>
-                    </div>
-                    <hr>
-                </div>
-            </div>
+            @include('front.right_side')
         </div>
     </div>
 
@@ -229,6 +155,10 @@
     <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
 
     <script>
+        $(document).ready(function() {
+
+            $("#upcomingEventsBtn").click();
+        });
         var user = {!! json_encode($user->toArray()) !!};
         if (user.mobile_is_private == 1)
             $('#makePhonePrivate').prop("checked", true);
@@ -357,6 +287,160 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+
+
+        //UPCOMING EVENTS BUTTON
+        $('#upcomingEventsBtn').click(function(event) {
+            event.preventDefault();
+            $(this).addClass('upcomingProfile');
+            $(this).removeClass('pastOutlineButton');
+            $('#pastEventsBtn').addClass('pastOutlineButton');
+            $('#pastEventsBtn').removeClass('upcomingProfile');
+            $('#draftEventsBtn').removeClass('upcomingProfile');
+            $('#draftEventsBtn').addClass('pastOutlineButton');
+            $.ajax({
+                    type: 'GET',
+                    url: '/getUpcomingEvents',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        $('#events').html('');
+
+                        response.data.forEach(function(event) {
+                            var img = event.events.event_pictures[0].image_path;
+                            $('#events').append("<div class='eventsCard'>" +
+                                "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                "<img class='profileEvents' style='border-radius:10px' src=" + img + " >" +
+                                "<div class ='ml-3'>" +
+                                "<h6 class='eventsTitleProfile'>" + event.events.event_name +
+                                "</h6>" +
+                                "<img class ='fav_title' src='assets/images/date.png'>" +
+                                "<span class='smallTextGrey'> " + event.events.event_date +
+                                "</span>" +
+                                "<br>" +
+                                "<image class='fav_title' src ='assets/images/location.png'>" +
+                                "<span class='smallTextGrey'> " + event.km +
+                                " KM away</span> " +
+                                "</div>" +
+                                "</div>" +
+                                "</div>"
+                            );
+
+                        });
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+        //PAST EVENTS BUTTON
+        $('#pastEventsBtn').click(function(event) {
+            event.preventDefault();
+            $(this).addClass('upcomingProfile');
+            $(this).removeClass('pastOutlineButton');
+            $('#upcomingEventsBtn').removeClass('upcomingProfile');
+            $('#upcomingEventsBtn').addClass('pastOutlineButton');
+            $('#draftEventsBtn').removeClass('upcomingProfile');
+            $('#draftEventsBtn').addClass('pastOutlineButton');
+
+
+            $.ajax({
+                    type: 'GET',
+                    url: '/getPastEvents',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        $('#events').html('');
+                        if (!response.data.length === 0) {
+                            response.data.forEach(function(event) {
+                                var img = event.event_pictures[0].image_path;
+                                $('#events').append("<div class='eventsCard'>" +
+                                    "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                    "<img class='profileEvents' src=" + img + " >" +
+                                    "<div class ='ml-3'>" +
+                                    "<h6 class='eventsTitleProfile'>" + event.event_name +
+                                    "</h6>" +
+                                    "<img class ='fav_title' src='assets/images/date.png'>" +
+                                    "<span class='smallTextGrey'>" + event.event_date +
+                                    "</span>" +
+                                    "<br>" +
+                                    "<image class='fav_title' src ='assets/images/location.png'>" +
+                                    "<span class='smallTextGrey'>5KM Away</span> " +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>"
+                                );
+
+                            });
+                        } else {
+                            $('#events').append(
+                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Past Events </h6>"
+                            );
+
+                        }
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+        //DRAFT EVENTS BUTTON
+        $('#draftEventsBtn').click(function(event) {
+            event.preventDefault();
+            $(this).addClass('upcomingProfile');
+            $(this).removeClass('pastOutlineButton');
+            $('#upcomingEventsBtn').removeClass('upcomingProfile');
+            $('#upcomingEventsBtn').addClass('pastOutlineButton');
+            $('#pastEventsBtn').addClass('pastOutlineButton');
+            $('#pastEventsBtn').removeClass('upcomingProfile');
+
+            $.ajax({
+                    type: 'GET',
+                    url: '/getDraftEvents',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        $('#events').html('');
+
+                        if (!response.data.length === 0) {
+                            response.data.forEach(function(event) {
+                                var img = event.event_pictures[0].image_path;
+                                $('#events').append("<div class='eventsCard'>" +
+                                    "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                    "<img class='profileEvents' src=" + img + " >" +
+                                    "<div class ='ml-3'>" +
+                                    "<h6 class='eventsTitleProfile'>" + event.event_name +
+                                    "</h6>" +
+                                    "<img class ='fav_title' src='assets/images/date.png'>" +
+                                    "<span class='smallTextGrey'>" + event.event_date +
+                                    "</span>" +
+                                    "<br>" +
+                                    "<image class='fav_title' src ='assets/images/location.png'>" +
+                                    "<span class='smallTextGrey'>5KM Away</span> " +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>"
+                                );
+
+                            });
+                        } else {
+                            $('#events').append(
+                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Drafted Events Events </h6>"
+                            );
+
+                        }
                     }
                 })
                 .done(function() {

@@ -8,7 +8,7 @@
                 <div class="sidebar ">
                     <div>
                         <i class="fa fa-location-arrow mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="index.html">Explore events</a>
+                        <a class="side_tag" href="{{ url('/') }}">Explore events</a>
                     </div>
                     <hr>
                     <div>
@@ -28,7 +28,7 @@
                     <hr>
                     <div class="sideBarActive active  align-items-center d-flex">
                         <i class="fa fa-user mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="following.html">Following</a>
+                        <a class="side_tag" href="{{ url('following') }}">Following</a>
                     </div>
                     <hr>
                     <div>
@@ -59,7 +59,7 @@
                         </a>
 
 
-                        <div class="block" onclick="unfollow({{$follow->id}})">
+                        <div class="block" onclick="unfollow({{ $follow->id }})">
                             <img src="assets/images/following.png" alt=""> Unfollow
                         </div>
                         @if ($follow->is_accepted == false)
@@ -163,7 +163,7 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
     <script>
-          function unfollow(id) {
+        function unfollow(id) {
             $.ajax({
                     type: 'POST',
                     url: '/unfollowing',
@@ -175,7 +175,7 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
-                       location.reload();
+                        location.reload();
                     }
                 })
                 .done(function() {

@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthResetPasswordController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\ProfileController;
@@ -39,7 +40,7 @@ Route::view('right', 'front.right');
 Route::view('header', 'front.header');
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth');
 Route::get('profile/{id}', [ProfileController::class, 'userProfile']);
-Route::view('/', 'front.home')->middleware('auth');
+Route::get('/', [UserController::class, 'create'])->middleware('auth');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('user', [UserController::class, 'store'])->name('user');
 // Route::get('/',[HomeController::class,'create']);
@@ -59,18 +60,27 @@ Route::get('/search', [UserController::class, 'search']);
 //Following
 Route::post('/following', [FollowingController::class, 'store']);
 Route::get('following', [FollowingController::class, 'create']);
-Route::post('/unfollowing',[FollowingController::class,'unfollow']); //from followingtable
+Route::post('/unfollowing', [FollowingController::class, 'unfollow']); //from followingtable
 //Followers
 Route::post('/follower', [FollowerController::class, 'store']);
 Route::get('follower', [FollowerController::class, 'create']);
 Route::post('/acceptFollowingRequest', [FollowingController::class, 'acceptFollowingRequest']);
-Route::post('/cancelPendingRequest',[FollowerController::class,'cancelPendingRequest']);
-Route::post('unfollow',[FollowerController::class,'unfollow']);
+Route::post('/cancelPendingRequest', [FollowerController::class, 'cancelPendingRequest']);
+Route::post('unfollow', [FollowerController::class, 'unfollow']);
 
 //Notifications
 
 Route::get('notifications', [NotificationsController::class, 'create']);
+Route::get('notificationReadable/{id}/{routeName}', [NotificationsController::class, 'makeNotificationReadable']);
 
 
 //Make Priate No
-Route::post('/makeNoPrivate',[UserController::class,'makeNoPrivate']);
+Route::post('/makeNoPrivate', [UserController::class, 'makeNoPrivate']);
+
+//EVENTS
+Route::post('/createEvent', [EventController::class, 'store']);
+Route::post('/draftEvent', [EventController::class, 'draftEvent']);
+Route::get('/getPastEvents', [EventController::class, 'getUserPastEvent']);
+Route::get('/getUpcomingEvents', [EventController::class, 'getUserUpcomingEvents']);
+Route::get('/getDraftEvents', [EventController::class, 'getDraftEvents']);
+Route::get('/eventDetails/{$id}', [EventController::class, 'getEventDetail']);

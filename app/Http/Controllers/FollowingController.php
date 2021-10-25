@@ -73,6 +73,8 @@ class FollowingController extends Controller
                 'message' => 'You have a follow request from ' . Auth::user()->name,
                 'user_id' => $followingId,
                 'sent_by' => $userId,
+                'notification_type'=>1,
+                'route_name'=>'follower'
             ]);
 
 
@@ -148,6 +150,8 @@ class FollowingController extends Controller
             'message' =>  $currentUser->name . ' accepted your following request',
             'user_id' => $following->user_id,
             'sent_by' => $currentUser->id,
+            'notification_type'=>2,
+            'route_name'=>'following'
         ]);
         return response()->json([
             'success' => true,

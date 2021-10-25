@@ -5,7 +5,7 @@
             text-decoration: none !important;
         }
 
-       
+
         html,
         body {
             min-height: 100vh;
@@ -14,10 +14,28 @@
         .xsmall {
             font-size: 11px;
         }
+        .profileEvents {
+            width: 90px!important;
+            height: 90px!important;
+        }
+        
+        .eventsPic {
+            width: 90px;
+            height: 97px;
+            border-radius: 10px;
+        }
+
+    
 
         .hide {
             display: block;
         }
+
+        .scroll {
+            max-width:100%;
+            overflow-x: auto;
+        }
+
 
         /* input[type=text] {
             width: 100%;
@@ -324,10 +342,7 @@
             overflow-x: scroll;
         }
 
-        .home_km {
-            margin-top: -10px;
-        }
-
+      
         .eventsNearYouBG {
             margin-bottom: 30px;
             background-color: white;
@@ -467,7 +482,7 @@
             font-size: 17px;
             font-weight: 600;
         }
-
+        .pac-container { z-index: 10000 !important; }
         .data {
             display: flex;
             padding: 19px 0px 0px 16px;
@@ -759,7 +774,7 @@
             padding: 20px;
             box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
             border-radius: 9px;
-            width: 300px;
+            min-width: 250px;
         }
 
         .smallTextGrey {
@@ -1200,10 +1215,9 @@
         }
 
         .loction_select {
-            width: 270.11px;
+          
             height: 30.87px;
-            left: 899.24px;
-            top: 675.74px;
+          width: 50%;
             background: #3BACEC;
             border-radius: 6px;
             float: right;
@@ -1366,8 +1380,8 @@
             }
 
             .profileEvents {
-                width: 90px;
-                height: 90px;
+                width: 90px!important;
+                height: 90px!important;
             }
 
             .eventsCard {
@@ -1375,7 +1389,7 @@
                 padding: 18px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 280px;
+                min-width: 280px;
                 align-items: center;
                 justify-content: center;
                 display: flex;
@@ -1435,7 +1449,7 @@
                 padding: 15px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 250px;
+                min-width: 250px;
             }
 
             .eventsTitleProfile {
@@ -1500,7 +1514,7 @@
                 padding: 15px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 250px;
+                min-width: 250px;
             }
 
             .eventsTitleProfile {
@@ -1612,7 +1626,7 @@
                 padding: 10px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 240px;
+                min-width: 240px;
             }
 
             .eventsTitleProfile {
@@ -1708,7 +1722,7 @@
                 padding: 12px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 250px;
+                min-width: 250px;
             }
 
             .eventsTitleProfile {
@@ -1824,7 +1838,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .heartIcon {
@@ -1865,7 +1879,7 @@
                 padding: 12px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 250px;
+                min-width: 250px;
             }
 
             .eventsTitleProfile {
@@ -1977,7 +1991,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .whiteBanner {
@@ -2027,7 +2041,7 @@
                 padding: 9px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 250px;
+                min-width: 250px;
             }
 
             .medium-text {
@@ -2166,7 +2180,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .whiteBanner {
@@ -2278,7 +2292,7 @@
                 padding: 5px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 230px;
+                min-width: 230px;
             }
 
             .medium-text {
@@ -2458,7 +2472,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .whiteBanner {
@@ -2563,7 +2577,7 @@
                 padding: 5px;
                 box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
                 border-radius: 9px;
-                width: 230px;
+                min-width: 230px;
             }
 
             .medium-text {
@@ -2662,7 +2676,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .normal-text {
@@ -2780,7 +2794,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .normal-text {
@@ -2909,7 +2923,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .normal-text {
@@ -3081,7 +3095,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .normal-text {
@@ -3393,7 +3407,7 @@
 
             .eventsPic {
                 width: 90px;
-                height: 97px;
+                height: 90px;
             }
 
             .normal-text {
@@ -3530,15 +3544,18 @@ CUSTOM UTILS CLASSES
 
         input[type="checkbox"] {
             visibility: hidden;
-       }
-        input[type="checkbox"]:checked + .labelSwitch {
+        }
+
+        input[type="checkbox"]:checked+.labelSwitch {
             transform: rotate(360deg);
             background-color: #314648;
-       }
-        input[type="checkbox"]:checked + .labelSwitch:before {
+        }
+
+        input[type="checkbox"]:checked+.labelSwitch:before {
             transform: translateX(50px);
             background-color: #fff;
-       }
+        }
+
         .labelSwitch {
             display: flex;
             width: 100px;
@@ -3549,7 +3566,8 @@ CUSTOM UTILS CLASSES
             transition: transform 0.75s ease-in-out;
             transform-origin: 50% 50%;
             cursor: pointer;
-       }
+        }
+
         .labelSwitch:before {
             transition: transform 0.75s ease;
             transition-delay: 0.5s;
@@ -3562,5 +3580,21 @@ CUSTOM UTILS CLASSES
             border-radius: 50%;
             top: 12px;
             left: 12px;
-       }
-        
+        }
+
+        .aWithoutDec {
+            color: inherit !important;
+            text-decoration: inherit !important;
+        }
+
+        textarea {
+            border: none;
+            background-color: transparent;
+            resize: none;
+            outline: none;
+            width: 98%; 
+            margin: 0; 
+            padding: 0; 
+            border-width: 0; 
+        }
+      

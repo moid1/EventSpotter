@@ -85,4 +85,12 @@ class NotificationsController extends Controller
     {
         //
     }
+
+    public function makeNotificationReadable($id,$routeName)
+    {
+        $notification = Notifications::where('id',$id)->first();
+        $notification->is_read = 1;
+        $notification->update();
+        return redirect($routeName);
+    }
 }

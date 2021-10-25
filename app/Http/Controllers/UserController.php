@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\ProfileImage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,10 +28,23 @@ class UserController extends Controller
      */
     public function create()
     {
-        // $user = Auth::user();
-        // $profileImage = ProfileImage::where('user_id',$user->id)->first();
-        // return view('front.home')->with(compact('user','profileImage'));
+        $upcomingEvents = Event::where('user_id', '!=', Auth::id())->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->orderBy('created_at', 'DESC')->get();
+        $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
+        $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
+       
+        $nearEvents = array();
+        foreach ($upcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+            // dd($km);
+            if ($km <= 100) {
+                $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+            }
+        }
 
+        // dd($nearEvents);
+
+        return view('front.home')->with(compact('user', 'nearEvents'));
     }
 
     /**
@@ -140,12 +154,9 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        // get the search term
         $text = $request->input('text');
-        // search the members table
         $users = User::whereRaw('email = ? or name like ?', [$text, "%{$text}%"])->with('profilePicture')->get();
         $users = $users->except(Auth::id());
-
         return response()->json($users);
     }
 
@@ -160,5 +171,25 @@ class UserController extends Controller
             'data' => $user,
             'message' => 'Phone No Status Changed Successfully',
         ]);
+    }
+
+
+    function distance($lat1, $lon1, $lat2, $lon2)
+    {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        // $unit = strtoupper($unit);
+
+        // if ($unit == "K") {
+        return ($miles * 1.609344);
+        // } else if ($unit == "N") {
+        //     return ($miles * 0.8684);
+        // } else {
+        //     return $miles;
+        // }
     }
 }
