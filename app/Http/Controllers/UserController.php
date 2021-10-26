@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Favrouite;
+use App\Models\Following;
 use App\Models\ProfileImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -31,18 +35,19 @@ class UserController extends Controller
         $upcomingEvents = Event::where('user_id', '!=', Auth::id())->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->orderBy('created_at', 'DESC')->get();
         $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
-
         $nearEvents = array();
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-                // dd($km);
                 if ($km <= 100) {
-                    $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+                    $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $value->id)->first();
+                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                    $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0);
                 }
             }
         }
+        // dd($nearEvents);
 
         // dd($nearEvents);
 

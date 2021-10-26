@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthResetPasswordController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FavrouiteController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\ProfileController;
@@ -84,3 +85,7 @@ Route::get('/getPastEvents', [EventController::class, 'getUserPastEvent']);
 Route::get('/getUpcomingEvents', [EventController::class, 'getUserUpcomingEvents']);
 Route::get('/getDraftEvents', [EventController::class, 'getDraftEvents']);
 Route::get('/eventDetails/{id}', [EventController::class, 'getEventDetail']);
+
+//FavrouiteEvnets
+Route::post('/saveFavrouite', [FavrouiteController::class, 'store']);
+Route::post('/deleteFavrouite',[FavrouiteController::class,'remove']);

@@ -571,6 +571,7 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'App\\Models\\Address' => __DIR__ . '/../..' . '/app/Models/Address.php',
         'App\\Models\\Event' => __DIR__ . '/../..' . '/app/Models/Event.php',
         'App\\Models\\EventsPictures' => __DIR__ . '/../..' . '/app/Models/EventsPictures.php',
+        'App\\Models\\Favrouite' => __DIR__ . '/../..' . '/app/Models/Favrouite.php',
         'App\\Models\\Follower' => __DIR__ . '/../..' . '/app/Models/Follower.php',
         'App\\Models\\Following' => __DIR__ . '/../..' . '/app/Models/Following.php',
         'App\\Models\\Notifications' => __DIR__ . '/../..' . '/app/Models/Notifications.php',

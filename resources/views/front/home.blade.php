@@ -24,10 +24,7 @@
                         @else
                             <h6 class="text-center w-100">No Near Live Events Feed</h6>
                         @endif
-
-
                     </div>
-
                 </div>
 
 
@@ -37,22 +34,28 @@
                         @foreach ($nearEvents as $event)
                             <div class="eventsNearYouBG">
                                 <div class="eventsNearYou">
-                                    <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
-                                        class="eventBgImage " alt="" srcset="">
+                                    <a href="{{ url('/eventDetails/' . $event['events']->id) }}">
+                                        <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                            class="eventBgImage " alt="" srcset="">
+                                    </a>
                                     <div class="options">
-                                        <div class="greenBanner  align-items-center d-flex">
+                                        <div
+                                            class="{{ $event['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}  align-items-center d-flex">
                                             <i class="fa fa-user-plus text-white">
-                                                <a href="event_detail.html"> <span
-                                                        class="text-white">Followed</span></a>
+                                                <a href="{{ url('/profile/' . $event['events']->user->id) }}"> <span
+                                                        class="text-white">{{ $event['Following'] == 1 ? 'Followed' : 'Follow' }}
+                                                    </span></a>
 
                                             </i>
                                         </div>
                                         <div class="whiteIconsBackgroundBox ">
-                                            <i class="fa fa-heart red "></i>
+
+                                            <i onclick="favroute(this) " data-id="{{ $event['events']->id }}"
+                                                class="fa fa-heart {{ $event['isFavroute'] == 1 ? 'red' : 'light-grey' }} Î "></i>
                                         </div>
-                                        <div class="whiteIconsBackgroundBox mt-5 ">
+                                        {{-- <div class="whiteIconsBackgroundBox mt-5 ">
                                             <i class="fa fa-flag light-grey "></i>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="whiteBanner left-0  text-center align-items-center d-flex">
                                         <img class="smallCircularImage mr-2 "
@@ -62,7 +65,7 @@
                                     </div>
                                     <div class="whiteBanner text-center align-items-center d-flex">
                                         <i class="fa fa-user-plus">
-                                            <span>{{ $user->followers->count() }} Followers</span>
+                                            <span>{{ $event['events']->user->followers->count() }} Followers</span>
                                         </i>
                                     </div>
                                 </div>
@@ -474,6 +477,41 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
         });
 
     });
+
+    function favroute(icon, eventId) {
+        var id = $(icon).attr('data-id');
+        if ($(icon).hasClass("light-grey")) {
+            $.ajax({
+                type: 'POST',
+                url: '/saveFavrouite',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'event_id': id,
+                }
+            }).done(function(msg) {
+                showToaster(msg.message, 'success');
+                $(icon).removeClass('light-grey');
+                $(icon).addClass('red');
+            })
+        } else if ($(icon).hasClass('red')) {
+            $.ajax({
+                type: 'POST',
+                url: '/deleteFavrouite',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'event_id': id,
+                }
+            }).done(function(msg) {
+                showToaster(msg.message, 'success');
+                $(icon).addClass('light-grey');
+                $(icon).removeClass('red');
+            })
+        }
+    }
 </script>
 
 </html>

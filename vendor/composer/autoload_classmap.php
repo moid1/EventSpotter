@@ -31,6 +31,7 @@ return array(
     'App\\Models\\Address' => $baseDir . '/app/Models/Address.php',
     'App\\Models\\Event' => $baseDir . '/app/Models/Event.php',
     'App\\Models\\EventsPictures' => $baseDir . '/app/Models/EventsPictures.php',
+    'App\\Models\\Favrouite' => $baseDir . '/app/Models/Favrouite.php',
     'App\\Models\\Follower' => $baseDir . '/app/Models/Follower.php',
     'App\\Models\\Following' => $baseDir . '/app/Models/Following.php',
     'App\\Models\\Notifications' => $baseDir . '/app/Models/Notifications.php',

@@ -8,10 +8,10 @@
                 <div class="eventsNearYouSection ">
                     <div class="eventsNearYouBG">
                         <div class="eventsNearYou">
-                            <img src="{{ asset($event->eventPictures[0]->image_path) }}" class="eventBgImage " alt=""
-                                srcset="">
+                            <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                class="eventBgImage " alt="" srcset="">
                             <div class="options">
-                                <div class="greenBanner  align-items-center d-flex">
+                                <div class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
                                     <i class="fa fa-user-plus text-white">
                                         <span class="text-white">Followed</span>
                                     </i>
@@ -24,30 +24,31 @@
                                 </div>
                             </div>
                             <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 " src="{{ asset($event->user->profilePicture->image) }}" />
-                                <span>{{$event->user->name}}</span>
+                                <img class="smallCircularImage mr-2 "
+                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                <span>{{ $eventDetails['event']->user->name }}</span>
                             </div>
                             <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
-                                    <span>120 Followers</span>
+                                    <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
                                 </i>
                             </div>
                         </div>
 
                         <div class="eventsSubDetails row mx-auto">
                             <div class="col-md-7 col-sm-7 col-5">
-                                <span class="eventsTitle">{{ $event->event_name }}</span>
+                                <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
                             </div>
                             <div class="col-md-5 col-sm-5 col-7">
                                 <div class="smallTextGrey row">
                                     <div class="col-md-6 col-sm-6 col-6">
                                         <i class="fa fa-calendar  ">
-                                            <span>{{ $event->created_at->diffForHumans() }}</span>
+                                            <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-6">
                                         <i class="fa fa-map-marker ">
-                                            <span>5km away</span>
+                                            <span>{{ $eventDetails['km'] }} Km away</span>
                                         </i>
                                     </div>
                                 </div>
@@ -94,11 +95,11 @@
 
                 <div class="event_comment">
                     <div class="event_tit">Details </div>
-                    <p class="event_desc"> {{ $event->event_description }}</p>
+                    <p class="event_desc"> {{ $eventDetails['event']->event_description }}</p>
                     <div class="event_tit">Conditions </div>
                     <div class="con_tag">
                         @php
-                            $conditionsArr = explode(',', unserialize($event->conditions));
+                            $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
                         @endphp
                         @foreach ($conditionsArr as $condition)
                             <button class="condition_tag">{{ $condition }}</button>
@@ -106,7 +107,7 @@
                     </div>
                     <br><br>
                     <div class="location_title">Location </div>
-                    <p class="event_desc"> {{ $event->location }}</p>
+                    <p class="event_desc"> {{ $eventDetails['event']->location }}</p>
                     {{-- <img class="map" src="{{asset('assets/images/map.png')}}" alt=""> --}}
                     <div id="map"></div>
 
@@ -135,7 +136,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
 <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
 <script>
-    var event = {!! json_encode($event->toArray()) !!};
+    var event = {!! json_encode($eventDetails['event']->toArray()) !!};
 
     function initialize() {
         var myLatlng = new google.maps.LatLng(event.lat, event.lng);

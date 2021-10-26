@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventsPictures;
+use App\Models\Favrouite;
+use App\Models\Following;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -160,13 +162,13 @@ class EventController extends Controller
     {
         $user = Auth::user();
         $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
-        $nearEvents=array();
+        $nearEvents = array();
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
             // dd($km);
             // if ($km <= 100) {
-                $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+            $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
             // }
         }
 
@@ -208,9 +210,17 @@ class EventController extends Controller
 
     public function getEventDetail($id)
     {
-        $event = Event::where('id', $id)->with(['eventPictures','user'])->first();
-        
-      
-        return view('front.event_details')->with(compact('event'));
+        $event = Event::where('id', $id)->with(['eventPictures', 'user'])->first();
+
+        $user = Auth::user();
+        $latLng = explode(',', $user->lat_lng); // user lat lng
+        $eventDetails = null;
+        if (is_array($latLng)) {
+            $km = $this->distance($latLng[0], $latLng[1], $event->lat, $event->lng);
+            $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $event->id)->first();
+            $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $event->user_id)->where('is_accepted', 1)->first();
+            $eventDetails = array('event' => $event, 'km' => number_format($km, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0);
+        }
+        return view('front.event_details')->with(compact('eventDetails','user'));
     }
 }
