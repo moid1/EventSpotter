@@ -313,28 +313,38 @@
                     success: function(response) {
                         console.log(response.data);
                         $('#events').html('');
+                        if (!response.data.length === 0) {
 
-                        response.data.forEach(function(event) {
-                            var img = event.events.event_pictures[0].image_path;
-                            $('#events').append("<div class='eventsCard'>" +
-                                "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
-                                "<img class='profileEvents' style='border-radius:10px' src=" + img + " >" +
-                                "<div class ='ml-3'>" +
-                                "<h6 class='eventsTitleProfile'>" + event.events.event_name +
-                                "</h6>" +
-                                "<img class ='fav_title' src='assets/images/date.png'>" +
-                                "<span class='smallTextGrey'> " + event.events.event_date +
-                                "</span>" +
-                                "<br>" +
-                                "<image class='fav_title' src ='assets/images/location.png'>" +
-                                "<span class='smallTextGrey'> " + event.km +
-                                " KM away</span> " +
-                                "</div>" +
-                                "</div>" +
-                                "</div>"
+                            response.data.forEach(function(event) {
+                                var img = event.events.event_pictures[0].image_path;
+                                $('#events').append("<div class='eventsCard'>" +
+                                    "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                    "<img class='profileEvents' style='border-radius:10px' src=" +
+                                    img + " >" +
+                                    "<div class ='ml-3'>" +
+                                    "<h6 class='eventsTitleProfile'>" + event.events
+                                    .event_name +
+                                    "</h6>" +
+                                    "<img class ='fav_title' src='assets/images/date.png'>" +
+                                    "<span class='smallTextGrey'> " + event.events.event_date +
+                                    "</span>" +
+                                    "<br>" +
+                                    "<image class='fav_title' src ='assets/images/location.png'>" +
+                                    "<span class='smallTextGrey'> " + event.km +
+                                    " KM away</span> " +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>"
+                                );
+
+                            });
+
+                        } else {
+                            $('#events').append(
+                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Past Events </h6>"
                             );
 
-                        });
+                        }
                     }
                 })
                 .done(function() {
