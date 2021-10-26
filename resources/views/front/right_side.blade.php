@@ -18,7 +18,7 @@
     <div class="col-md-3">
         <div class="notifications mx-auto">
             <p class="margin-left-20"> Notifications</p>
-            @foreach (\App\Models\Notifications::where('user_id', Auth::id())->get() as $noti)
+            @foreach (\App\Models\Notifications::where('user_id', Auth::id())->take(10)->get() as $noti)
                 <div class="d-flex align-items-center margin-5 side">
 
 

@@ -83,4 +83,4 @@ Route::post('/draftEvent', [EventController::class, 'draftEvent']);
 Route::get('/getPastEvents', [EventController::class, 'getUserPastEvent']);
 Route::get('/getUpcomingEvents', [EventController::class, 'getUserUpcomingEvents']);
 Route::get('/getDraftEvents', [EventController::class, 'getDraftEvents']);
-Route::get('/eventDetails/{$id}', [EventController::class, 'getEventDetail']);
+Route::get('/eventDetails/{id}', [EventController::class, 'getEventDetail']);

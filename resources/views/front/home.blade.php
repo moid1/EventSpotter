@@ -297,7 +297,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
         alert(error.message);
     }
 
-    function initialize() {
+    function initialize() { 
         var places = new google.maps.places.Autocomplete(document.getElementById('venue'));
         console.log(places);
         google.maps.event.addListener(places, 'place_changed', function() {

@@ -160,6 +160,7 @@ class EventController extends Controller
     {
         $user = Auth::user();
         $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        $nearEvents=array();
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
@@ -207,7 +208,9 @@ class EventController extends Controller
 
     public function getEventDetail($id)
     {
-        $event = Event::find($id);
-        return view('front.event_detail');
+        $event = Event::where('id', $id)->with(['eventPictures','user'])->first();
+        
+      
+        return view('front.event_details')->with(compact('event'));
     }
 }
