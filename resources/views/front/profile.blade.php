@@ -341,7 +341,7 @@
 
                         } else {
                             $('#events').append(
-                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Past Events </h6>"
+                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Upcoming Events </h6>"
                             );
 
                         }
