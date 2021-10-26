@@ -35,7 +35,7 @@ class UserController extends Controller
         $nearEvents = array();
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
-            if (isset($latlng)) {
+            if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
                 // dd($km);
                 if ($km <= 100) {
