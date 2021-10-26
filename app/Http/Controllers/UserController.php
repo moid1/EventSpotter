@@ -31,14 +31,16 @@ class UserController extends Controller
         $upcomingEvents = Event::where('user_id', '!=', Auth::id())->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->orderBy('created_at', 'DESC')->get();
         $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
-       
+
         $nearEvents = array();
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
-            $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-            // dd($km);
-            if ($km <= 100) {
-                $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+            if (isset($latlng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                // dd($km);
+                if ($km <= 100) {
+                    $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+                }
             }
         }
 
