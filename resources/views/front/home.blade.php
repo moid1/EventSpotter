@@ -58,11 +58,11 @@
                                         <img class="smallCircularImage mr-2 "
                                             src="{{ url($event['events']->user->profilePicture->image) }}" />
                                         <a style="color:black"
-                                            href="{{url('/profile/'.$event['events']->user->id)}}"><span>{{ $event['events']->user->name }}</span></a>
+                                            href="{{ url('/profile/' . $event['events']->user->id) }}"><span>{{ $event['events']->user->name }}</span></a>
                                     </div>
                                     <div class="whiteBanner text-center align-items-center d-flex">
                                         <i class="fa fa-user-plus">
-                                        <span>{{$user->followers->count()}} Followers</span>
+                                            <span>{{ $user->followers->count() }} Followers</span>
                                         </i>
                                     </div>
                                 </div>
@@ -202,15 +202,16 @@
                                 placeholder="Event Name">
                         </div>
                         <div class="inputFieldGreenBG  mt-2 h-50">
-                            <textarea rows="5" type="text" class=" headerSearchColor  mt-2" name="eventDescription"
-                                id="eventDescription" placeholder="Event Description"></textarea>
+                            <textarea style="margin-left: 15px;" rows="5" type="text" class=" headerSearchColor  mt-2"
+                                name="eventDescription" id="eventDescription"
+                                placeholder="Event Description"></textarea>
                         </div>
                         <label for="eventType" class="normal-text mt-3 mb-2">Event Type</label>
                         <select class="inputFieldGreenBG d-flex even_type" name="eventType" id="eventType">
                             <option selected disabled>Select</option>
-                            <option value="">Crowded</option>
-                            <option value="">Crowded</option>
-                            <option value="">Crowded</option>
+                            <option value="crowded">Crowded</option>
+                            <option value="Adult">Adult</option>
+                            <option value="Family">Family</option>
                         </select>
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10">
@@ -297,7 +298,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
         alert(error.message);
     }
 
-    function initialize() { 
+    function initialize() {
         var places = new google.maps.places.Autocomplete(document.getElementById('venue'));
         console.log(places);
         google.maps.event.addListener(places, 'place_changed', function() {
@@ -338,11 +339,19 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
         if (condition.innerText == 'Add Conditions') {
             var conditionText = prompt("Condition", "");
-            $("<button onclick='eventConditions(this)' class='event_tag'>" + conditionText + "</button>").insertAfter(
+            $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag'>" + conditionText +
+                "</button>").insertAfter(
                 '.eventCond');
             eventConditionsArray.push(conditionText);
 
-        } else {}
+        } else {
+
+        }
+    }
+
+    function removeConditions(condition) {
+        $('#' + condition.innerText).remove();
+        eventConditionsArray = eventConditionsArray.filter(item => item !== condition.innerText)
     }
 
     function makeEventPublic(val) {
