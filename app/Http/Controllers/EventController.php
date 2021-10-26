@@ -165,9 +165,9 @@ class EventController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
             // dd($km);
-            if ($km <= 100) {
+            // if ($km <= 100) {
                 $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
-            }
+            // }
         }
 
         return response()->json([
