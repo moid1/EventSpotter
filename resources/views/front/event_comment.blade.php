@@ -1,71 +1,69 @@
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventSpotter</title>
-    <link rel="stylesheet" href="{{url('assets/style/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <link rel="shortcut icon" href="{{url('assets//images/logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="assets/libraries/css/bootstrap.min.css">
-    <script src="assets/libraries/js/fontawesome.js"></script>
-
-</head>
+@include('layouts.head')
 
 <body>
-@include('front.header')
+    @include('front.header')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9 mx-auto">
                 <div class="eventsNearYouSection ">
-                    <div class="eventsNearYouBG">
+                    <div class="eventsNearYouBG" style="box-shadow: none">
                         <div class="eventsNearYou">
-                            <img src="{{url('assets/images/your.png')}}" class="eventBgImage " alt="" srcset="">
+                            <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                class="eventBgImage " alt="" srcset="">
                             <div class="options">
-                                <div class="top_banner  align-items-center d-flex">
+                                {{-- <div
+                                    class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
                                     <i class="fa fa-user-plus text-white">
                                         <span class="text-white">Followed</span>
                                     </i>
-                                </div>
-                                <div class="top_banner2 ">
+                                </div> --}}
+                                {{-- <div class="whiteIconsBackgroundBox ">
                                     <i class="fa fa-heart red "></i>
-                                </div>
-                                <div class="top_banner2 mt-5 ">
+                                </div> --}}
+                                {{-- <div class="whiteIconsBackgroundBox mt-5 ">
                                     <i class="fa fa-flag light-grey "></i>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 " src="{{url('assets/images/joh.png')}}" />
-                                <span>John Doe</span>
+                                <img class="smallCircularImage mr-2 "
+                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                <span>{{ $eventDetails['event']->user->name }}</span>
                             </div>
                             <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
-                                    <span>120 Followers</span>
+                                    <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
                                 </i>
                             </div>
                         </div>
-                        <div class="eventsSubDetails d-flex align-items-center ">
-                            <div class="col-md-9 mt-2">
-                                <h4>New year party at local park</h4>
-                            </div>
-                            <div class="smallTextGrey d-flex align-items-center">
-                                <i class="fa fa-calendar  ">
-                                    <span>Tomorrow</span>
-                                </i>
-                                <div class="ml-3 mr-2 "></div>
-                                <i class="fa fa-map-marker ">
-                                    <span>5km away</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="eventOptions ml-3 mt-3 mb-5  text-center">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <div class="col-md-2  mediumTextGrey">
-                                    <span class=" ">Events Details</span>
-                                    <span class="ml-5 center"></span>
 
+                        <div class="eventsSubDetails row mx-auto ">
+                            <div class="col-md-7 col-sm-7 col-5">
+                                <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-7">
+                                <div class="smallTextGrey row">
+                                    <div class="col-md-6 col-sm-6 col-6">
+                                        <i class="fa fa-calendar  ">
+                                            <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
+                                        </i>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-6">
+                                        <i class="fa fa-map-marker ">
+                                            <span>{{ $eventDetails['km'] }} Miles away</span>
+                                        </i>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="eventOptions">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ url('eventDetails/' . $eventDetails['event']->id) }}">
+                                    <div class="col-md-2  mediumTextGrey">
+                                        <span class="nowrap ">Events Details</span>
+                                        <span class="ml-5 center"></span>
+                                    </div>
+                                </a>
                                 <div class="col-md-2  mediumTextGrey">
                                     <i class="fa fa-thumbs-up blue">
                                     </i>
@@ -75,75 +73,96 @@
                                 </div>
                                 <div class="col-md-3 mb-2  mediumTextGrey ">
 
-                                    <span class="ml-1 b_comment"><img class="comt_img" src="{{url('assets/images/chatwhite.png')}}"
-                                            alt=""> 20 Comments</span>
+                                    <span class="ml-1 b_comment"><img class="comt_img"
+                                            src="{{ asset('assets/images/chatwhite.png') }}" alt=""> {{ $comments->count() }}
+                                        Comments</span>
 
 
                                 </div>
-                                <div class="col-md-2  mediumTextGrey ">
-                                    <img src="{{url('assets/images/forword.png')}}" alt="">
+                                {{-- <div class="col-md-2  mediumTextGrey ">
+                                    <img src="{{ asset('assets/images/forword.png') }}" alt="">
                                     <span class="ml-1 "> 20 Shares</span>
                                     <span class="ml-5 center"></span>
 
-                                </div>
-                                <div class="col-md-2  mediumTextGrey">
-                                    <img src="{{url('assets/images/sna.png')}}" alt="">
-                                    <span class="ml-2 "> 40 Live Snaps</span>
-                                </div>
+                                </div> --}}
+                                <a class="nowrap"
+                                    href="{{ url('eventSnap/' . $eventDetails['event']->id) }}">
+                                    <div class="col-md-2  mediumTextGrey">
+                                        <img src="{{ asset('assets/images/sna.png') }}" alt="">
+                                        <span class="ml-2 "> {{ $eventFeeds->count() }} Live Snaps</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="eventsComment">
-                    <span class="commentTitle "> 20 Comments</span>
-                    <div class="comments">
-                        <div class="row ">
-                            <img class="smallCircularImage " src="{{url('assets/images/man.jpg')}}" />
-                            <span class="commenterName">You </span>
-                            <span class="commentTime"><img src="{{url('assets/images/forword.png')}}" alt=""> 2 min ago <img src="{{url('assets/images/flag.png')}}" alt=""></span>
+                    <span class="commentTitle "> {{ $comments->count() }} Comments</span>
+                    @foreach ($comments as $comment)
+                        <div class="{{ Auth::id() == $comment->user_id ? 'yourComment ' : 'otherComment' }} comments mt-2">
+                            <div class="row ">
+                                <img class="smallCircularImage "
+                                    src="{{ asset($comment->user->profilePicture->image) }}" />
+                                <span
+                                    class="commenterName">{{ Auth::id() == $comment->user_id ? 'You' : $comment->user->name }}
+                                </span>
+                                <span class="commentTime"> {{ $comment->created_at->diffForHumans() }}</span>
+                                {{-- <img src="{{ url('assets/images/forword.png') }}"
+                                        alt=""> --}}
+                                {{-- <img
+                                        src="{{ url('assets/images/flag.png') }}" alt=""> --}}
+                            </div>
+                            <br>
+                            <span class="commentText"> {{ $comment->comment }}</span>
                         </div>
-                        <br>
-                        <span class="commentText"> Guys wait, host is coming live</span>
-                    </div>
-                    <br>                    
-                    <div class="comments">
-                        <div class="row ">
-                            <img class="smallCircularImage " src="{{url('assets/images/man.jpg')}}" />
-                            <span class="commenterName">You </span>
-                            <span class="commentTime"><img src="{{url('assets/images/forword.png')}}" alt=""> 2 min ago <img src="{{url('assets/images/flag.png')}}" alt=""></span>
-                        </div>
-                        <br>
-                        <span class="commentText"> Guys wait, host is coming live</span>
-                    </div>
-                    <br>                    
-                    <div class="comments">
-                        <div class="row ">
-                            <img class="smallCircularImage " src="{{url('assets/images/man.jpg')}}" />
-                            <span class="commenterName">You </span>
-                            <span class="commentTime"><img src="{{url('assets/images/forword.png')}}" alt=""> 2 min ago <img src="{{url('assets/images/flag.png')}}" alt=""></span>
-                        </div>
-                        <br>
-                        <span class="commentText"> Guys wait, host is coming live</span>
-                    </div>
-                    <br>                    
-                    <div class="comments">
-                        <div class="row ">
-                            <img class="smallCircularImage " src="{{url('assets/images/man.jpg')}}" />
-                            <span class="commenterName">You </span>
-                            <span class="commentTime"><img src="{{url('assets/images/forword.png')}}" alt=""> 2 min ago <img src="{{url('assets/images/flag.png')}}" alt=""></span>
-                        </div>
-                        <br>
-                        <span class="commentText"> Guys wait, host is coming live</span>
-                    </div>
-                    <br>
+                    @endforeach
 
-                   
+                    <div class="userWillComment mt-3">
+                        <textarea placeholder="Write Comment" style="color: #74ABB0" type="text" name="comment"
+                            id="comment"></textarea>
+                        <button id="commentBtn" class="commentBtn" value="Comment">Comment</button>
+                    </div>
+
+
+
+
                 </div>
             </div>
-           @include('front.right_side')
+            @include('front.right_side')
         </div>
     </div>
     <script src="https://use.fontawesome.com/382f336cbc.js"></script>
+
+
 </body>
+<script>
+    var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
+</script>
+<script>
+    $('#commentBtn').click(function(event) {
+        event.preventDefault();
+        var formData = {
+            event_id: eventss.id,
+            comment: $('#comment').val(),
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/storeComment',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: formData,
+            error: function(res) {
+                var errors = JSON.parse(res.responseText);
+
+            }
+        }).done(function(msg) {
+location.reload();
+        })
+    });
+</script>
+
 </html>

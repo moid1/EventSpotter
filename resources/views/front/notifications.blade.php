@@ -5,7 +5,7 @@
     @include('front.header')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-9 col-sm-12 col-12">
+            <div class="col-md-12 col-sm-12 col-12">
                 <div class="notification">
                     <div class="not_title">Notifications </div>
                     @if (count($notifications) > 0)
@@ -49,7 +49,7 @@
 
                 </div>
             </div>
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <div class="notifications mx-auto">
                     <p class="margin-left-20">Live Notifications</p>
                     <div class="d-flex align-items-center margin-5 side">
@@ -92,7 +92,7 @@
                     </div>
                     <hr>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </body>

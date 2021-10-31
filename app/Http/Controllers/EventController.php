@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventFeeds;
 use App\Models\EventsPictures;
 use App\Models\Favrouite;
 use App\Models\Following;
+use App\Models\Likes;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -166,10 +169,7 @@ class EventController extends Controller
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-            // dd($km);
-            // if ($km <= 100) {
             $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
-            // }
         }
 
         return response()->json([
@@ -197,6 +197,7 @@ class EventController extends Controller
         $dist = acos($dist);
         $dist = rad2deg($dist);
         $miles = $dist * 60 * 1.1515;
+        return $miles;
         // $unit = strtoupper($unit);
 
         // if ($unit == "K") {
@@ -210,7 +211,7 @@ class EventController extends Controller
 
     public function getEventDetail($id)
     {
-        $event = Event::where('id', $id)->with(['eventPictures', 'user'])->first();
+        $event = Event::where('id', $id)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->first();
 
         $user = Auth::user();
         $latLng = explode(',', $user->lat_lng); // user lat lng
@@ -218,9 +219,136 @@ class EventController extends Controller
         if (is_array($latLng)) {
             $km = $this->distance($latLng[0], $latLng[1], $event->lat, $event->lng);
             $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $event->id)->first();
+            $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $event->id)->first();
+
             $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $event->user_id)->where('is_accepted', 1)->first();
-            $eventDetails = array('event' => $event, 'km' => number_format($km, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0);
+            $eventDetails = array('event' => $event, 'km' => number_format($km, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
         }
-        return view('front.event_details')->with(compact('eventDetails','user'));
+        return view('front.event_details')->with(compact('eventDetails', 'user'));
+    }
+
+
+    public function yourEvents()
+    {
+        $user = Auth::user();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->get();
+        $userUpcomingEvents = array();
+        $ourEvents = array();
+        foreach ($yourUpcomingEvents as $key => $value) {
+            $today = Carbon::now();
+            if ($value->event_date >= $today) {
+                $userUpcomingEvents[] = $value;
+            }
+        }
+
+
+
+        foreach ($userUpcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $ourEvents,
+            'message' => 'All Upcoming Events',
+        ]);
+    }
+
+    public function yourPastEvents()
+    {
+        $user = Auth::user();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
+        $userUpcomingEvents = array();
+        $ourEvents = array();
+        // foreach ($yourUpcomingEvents as $key => $value) {
+        //     $today = Carbon::now();
+        //     if ($value->event_date >= $today) {
+        //         $userUpcomingEvents[] = $value;
+        //     }
+        // }
+        foreach ($yourUpcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $ourEvents,
+            'message' => 'All Past Events',
+        ]);
+    }
+
+    public function yourDraftEvents()
+    {
+        $user = Auth::user();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('is_drafted', 1)->with(['eventPictures', 'user'])->get();
+        $userUpcomingEvents = array();
+        $ourEvents = array();
+        foreach ($yourUpcomingEvents as $key => $value) {
+            $today = Carbon::now();
+            if ($value->event_date >= $today) {
+                $userUpcomingEvents[] = $value;
+            }
+        }
+        foreach ($userUpcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+            }
+        }
+
+
+
+        return response()->json([
+            'success' => true,
+            'data' => $ourEvents,
+            'message' => 'All Drafted Events',
+        ]);
+    }
+
+    /// EVENT SNAPS
+
+    public function eventSnap($id)
+    {
+        $event = Event::where('id', $id)->with(['eventPictures', 'user', 'livefeed', 'like', 'comment'])->first();
+
+        $user = Auth::user();
+        $eventFeeds = EventFeeds::where('event_id', $id)->with(['user'])->get();
+        $latLng = explode(',', $user->lat_lng); // user lat lng
+        $eventDetails = null;
+        if (is_array($latLng)) {
+            $km = $this->distance($latLng[0], $latLng[1], $event->lat, $event->lng);
+            $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $event->id)->first();
+            $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $event->id)->first();
+            $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $event->user_id)->where('is_accepted', 1)->first();
+            $eventDetails = array('event' => $event, 'km' => number_format($km, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
+        }
+        return view('front.event_snap')->with(compact('eventDetails', 'user', 'eventFeeds'));
+    }
+
+    public function filterEvent($filter)
+    {
+        $events = Event::where('is_drafted', 0)->where('user_id', '!=', Auth::id())->get();
+        $filterEvent = array();
+        foreach ($events as $key => $event) {
+            $conditions = explode(',', unserialize($event->conditions));
+            foreach ($conditions as $key => $value) {
+                if ($filter == $value) {
+                    $filterEvent[] = $event;
+                }
+            }
+        }
+
+        dd($event);
     }
 }

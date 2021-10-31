@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favrouite;
+use App\Models\Following;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +27,31 @@ class FavrouiteController extends Controller
      */
     public function create()
     {
-        //
+        $favrouite = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $user = Auth::user();
+        $favUpcomingEvent = array();
+        $favrouiteEvent = array();
+        foreach ($favrouite as $key => $value) {
+            $today = Carbon::now();
+            if ($value->event->event_date >= $today) {
+                $favUpcomingEvent[] = $value->event;
+            }
+        }
+        foreach ($favUpcomingEvent as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                if ($km <= 100) {
+                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+                }
+            }
+        }
+
+
+        $metaData = false;
+
+        return view('front.favourit')->with(compact('favrouiteEvent', 'metaData'));
     }
 
     /**
@@ -101,5 +127,77 @@ class FavrouiteController extends Controller
             'success' => true,
             'message' => 'Your event has been unfavourited',
         ]);
+    }
+
+    public function getFavouritePastEvents()
+    {
+        $user = Auth::user();
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $favUpcomingEvent = array();
+        $favrouiteEvent = array();
+        foreach ($favEvents as $key => $value) {
+            $today = Carbon::now();
+            if ($value->event->event_date < $today) {
+                $favUpcomingEvent[] = $value->event;
+            }
+        }
+        foreach ($favUpcomingEvent as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                if ($km <= 100) {
+                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+                }
+            }
+        }
+
+        $metaData = true;
+        return view('front.favourit')->with(compact('favrouiteEvent', 'metaData'));
+    }
+
+    public function getFavouriteUpcomingEvents()
+    {
+        $user = Auth::user();
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $favUpcomingEvent = array();
+        $favrouiteEvent = array();
+        foreach ($favEvents as $key => $value) {
+            $today = Carbon::now();
+            if ($value->event->event_date >= $today) {
+                $favUpcomingEvent[] = $value->event;
+            }
+        }
+        foreach ($favUpcomingEvent as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                if ($km <= 100) {
+                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+                }
+            }
+        }
+        $metaData = false;
+        return view('front.favourit')->with(compact('favrouiteEvent', 'metaData'));
+    }
+
+    function distance($lat1, $lon1, $lat2, $lon2)
+    {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        // $unit = strtoupper($unit);
+
+        // if ($unit == "K") {
+        return ($miles * 1.609344);
+        // } else if ($unit == "N") {
+        //     return ($miles * 0.8684);
+        // } else {
+        //     return $miles;
+        // }
     }
 }

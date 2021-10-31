@@ -1,196 +1,203 @@
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventSpotter</title>
-    <link rel="stylesheet" href="{{url('assets/style/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <link rel="shortcut icon" href="{{url('assets//images/logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="assets/libraries/css/bootstrap.min.css">
-    <script src="assets/libraries/js/fontawesome.js"></script>
-
-</head>
+@include('layouts.head')
 
 <body>
-  @include('front.header')
-
-
+    @include('front.header')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9 mx-auto">
                 <div class="eventsNearYouSection ">
-                    <div class="eventsNearYouBG">
+                    <div class="eventsNearYouBG" style="box-shadow: none">
                         <div class="eventsNearYou">
-                            <img src="{{url('assets/images/your.png')}}" class="eventBgImage " alt="" srcset="">
+                            <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                class="eventBgImage " alt="" srcset="">
                             <div class="options">
-                                <div class="top_banner  align-items-center d-flex">
+                                <div
+                                    class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
                                     <i class="fa fa-user-plus text-white">
                                         <span class="text-white">Followed</span>
                                     </i>
                                 </div>
-                                <div class="top_banner2 ">
+                                {{-- <div class="whiteIconsBackgroundBox ">
                                     <i class="fa fa-heart red "></i>
-                                </div>
-                                <div class="top_banner2 mt-5 ">
+                                </div> --}}
+                                {{-- <div class="whiteIconsBackgroundBox mt-5 ">
                                     <i class="fa fa-flag light-grey "></i>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 " src="{{url('assets/images/joh.png')}}" />
-                                <span>John Doe</span>
+                                <img class="smallCircularImage mr-2 "
+                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                <span>{{ $eventDetails['event']->user->name }}</span>
                             </div>
                             <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
-                                    <span>120 Followers</span>
+                                    <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
                                 </i>
                             </div>
                         </div>
-                        <div class="eventsSubDetails d-flex align-items-center ">
-                            <div class="col-md-9 mt-2">
-                                <h4>New year party at local park</h4>
-                            </div>
-                            <div class="smallTextGrey d-flex align-items-center">
-                                <i class="fa fa-calendar  ">
-                                    <span>Tomorrow</span>
-                                </i>
-                                <div class="ml-3 mr-2 "></div>
-                                <i class="fa fa-map-marker ">
-                                    <span>5km away</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="eventOptions ml-3 mt-3 mb-5  text-center">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <div class="col-md-2  mediumTextGrey">
-                                    <span class=" ">Events Details</span>
-                                    <span class="ml-5 center"></span>
 
+                        <div class="eventsSubDetails row mx-auto">
+                            <div class="col-md-7 col-sm-7 col-5">
+                                <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-7">
+                                <div class="smallTextGrey row">
+                                    <div class="col-md-6 col-sm-6 col-6">
+                                        <i class="fa fa-calendar  ">
+                                            <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
+                                        </i>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-6">
+                                        <i class="fa fa-map-marker ">
+                                            <span>{{ $eventDetails['km'] }} Miles away</span>
+                                        </i>
+                                    </div>
                                 </div>
-                                <div class="col-md-2  mediumTextGrey">
-                                    <i class="fa fa-thumbs-up blue">
+                            </div>
+                        </div>
+
+                        <div class="eventOptions">
+                            <div class="row mx-auto justify-content-between ">
+                                <div id="isLiked" onclick="like(this)" data-id="{{ $eventDetails['event']->id }}"
+                                    class="nowrap  col-md-3 col-sm-3 col-3 {{ $eventDetails['isLiked'] == 1 ? 'blue' : 'nothing' }} ">
+                                    <i class="fa fa-thumbs-up ">
                                     </i>
-                                    <span class="ml-2 blue"> 12 Likes</span>
-
-
+                                    <span id="totalLikes{{ $eventDetails['event']->id }}"
+                                        class="eventsDetailsHome  ">
+                                        {{ $eventDetails['event']->like->count() }}
+                                        Likes</span>
+                                    {{-- <span class="vertical"></span> --}}
                                 </div>
-                                <div class="col-md-3 mb-2  mediumTextGrey ">
-                                    <span class="ml-1 "><img class="comt_img" src="{{url('assets/images/text.png')}}" alt=""> 20 Comments</span>
-                                </div>
-                                <div class="col-md-2  mediumTextGrey ">
-                                    <img src="{{url('assets/images/forword.png')}}" alt="">
-                                    <span class="ml-1 "> 20 Shares</span>
-                                    <span class="ml-5 center"></span>
+                                <a class="nowrap" style="text-decoration: none"
+                                    href="{{ url('eventComment/' . $eventDetails['event']->id) }}">
+                                    <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                        <i class="fa fa-comments">
+                                        </i>
+                                        <span class="eventsDetailsHome">
+                                            {{ $eventDetails['event']->comment->count() }}
+                                            Comments</span>
+                                        {{-- <span class="vertical"></span> --}}
+                                    </div>
+                                </a>
+                                {{-- <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                    <i class="fa fa-share">
+                                    </i>
+                                    <span class="eventsDetailsHome"> 20 Shares</span>
+                                    <span class="vertical"></span>
 
-                                </div>
-                                <div class="col-md-3 mb-2  mediumTextGrey ">
-
-                                    <span class="ml-1 b_comment"><img class="comt_img" src="{{url('assets/images/whitvideo.png')}}" alt=""> 40 Live Snaps</span>
-
-
+                                </div> --}}
+                                <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
+                                    <i class="fa fa-play ">
+                                    </i>
+                                    <span class="eventsDetailsHome"> {{ $eventDetails['event']->livefeed->count() }}
+                                        Live Snaps</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="event_comment">
-                    <div class="eventLiveFeedSection">
-                        <p class="mt-3 ml-5 normal-text"> Live Feed</p>
+                    <div class="eventLiveFeedSection ml-2">
+                        <p class="mt-3  normal-text mb-2"> Live Feed</p>
+
                         <div class="d-flex liveFeed">
-                            <div class="liveFeedData">
-                                <img src="{{url('assets/images/Rectangle 45.png')}}" />
-                                <h6 class="home_km">1km </h6>
-                            </div>
-                            <div class="liveFeedData">
-                                <img src="{{url('assets/images/Rectangle 46.png')}}" />
-                                <h6 class="home_km">2km </h6>
-                            </div>
-                            <div class="liveFeedData">
-                                <img src="{{url('assets/images/Rectangle 47.png')}}" />
-                                <h6 class="home_km">3km </h6>
-                            </div>
-                            <div class="liveFeedData">
-                                <img src="{{url('assets/images/Rectangle 48.png')}}" />
-                                <h6 class="home_km">4km </h6>
-                            </div>
+                            @foreach ($eventFeeds as $feed)
+                                <div class="liveFeedData text-center">
+                                    <img class="eventsPic mr-3 mb-2" src="{{ asset($feed->path) }}" />
+                                    <h6 class="home_km">{{ $feed->user->name }} </h6>
+                                </div>
+                            @endforeach
                         </div>
+
+
                     </div>
                     <div class="eventsNearYouSection ">
-                        <p class="mt-3 ml-1 normal-text">Snap</p>
-                        <br>
-                        <div class="eventsNearYouBG">
-                            <div class="main_snap">
-                                <div class="row snap_cb">
-                                    <div class="col-1 mt-2">
-                                        <img src="{{url('assets/images/joh.png')}}" />
-                                    </div>
-                                    <div class="col-9 mt-1">
-                                        <p class="snap_nm">Rana Bilal Ahmed</p>
-                                        <p class="snap_text">sdfsdaffdfdsf</p>
-                                    </div>
-                                    <div class="col-2 mt-4">
-                                        <img src="{{url('assets/images/forword.png')}}" alt="">
-                                        <p class="com_time">3s ago</p>
-                                        <img class="com_flag" src="{{url('assets/images/flag.png')}}" alt="">
-                                    </div>
-                                </div>
-                                <div class="eventsNearYou">
-                                    <img src="{{url('assets/images/snap5.png')}}" class="eventBgImage " alt="" srcset="">
-                                    <a href=""><img src="{{url('assets/images/play.png')}}" class="centerIcon"></a>
+                        <p class="mt-3 ml-1 normal-text m">Snap</p>
+                        @foreach ($eventFeeds as $feed)
 
+                            <div class="mt-3 eventsNearYouBG">
+                                <div class="main_snap">
+                                    <div class="row snap_cb">
+                                        <div class="col-1 mt-2">
+                                            <img class="smallCircularImage"
+                                                src="{{ asset($feed->user->profilePicture->image) }}" />
+                                        </div>
+                                        <div class="col-9 mt-1">
+                                            <p class="snap_nm">{{ $feed->user->name }}</p>
+                                            <p class="snap_text">{{ $feed->description }}</p>
+                                        </div>
+                                        <div class="col-2  row">
+                                            {{-- <img class="img-fluid" src="{{ asset('assets/images/forword.png') }}" alt=""> --}}
+                                            <p class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}</p>
+                                            {{-- <img class="com_flag" src="{{ asset('assets/images/flag.png') }}"
+                                            alt=""> --}}
+                                        </div>
+                                    </div>
+                                    <div class="eventsNearYou">
+                                        <img src="{{ asset($feed->path) }}" class="eventBgImage " alt="" srcset="">
+                                        {{-- <a href=""><img src="{{ asset('assets/images/play.png') }}"
+                                                class="centerIcon"></a> --}}
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
+
 
                     </div>
 
-                    <div class="snp_btn">
-                        <button class="snap_btn1">Go Live</button>
-                        <button class="snap_btn2" data-toggle="modal" data-target="#exampleModalCenter">Upload Snap</button>
+                    <div class=" d-flex justify-content-center">
+                        {{-- <button class="snap_btn1">Go Live</button> --}}
+                        <button class="snap_btn2" data-toggle="modal" data-target="#exampleModalCenter">Upload
+                            Snap</button>
                     </div>
                     <br>
                 </div>
                 <br><br><br>
             </div>
-
-         @include('front.right_side')
+            @include('front.right_side')
         </div>
     </div>
 
 </body>
 <!-- createEventModal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg  ">
         <div class="modal-content">
             <div class="modal-body">
                 <div class=" row align-items-center justify-content-center text-center ">
                     <div class="col-md-3">
-                        <img class="img-fluid" src="assets/images/headerLogo.png" alt="" srcset="">
+                        <img class="img-fluid" src="{{ asset('assets/images/headerLogo.png') }}" srcset="">
                     </div>
                     <div class="col-md-7">
                         <h5>Upload Snap</h5>
                     </div>
                     <div class="col-md-2">
-                        <img class="w-20" src="assets/images/info.png" alt="" srcset="">
+                        <img class="w-20" src="{{ asset('assets/images/info.png') }}" srcset="">
                     </div>
                 </div>
                 <div class="row mt-4 h-25">
                     <div class="col-md-6">
-                        <label for="">Tag people in snap</label>
-                        <div class="inputFieldGreenBG d-flex ">
-                            <input type="text" class="headerSearchColor ml-3" name="Snap Description" id="" placeholder="Snap Description">
-                        </div>
+
                         <div class="inputFieldGreenBG  mt-2 h-50">
-                            <input type="text" class="headerSearchColor ml-3 mt-2" name="Snap Description" id="" placeholder="Snap Description">
+                            <textarea style="margin-left: 15px;" rows="4" type="text" class=" headerSearchColor  mt-2"
+                                name="snapDescription" id="snapDescription" placeholder="Snap Description"></textarea>
                         </div>
+                        {{-- <label for="">Tag people in snap</label>
+                        <div class="inputFieldGreenBG d-flex ">
+                            <input type="text" class="headerSearchColor ml-3" name="Snap Description" id=""
+                                placeholder="Snap Description">
+                        </div> --}}
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10">
-                        <img src="assets/images/Frame.png" alt="" srcset="">
+                        <img id="eventPictureSrc" src="{{ asset('assets/images/Frame.png') }}" alt="" srcset="">
                         <br>
-                        <Button class="upcoming mb-3">Upload Picture/Video</Button>
+                        <Button id="" onclick="getSnaps()" class="upcoming mb-3 mt-2">Upload Picture/Video</Button>
+                        <input type="file" name="image" id="uploadEventSnap" class="d-none" />
+
                     </div>
-                    <button class="snp_uplo">Upload</button>
+                    <button id="uploadSnap" class="snp_uplo">Upload</button>
                 </div>
             </div>
         </div>
@@ -198,9 +205,103 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
+<script>
+    var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
+</script>
+<script>
+    function getSnaps() {
+        $('#uploadEventSnap').click();
+    }
+
+    function like(event) {
+        var id = $(event).attr('data-id');
+        $.ajax({
+            type: 'POST',
+            url: '/like',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'event_id': id,
+            }
+        }).done(function(msg) {
+            showToaster(msg.message, 'success');
+            $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
+            $(event).removeClass('blue');
+            $(event).addClass(msg.className);
+
+        })
+    }
+
+    var eventSnap = null;
+    $(function() {
+        $('#uploadEventSnap').change(function() {
+            var input = this;
+            eventSnap = input;
+            var url = $(this).val();
+            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
+                    ext == "jpg")) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#eventPictureSrc').attr('src', e.target.result);
+                    $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                }
+                // $('.uploadCatchyText').addClass('d-none');
+                reader.readAsDataURL(input.files[0]);
+
+
+            } else {
+                alert('Invalid Image type');
+            }
+        });
+
+    });
+    $('#uploadSnap').click(function(event) {
+        event.preventDefault();
+        var form_data = new FormData();
+        if (eventSnap == null) {
+            showToaster('Snap is required', '');
+            return;
+        }
+        form_data.append("path", eventSnap.files[0]);
+        form_data.append('description', $('#snapDescription').val());
+        form_data.append('event_id', eventss.id);
+
+        $.ajax({
+            type: 'POST',
+            url: '/uploadEventSnap',
+            mimeType: "multipart/form-data",
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: form_data,
+            error: function(res) {
+                var errors = JSON.parse(res.responseText);
+
+            }
+        }).done(function(msg) {
+            showToaster('Your snap has been uploaded successfully', 'success');
+            $('#exampleModalCenter').modal('toggle');
+            location.reload();
+
+        })
+    });
+</script>
 
 
 </html>

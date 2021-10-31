@@ -1,80 +1,177 @@
-<html lang="en">
+@include('layouts.head')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventSpotter</title>
-    <link rel="stylesheet" href="{{url('assets/style/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <link rel="shortcut icon" href="{{url('assets//images/logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="assets/libraries/css/bootstrap.min.css">
-    <script src="assets/libraries/js/fontawesome.js"></script>
-
-</head>
 <body>
-@include('front.header')
-
-
+    @include('front.header')
     <div class="container-fluid">
         <div class="row">
-@include('front.left_side')
+            <div class="col-md-3  float-left">
+                <div class="sidebar ">
+                    <div>
+                        <i class="fa fa-location-arrow mr-3 ml-3" aria-hidden="true"></i>
+                        <a class="side_tag" href="{{ url('/') }}">Explore events</a>
+                    </div>
+                    <hr>
+                    <div>
+                        <i class="fa fa-calendar mr-3 ml-3" aria-hidden="true"></i>
+                        <a class="side_tag" href="{{ url('userEvents') }}">Your events</a>
+                    </div>
+                    <hr>
+                    <div class="sideBarActive active  align-items-center d-flex">
+                        <i class="   fa fa-heart mr-3 ml-3" aria-hidden="true"></i>
+                        <a class="side_tag" href="#"> Favorite events</a>
+                    </div>
+                    <hr>
+                    <div class="align-items-center d-flex">
+                        <i class="fa fa-user-plus mr-3 ml-3" aria-hidden="true"></i>
+                        <a class="side_tag" href="{{ url('follower') }}">Followers</a>
+                    </div>
+                    <hr>
+                    <div class=" align-items-center d-flex">
+                        <i class="fa fa-user mr-3 ml-3" aria-hidden="true"></i>
+                        <a class="side_tag" href="{{ url('/following') }}">Following</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="top_button">
-                    <button class="upcoming">Upcoming</button>
-                    <button class="past">Past Events</button>
+                    <button onclick="getFavouriteUpcomingEvents()"
+                        class="{{ $metaData ? 'past' : 'upcoming' }} ">Upcoming</button>
+                    <button onclick="getFavouriteUserPastEvents()" class="{{ $metaData ? 'upcoming' : 'past' }} ">Past
+                        Events</button>
                 </div>
-                <div class="favourit">
-                    <div class="row">
-                        <div class="col-2">
-                            <img src="{{url('assets/images/favourit1.png')}}" alt="">
-                        </div>
-                        <div class="col-9">
-                            <h4 class="title_favourit">New year party at local park</h4>
-                            <div class="row ">
-                                <div class="col-4 date">
-                                    <img class="fav_title" src="{{url('assets/images/date.png')}}" alt=""> Tomorrow
-                                </div>
-                                <div class="center location"></div>
-                                <div class="col-4">
-                                    <img class="fav_title" src="{{url('assets/images/location.png')}}" alt=""> 5km away
-                                </div>
-                            </div><br>
-                            <div class="row">
-                                <div class="col-4">
-                                    <img class="fav_title" src="{{url('assets/images/following.png')}}" alt=""> Tomorrow
-                                </div>
-                                <div class="center"></div>
-                                <div class="col-2">
-                                    <img class="fav_title" src="{{url('assets/images/like.png')}}" alt=""> 20
-                                </div>
-                                <div class="center"></div>
-                                <div class="col-2">
-                                    <img class="fav_text" src="{{url('assets/images/text.png')}}" alt="">
-                                    <p class="text">12</p>
+                @if (count($favrouiteEvent) > 0)
 
-                                </div>
-                                <div class="center"></div>
-                                <div class="col-1">
-                                    <img class="fav_text" src="{{url('assets/images/forword.png')}}" alt="">
-                                    <p class="text">15</p>
-                                </div>
-                                <div class="center"></div>
-                                <div class="col-1">
-                                    <img class="fav_text" src="{{url('')}}assets/images/vid.png" alt="">
-                                    <p class="text">40</p>
+
+                    <div class="favEvent">
+                        @foreach ($favrouiteEvent as $event)
+
+                            <div class="favourit">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img class="" style="width: 90px;height:90px"
+                                            src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt="">
+                                    </div>
+                                    </a>
+                                    <div class="col-9">
+                                        <h4 class="title_favourit">{{ $event['events']->event_name }}</h4>
+                                        <div class="row ">
+                                            <div class="col-4 date">
+                                                <img class="fav_title" src="{{ url('assets/images/date.png') }}"
+                                                    alt="">
+                                                {{ $event['events']->event_date }}
+                                            </div>
+                                            <div class="center location"></div>
+                                            <div class="col-4">
+                                                <img class="fav_title"
+                                                    src="{{ url('assets/images/location.png') }}" alt="">
+                                                {{ $event['km'] }} km
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img class="fav_title"
+                                                    src="{{ url('assets/images/following.png') }}" alt="">
+                                                {{ $event['events']->user->followers->count() }} Followers
+                                            </div>
+                                            <div class="center"></div>
+                                            <div class="col-2">
+                                                <img class="fav_title" src="{{ url('assets/images/like.png') }}"
+                                                    alt="">
+                                                20
+                                            </div>
+                                            <div class="center"></div>
+                                            <div class="col-2">
+                                                <img class="fav_text" src="{{ url('assets/images/text.png') }}"
+                                                    alt="">
+                                                <p class="text">12</p>
+
+                                            </div>
+                                            <div class="center"></div>
+                                            <div class="col-1">
+                                                <img class="fav_text"
+                                                    src="{{ url('assets/images/forword.png') }}" alt="">
+                                                <p class="text">15</p>
+                                            </div>
+                                            <div class="center"></div>
+                                            <div class="col-1">
+                                                <img class="fav_text" src="{{ url('assets/images/vid.png') }}"
+                                                    alt="">
+                                                <p class="text">40</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1   text-center align-items-center">
+                                        <i onclick="favroute(this) " data-id="{{ $event['events']->id }}"
+                                            class="fa fa-heart red "></i>
+                                        <a href="{{ url('/eventDetails/' . $event['events']->id) }}">
+                                            <i class="mt-2  fa fa-info-circle light-grey "></i>
+                                        </a>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-1">
-                            <img src="{{url('assets/images/heart.png')}}" alt="">
-                        </div>
+                        @endforeach
                     </div>
-                </div>
-
+                @else
+                    <div class="text-center mt-5 ">
+                        <h6>No Events Found</h6>
+                    </div>
+                @endif
             </div>
-@include('front.right_side')
+
+            @include('front.right_side')
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
+    <script>
+        function getFavouriteUserPastEvents() {
+            window.location.href = "/getFavouriteUserPastEvents";
+        }
+
+        function getFavouriteUpcomingEvents() {
+            window.location.href = "/getFavouriteUpcomingEvents";
+        }
+
+        function favroute(icon, eventId) {
+            var id = $(icon).attr('data-id');
+            if ($(icon).hasClass("light-grey")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/saveFavrouite',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'event_id': id,
+                    }
+                }).done(function(msg) {
+                    showToaster(msg.message, 'success');
+                    $(icon).removeClass('light-grey');
+                    $(icon).addClass('red');
+                })
+            } else if ($(icon).hasClass('red')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/deleteFavrouite',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'event_id': id,
+                    }
+                }).done(function(msg) {
+                    showToaster(msg.message, 'success');
+                    $(icon).addClass('light-grey');
+                    $(icon).removeClass('red');
+                })
+            }
+        }
+    </script>
 </body>
+
+
+
 </html>

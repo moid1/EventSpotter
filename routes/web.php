@@ -4,14 +4,20 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthResetPasswordController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventFeedsController;
 use App\Http\Controllers\FavrouiteController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\NotificationsController;
+use App\Models\Event;
+use App\Models\Favrouite;
 use App\Models\Following;
+use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,4 +94,31 @@ Route::get('/eventDetails/{id}', [EventController::class, 'getEventDetail']);
 
 //FavrouiteEvnets
 Route::post('/saveFavrouite', [FavrouiteController::class, 'store']);
-Route::post('/deleteFavrouite',[FavrouiteController::class,'remove']);
+Route::post('/deleteFavrouite', [FavrouiteController::class, 'remove']);
+Route::get('/favrouite', [FavrouiteController::class, 'create']);
+
+Route::get('getFavouriteUserPastEvents', [FavrouiteController::class, 'getFavouritePastEvents']);
+Route::get('getFavouriteUpcomingEvents', [FavrouiteController::class, 'getFavouriteUpcomingEvents']);
+
+//YOUR EVENTS
+Route::view('/userEvents', 'front.your_events');
+Route::get('/yourEvents', [EventController::class, 'yourEvents']);
+Route::get('/yourPastEvents', [EventController::class, 'yourPastEvents']);
+Route::get('/yourDraftEvents', [EventController::class, 'yourDraftEvents']);
+
+//Event Snaps
+
+Route::get('/eventSnap/{id}', [EventController::class, 'eventSnap']);
+Route::post('/uploadEventSnap', [EventFeedsController::class, 'store']);
+
+
+//COmments
+
+Route::get('eventComment/{id}', [CommentsController::class, 'create']);
+Route::post('storeComment', [CommentsController::class, 'store']);
+
+//Likes
+
+Route::post('like', [LikesController::class, 'store']);
+
+Route::get('filter/{filter}', [EventController::class, 'filterEvent']);

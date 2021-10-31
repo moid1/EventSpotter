@@ -36,9 +36,10 @@ class ProfileController extends Controller
         $following = Following::where('user_id', $user->id)->where('is_accepted', 1)->count();
         $address = Address::where('user_id', $user->id)->latest()->first();
         $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
+        $totalEvents = Event::where('user_id', Auth::id())->where('is_drafted', 0)->get()->count();
         $isFollowing = [];
         $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
-        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'isFollowing', 'profilePicture', 'upcomingEvents'));
+        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'isFollowing', 'profilePicture', 'upcomingEvents', 'totalEvents'));
     }
 
     /**

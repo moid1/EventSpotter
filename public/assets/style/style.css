@@ -45,6 +45,28 @@
         }
 
 
+        .modal {
+            text-align: center;
+            padding: 0 !important;
+        }
+
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px;
+
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+
+
         /* input[type=text] {
             width: 100%;
         } */
@@ -345,6 +367,10 @@
             margin-bottom: 25px;
         }
 
+        .nowrap {
+            white-space: nowrap;
+        }
+
         .eventLiveFeedSection {
             width: 100%;
             overflow-x: scroll;
@@ -354,7 +380,7 @@
         .eventsNearYouBG {
             margin-bottom: 30px;
             background-color: white;
-            box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.07);
+            /* box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.07); */
         }
 
         .eventsNearYou {
@@ -963,9 +989,8 @@
         .comment {
             width: 96%;
             height: 51.38px;
-            left: 120.94px;
-            top: 178.31px;
-            background: #F7F7F7;
+          
+            /* background: #F7F7F7; */
             border-radius: 10px;
             margin: 0px 17px;
             padding: 10px;
@@ -1101,19 +1126,17 @@
         }
 
         .main_snap {
-            width: 859.07px;
-            height: 490.58px;
-            left: 136.05px;
-            top: 939.14px;
+            width: 90%;
+            height: auto;
+            margin: 0 auto;
+            ;
             background: #F7F7F7;
             border-radius: 10px;
         }
 
         .snap_cb {
             width: 80%;
-            height: 11%;
-            /* left: 136.05px; */
-            top: 756.42px;
+
             background: #F7F7F7;
             border-radius: 10px;
             margin-left: 21px !important;
@@ -1363,12 +1386,12 @@
         .comments {
             width: 100%;
             margin: 0 auto;
-            ;
+
             height: 50px;
             border-radius: 9px;
             display: flex;
             align-items: center;
-            background-color: #F8F5EB;
+           
             padding: 30px;
         }
 
@@ -3655,4 +3678,29 @@ CUSTOM UTILS CLASSES
             margin: 0;
             padding: 0;
             border-width: 0;
+        }
+
+        .userWillComment {
+            background: rgba(41, 114, 121, 0.09);
+            border-radius: 6px;
+            color: #74ABB0 !important;
+            line-height: 27px;
+            padding: 10px;
+        }
+
+        .commentBtn {
+            background: #3BACEC;
+            color: white;
+            border: none;
+            position: absolute;
+            border-radius: 6px;
+            right: 3%;
+            padding: 10px;
+        }
+
+        .yourComment {
+            background-color: #F8F5EB !important;
+        }
+        .otherComment{
+            background-color: #F7F7F7 !important;
         }

@@ -13,12 +13,12 @@
                     <hr>
                     <div>
                         <i class="fa fa-calendar mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="your_event.html">Your events</a>
+                        <a class="side_tag" href="{{ url('userEvents') }}">Your events</a>
                     </div>
                     <hr>
                     <div>
                         <i class="fa fa-heart mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="favourit.html"> Favorite events</a>
+                        <a class="side_tag" href="{{ url('favrouite') }}"> Favorite events</a>
                     </div>
                     <hr>
                     <div>
@@ -31,11 +31,7 @@
                         <a class="side_tag" href="{{ url('following') }}">Following</a>
                     </div>
                     <hr>
-                    <div>
-                        <i class="fa fa-calendar-check-o mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="events_your.html">Event you attended</a>
-                    </div>
-                    <hr>
+
                 </div>
             </div>
             <div class="col-md-6">

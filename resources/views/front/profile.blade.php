@@ -33,7 +33,7 @@
                                 </div>
                             </a>
                             <div class="grey-background borderRadius5  margin-left-20 text-center pl-3 pr-3">
-                                <span class="large-text">4</span>
+                                <span class="large-text">{{$totalEvents}}</span>
                                 <br>
                                 <span class="notifications-primary-text">Events</span>
                             </div>

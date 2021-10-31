@@ -11,17 +11,18 @@
                             <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
                                 class="eventBgImage " alt="" srcset="">
                             <div class="options">
-                                <div class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
+                                <div
+                                    class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
                                     <i class="fa fa-user-plus text-white">
                                         <span class="text-white">Followed</span>
                                     </i>
                                 </div>
-                                <div class="whiteIconsBackgroundBox ">
+                                {{-- <div class="whiteIconsBackgroundBox ">
                                     <i class="fa fa-heart red "></i>
-                                </div>
-                                <div class="whiteIconsBackgroundBox mt-5 ">
+                                </div> --}}
+                                {{-- <div class="whiteIconsBackgroundBox mt-5 ">
                                     <i class="fa fa-flag light-grey "></i>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="whiteBanner left-0  text-center align-items-center d-flex">
                                 <img class="smallCircularImage mr-2 "
@@ -48,48 +49,55 @@
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-6">
                                         <i class="fa fa-map-marker ">
-                                            <span>{{ $eventDetails['km'] }} Km away</span>
+                                            <span>{{ $eventDetails['km'] }} Miles away</span>
                                         </i>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="eventOptions">
-                            <div class="row mx-auto ">
-                                <div class="col-md-3 col-sm-3 col-3">
-                                    <i class="fa fa-thumbs-up blue">
+                        <div class="eventOptions ">
+                            <div class="row mx-auto justify-content-between">
+                                <div id="isLiked" onclick="like(this)" data-id="{{ $eventDetails['event']->id }}"
+                                    class="nowrap  col-md-3 col-sm-3 col-3 {{ $eventDetails['isLiked'] == 1 ? 'blue' : 'nothing' }} ">
+                                    <i class="fa fa-thumbs-up ">
                                     </i>
-                                    <span class="eventsDetailsHome blue"> 12 Likes</span>
-                                    <span class="vertical"></span>
+                                    <span id="totalLikes{{ $eventDetails['event']->id }}"
+                                        class="eventsDetailsHome  ">
+                                        {{ $eventDetails['event']->like->count() }}
+                                        Likes</span>
+                                    {{-- <span class="vertical"></span> --}}
                                 </div>
-                                <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
-                                    <i class="fa fa-comments">
-                                    </i>
-                                    <span class="eventsDetailsHome"> 20 Comments</span>
-                                    <span class="vertical"></span>
-                                </div>
-
-                                <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                <a class="nowrap" style="text-decoration: none"
+                                    href="{{ url('eventComment/' . $eventDetails['event']->id) }}">
+                                    <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                        <i class="fa fa-comments">
+                                        </i>
+                                        <span class="eventsDetailsHome">
+                                            {{ $eventDetails['event']->comment->count() }}
+                                            Comments</span>
+                                        {{-- <span class="vertical"></span> --}}
+                                    </div>
+                                </a>
+                                {{-- <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
                                     <i class="fa fa-share">
                                     </i>
                                     <span class="eventsDetailsHome"> 20 Shares</span>
                                     <span class="vertical"></span>
 
-                                </div>
-                                <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
-                                    <i class="fa fa-play ">
-                                    </i>
-                                    <span class="eventsDetailsHome"> 40 Live Snaps</span>
-                                </div>
+                                </div> --}}
+                                <a href="{{ url('eventSnap/' . $eventDetails['event']->id) }}" class="nowrap">
+                                    <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
+                                        <i class="fa fa-play ">
+                                        </i>
+                                        <span class="eventsDetailsHome">
+                                            {{ $eventDetails['event']->livefeed->count() }}
+                                            Live Snaps</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
 
                 </div>
 
@@ -120,22 +128,34 @@
 
             <br>
 
-
-
             @include('front.right_side')
 
         </div>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 
 <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
 <script>
+    function like(event) {
+        var id = $(event).attr('data-id');
+        $.ajax({
+            type: 'POST',
+            url: '/like',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'event_id': id,
+            }
+        }).done(function(msg) {
+            showToaster(msg.message, 'success');
+            $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
+            $(event).removeClass('blue');
+            $(event).addClass(msg.className);
+
+        })
+    }
     var event = {!! json_encode($eventDetails['event']->toArray()) !!};
 
     function initialize() {

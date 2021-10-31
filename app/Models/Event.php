@@ -16,11 +16,21 @@ class Event extends Model
         return $this->hasMany(EventsPictures::class);
     }
 
-   
-
     public function user()
     {
-        return $this->belongsTo(User::class)->with('profilePicture');
+        return $this->belongsTo(User::class)->with('profilePicture')->with('followers');
     }
 
+    public function comment()
+    {
+        return $this->hasMany(Comments::class);
+    }
+    public function like()
+    {
+        return $this->hasMany(Likes::class);
+    }
+
+    public function livefeed(){
+        return $this->hasMany(EventFeeds::class);
+    }
 }

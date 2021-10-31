@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Favrouite extends Model
+class EventFeeds extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function event()
+    public function user()
     {
-        return $this->belongsTo(Event::class)->with(['eventPictures','user']);
+        return $this->belongsTo(User::class);
     }
 }

@@ -8,17 +8,17 @@
                 <div class="sidebar ">
                     <div>
                         <i class="fa fa-location-arrow mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="index.html">Explore events</a>
+                        <a class="side_tag" href="{{ '/' }}">Explore events</a>
                     </div>
                     <hr>
                     <div>
                         <i class="fa fa-calendar mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="your_event.html">Your events</a>
+                        <a class="side_tag" href="{{ url('userEvents') }}">Your events</a>
                     </div>
                     <hr>
                     <div>
                         <i class="fa fa-heart mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="favourit.html"> Favorite events</a>
+                        <a class="side_tag" href="{{ url('favrouite') }}"> Favorite events</a>
                     </div>
                     <hr>
                     <div class="sideBarActive active  align-items-center d-flex">
@@ -29,11 +29,6 @@
                     <div class=" align-items-center d-flex">
                         <i class="fa fa-user mr-3 ml-3" aria-hidden="true"></i>
                         <a class="side_tag" href="{{ url('/following') }}">Following</a>
-                    </div>
-                    <hr>
-                    <div>
-                        <i class="fa fa-calendar-check-o mr-3 ml-3" aria-hidden="true"></i>
-                        <a class="side_tag" href="events_your.html">Event you attended</a>
                     </div>
                     <hr>
                 </div>
@@ -94,7 +89,7 @@
                         </div> --}}
 
                         <div class="block">
-                           <i class="fa fa-ban" onclick="unfollow('{{$follower->id}}')"></i> Unfollow`
+                            <i class="fa fa-ban" onclick="unfollow('{{ $follower->id }}')"></i> Unfollow`
                         </div>
                         <div class="last"></div>
 
@@ -246,7 +241,7 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
-                       location.reload();
+                        location.reload();
                     }
                 })
                 .done(function() {
