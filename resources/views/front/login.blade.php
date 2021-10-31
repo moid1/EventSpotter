@@ -64,6 +64,10 @@
                                 <input type="password" class="headerSearchColor ml-3" name="password"
                                     placeholder="Password" id="password">
                             </div>
+                            <span toggle="#password-field"
+                                class="fa fa-eye  ml-4 float-right 
+                            toggle-password"></span>
+
                             {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="ml-4 float-right "> --}}
                         </div>
                         @if ($errors->has('password'))
@@ -88,7 +92,8 @@
             <div class="container">
                 <div class="row align-items-center ">
                     <div class="col-lg-4 col-md-6">
-                        <h5 class="h1 text-white text-center"><img src="{{url('assets/images/moid1.png')}}" alt=""></h5>
+                        <h5 class="h1 text-white text-center"><img src="{{ url('assets/images/moid1.png') }}" alt="">
+                        </h5>
                         <h1 class="text-white text-center" style="font-size: 33px;">Event Spotter</h1>
                         <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                         <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">Bootstrapious.com</a></p> -->
@@ -97,18 +102,24 @@
                         <h5 class=" mb-3" style="color: #74ABB0;">Quick links</h5>
                         <ul class="list-unstyled text-muted">
                             <li class="mb-2">
-                                <a target="_blank"  href="{{url('terms_of_service')}}" style="color: white; ">Terms of Services
+                                <a target="_blank" href="{{ url('terms_of_service') }}" style="color: white; ">Terms
+                                    of
+                                    Services
 
-                            </a>
+                                </a>
                             </li>
 
-                            <li class="mb-2"><a target="_blank" href="{{url('privacy_policy')}}" style="color: white;">Privacy Policy</a></li>
-                            <li class="mb-2"><a target="_blank" href="{{url('refund')}}" style="color: white;">Refund Policy</a></li>
+                            <li class="mb-2"><a target="_blank" href="{{ url('privacy_policy') }}"
+                                    style="color: white;">Privacy Policy</a></li>
+                            <li class="mb-2"><a target="_blank" href="{{ url('refund') }}"
+                                    style="color: white;">Refund Policy</a></li>
                             <li class="mb-2">
-                                <a target="_blank" href="{{url('cookie_policy')}}" style="color: white;">Cookie Policy</a>
+                                <a target="_blank" href="{{ url('cookie_policy') }}" style="color: white;">Cookie
+                                    Policy</a>
                             </li>
                             <li>
-                                <a target="_blank" href="{{url('disclamier')}}" style="color: white;">Disclamier </a>
+                                <a target="_blank" href="{{ url('disclamier') }}" style="color: white;">Disclamier
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -123,8 +134,11 @@
                     </div> -->
                     <div class="col-lg-4 col-md-6">
                         <h5 class=" mb-3" style="color: #74ABB0;">Contact Us</h5>
-                        <a href=""><img class="mb-3" src="{{url('assets/images/df.jpeg')}}" alt=""></a><br>
-                        <a href="" class=""><img src="{{url('assets/images/apple2.jpeg')}}" alt=""></a>
+                        <h3 class="text-white">Coming Soon</h3>
+                        {{-- <a href=""><img class="mb-3" src="{{ url('assets/images/df.jpeg') }}"
+                                alt=""></a><br>
+                        <a href="" class=""><img src="{{ url('assets/images/apple2.jpeg') }}"
+                                alt=""></a> --}}
                         <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p> -->
                         <!-- <form action="#">
                             <div class="input-group mb-3">
@@ -136,12 +150,22 @@
                 </div>
             </div>
             <div class="w-100 text-center">
-            <span class="text-muted text-center w-100 ">Copyrights 2021. EventSpotter <br>All rights reserved</span>
-        </div>
+                <span class="text-muted text-center w-100 ">Copyrights 2021. EventSpotter <br>All rights reserved</span>
+            </div>
         </footer>
     </div>
-</div>
+    </div>
     <script>
+        $("body").on('click', '.toggle-password', function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $("#password");
+            if (input.attr("type") === "password")
+                input.attr("type", "text");
+            else
+                input.attr("type", "password");
+
+
+        });
         setTimeout(function() {
             $('#success').addClass('d-none');
 

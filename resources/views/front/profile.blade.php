@@ -33,13 +33,13 @@
                                 </div>
                             </a>
                             <div class="grey-background borderRadius5  margin-left-20 text-center pl-3 pr-3">
-                                <span class="large-text">{{$totalEvents ?? ''}}</span>
+                                <span class="large-text">{{ $totalEvents ?? '0' }}</span>
                                 <br>
                                 <span class="notifications-primary-text">Events</span>
                             </div>
                             @if (Auth::User()->id == $user->id)
                                 <button class="logout" onclick="window.location='{{ url('/logout') }}'">
-                                    <img src="/assets/images/logout.png" alt="logout" srcset="">
+                                    <img src="{{ asset('assets/images/logout.png') }}" alt="logout" srcset="">
                                     <span class="ml-2">Logout</span>
                                 </button>
                             @else
@@ -315,8 +315,15 @@
                     $('#events').html('');
                     if (response.data.length > 0) {
                         response.data.forEach(function(event) {
-                            var img = event.events.event_pictures[0].image_path;
-                            $('#events').append("<div class='eventsCard'>" +
+
+                            var img =
+                                window.location.origin + '/' + event.events.event_pictures[0]
+                                .image_path;
+                            var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
+
+
+                            $('#events').append("<a href=" + url +
+                                "> <div class='eventsCard'>" +
                                 "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
                                 "<img class='profileEvents' style='border-radius:10px' src=" +
                                 img + " >" +
@@ -324,16 +331,16 @@
                                 "<h6 class='eventsTitleProfile'>" + event.events
                                 .event_name +
                                 "</h6>" +
-                                "<img class ='fav_title' src='assets/images/date.png'>" +
+                                "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
                                 "<span class='smallTextGrey'> " + event.events.event_date +
                                 "</span>" +
                                 "<br>" +
-                                "<image class='fav_title' src ='assets/images/location.png'>" +
+                                "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
                                 "<span class='smallTextGrey'> " + event.km +
-                                " KM away</span> " +
+                                " Miles away</span> " +
                                 "</div>" +
                                 "</div>" +
-                                "</div>"
+                                "</div></a>"
                             );
 
                         });
@@ -349,6 +356,7 @@
         });
         //PAST EVENTS BUTTON
         $('#pastEventsBtn').click(function(event) {
+
             event.preventDefault();
             $(this).addClass('upcomingProfile');
             $(this).removeClass('pastOutlineButton');
@@ -367,24 +375,31 @@
                     success: function(response) {
                         console.log(response.data);
                         $('#events').html('');
+
                         if (response.data.length > 0) {
                             response.data.forEach(function(event) {
-                                var img = event.event_pictures[0].image_path;
-                                $('#events').append("<div class='eventsCard'>" +
+                                var img =
+                                    window.location.origin + '/' + event.events.event_pictures[0].image_path;
+                                var url = "{{ url('eventDetails') }}" + "/" + event.id;
+                                $('#events').append("<a href=" + url +
+                                    "> <div class='eventsCard'>" +
                                     "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
-                                    "<img class='profileEvents' src=" + img + " >" +
+                                    "<img class='profileEvents' style='border-radius:10px' src=" +
+                                    img + " >" +
                                     "<div class ='ml-3'>" +
-                                    "<h6 class='eventsTitleProfile'>" + event.event_name +
+                                    "<h6 class='eventsTitleProfile'>" + event
+                                    .events.event_name +
                                     "</h6>" +
-                                    "<img class ='fav_title' src='assets/images/date.png'>" +
-                                    "<span class='smallTextGrey'>" + event.event_date +
+                                    "<img class ='fav_title' src='{{asset('assets/images/date.png')}}'>" +
+                                    "<span class='smallTextGrey'> " + event.events.event_date +
                                     "</span>" +
                                     "<br>" +
-                                    "<image class='fav_title' src ='assets/images/location.png'>" +
-                                    "<span class='smallTextGrey'>5KM Away</span> " +
+                                    "<image class='fav_title' src ='{{asset('assets/images/location.png')}}'>" +
+                                    "<span class='smallTextGrey'> " + event.km +
+                                    " Miles away</span> " +
                                     "</div>" +
                                     "</div>" +
-                                    "</div>"
+                                    "</div></a>"
                                 );
 
                             });
@@ -423,7 +438,10 @@
                         if (response.data.length > 0) {
                             response.data.forEach(function(event) {
                                 var img = event.event_pictures[0].image_path;
-                                $('#events').append("<div class='eventsCard'>" +
+                                var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
+
+                                $('#events').append("<a href=" + url +
+                                    "> <div class='eventsCard'>" +
                                     "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
                                     "<img class='profileEvents' src=" + img + " >" +
                                     "<div class ='ml-3'>" +
@@ -437,7 +455,7 @@
                                     "<span class='smallTextGrey'>5KM Away</span> " +
                                     "</div>" +
                                     "</div>" +
-                                    "</div>"
+                                    "</div></a>"
                                 );
 
                             });

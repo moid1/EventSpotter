@@ -80,8 +80,10 @@
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
+                                "<a href=" + url + ">" +
                                 "<img style='width:90px;height:90px' src=" + data['events']
                                 .event_pictures[0].image_path + ">" +
+                                "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
                                 "<h4 class='title_favourit'>" + data['events'].event_name +
@@ -121,7 +123,7 @@
                                 "<div class='center'></div>" +
                                 "<div class='col-1'>" +
                                 "<img class='fav_text' src='assets/images/vid.png'>" +
-                                "<p class='text'>"+ data['events'].livefeed.length +"</p>" +
+                                "<p class='text'>" + data['events'].livefeed.length + "</p>" +
                                 "</div>" +
                                 "</div>" +
                                 "</div>" +
@@ -172,8 +174,10 @@
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
+                                "<a href=" + url + ">" +
                                 "<img style='width:90px;height:90px' src=" + data['events']
                                 .event_pictures[0].image_path + ">" +
+                                "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
                                 "<h4 class='title_favourit'>" + data['events'].event_name +
@@ -187,7 +191,7 @@
                                 "<div class='center location'></div>" +
                                 "<div class='col-4'>" +
                                 "<img class='fav_title' src='assets/images/location.png' >" +
-                                data['km'] + "miles" +
+                                data['km'] + " miles" +
                                 "</div>" +
                                 "</div><br>" +
                                 "<div class='row'>" +
@@ -197,23 +201,23 @@
                                 "</div>" +
                                 "<div class='center'></div>" +
                                 "<div class='col-2'>" +
-                                "<img class='fav_title' src='assets/images/like.png'>" +
-                                "20" +
+                                "<i class='fa fa-thumbs-up'></i>" +
+                                data['events'].like.length +
                                 "</div>" +
                                 "<div class='center'></div>" +
                                 "<div class='col-2'>" +
                                 "<img class='fav_text' src='assets/images/text.png'>" +
-                                "<p class='text'>12</p>" +
+                                "<p class='text'>" + data['events'].comment.length + "</p>" +
                                 "</div>" +
                                 "<div class='center'></div>" +
-                                "<div class='col-1'>" +
-                                "<img class='fav_text' src='assets/images/forword.png'>" +
-                                "<p class='text'>15</p>" +
-                                "</div>" +
+                                // "<div class='col-1'>" +
+                                // "<img class='fav_text' src='assets/images/forword.png'>" +
+                                // "<p class='text'>15</p>" +
+                                // "</div>" +
                                 "<div class='center'></div>" +
                                 "<div class='col-1'>" +
                                 "<img class='fav_text' src='assets/images/vid.png'>" +
-                                "<p class='text'>40</p>" +
+                                "<p class='text'>" + data['events'].livefeed.length + "</p>" +
                                 "</div>" +
                                 "</div>" +
                                 "</div>" +
@@ -263,8 +267,10 @@
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
+                                "<a href=" + url + ">" +
                                 "<img style='width:90px;height:90px' src=" + data['events']
                                 .event_pictures[0].image_path + ">" +
+                                "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
                                 "<h4 class='title_favourit'>" + data['events'].event_name +

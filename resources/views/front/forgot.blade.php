@@ -33,7 +33,8 @@
             <span class="right-top"></span>
             <span class="left-bottom"></span>
             <div class="text-center">
-                <img class="sign_log" src="{{ url('assets/images/logo.png') }}" alt="" srcset="">
+                <img class="sign_log" src="{{ url('assets/images/logo.png') }}" width="50%" height="auto" alt=""
+                    srcset="">
                 <h6 class="medium-heading-green mt-3">Forgot Password?</h6>
                 <form method="POST" action="/forget-password">
                     @csrf
@@ -62,17 +63,17 @@
                         <button type="submit" class="upcoming mt-3 w-100">
                             Reset Password
                         </button>
-                        <a href="{{ url('login') }}">
-                            <button class="past mt-3 w-100">
-                                Or Login instead
-                            </button>
-                        </a>
+                        <a href="{{ url('login') }}" type="button" class="past mt-3 w-100">
+                            Or Login instead</a>
+
+                       
                     </div>
                 </form>
             </div>
         </div>
     </div>
     </div>
+
 </body>
 
 </html>

@@ -13,6 +13,6 @@ class Favrouite extends Model
 
     public function event()
     {
-        return $this->belongsTo(Event::class)->with(['eventPictures','user']);
+        return $this->belongsTo(Event::class)->with(['eventPictures','user','comment','like','livefeed']);
     }
 }

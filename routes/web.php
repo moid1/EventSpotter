@@ -91,6 +91,7 @@ Route::get('/getPastEvents', [EventController::class, 'getUserPastEvent']);
 Route::get('/getUpcomingEvents', [EventController::class, 'getUserUpcomingEvents']);
 Route::get('/getDraftEvents', [EventController::class, 'getDraftEvents']);
 Route::get('/eventDetails/{id}', [EventController::class, 'getEventDetail']);
+Route::post('/deleteEvent',[EventController::class,'deleteEvent']);
 
 //FavrouiteEvnets
 Route::post('/saveFavrouite', [FavrouiteController::class, 'store']);

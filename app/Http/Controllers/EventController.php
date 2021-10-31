@@ -153,10 +153,18 @@ class EventController extends Controller
 
     public function getUserPastEvent()
     {
-        $pastEvents = Event::where('user_id', Auth::id())->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        $user = Auth::user();
+        $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        $nearEvents = array();
+        foreach ($upcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+            $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+        }
+
         return response()->json([
             'success' => true,
-            'data' => $pastEvents,
+            'data' => $nearEvents,
             'message' => 'All Past Events',
         ]);
     }
@@ -231,22 +239,20 @@ class EventController extends Controller
     public function yourEvents()
     {
         $user = Auth::user();
-        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->get();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
+        // foreach ($yourUpcomingEvents as $key => $value) {
+        //     $today = Carbon::now();
+        //     if ($value->event_date >= $today) {
+        //         $userUpcomingEvents[] = $value;
+        //     }
+        // }
         foreach ($yourUpcomingEvents as $key => $value) {
-            $today = Carbon::now();
-            if ($value->event_date >= $today) {
-                $userUpcomingEvents[] = $value;
-            }
-        }
-
-
-
-        foreach ($userUpcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+
                 $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
                 $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
@@ -350,5 +356,15 @@ class EventController extends Controller
         }
 
         dd($event);
+    }
+
+    public function deleteEvent(Request $request)
+    {
+        Event::where('id', $request->event_id)->where('user_id', Auth::id())->delete();
+        return response()->json([
+            'success' => true,
+            'data' => [],
+            'message' => 'Event Deleted Successfully',
+        ]);
     }
 }

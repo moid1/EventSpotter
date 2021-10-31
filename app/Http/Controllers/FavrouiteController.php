@@ -71,7 +71,7 @@ class FavrouiteController extends Controller
         return response()->json([
             'success' => true,
             'data' => $favroute,
-            'message' => 'Event has been favrouited',
+            'message' => 'Event has been favorited',
         ]);
     }
 

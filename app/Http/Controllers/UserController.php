@@ -35,7 +35,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $upcomingEvents = Event::where('user_id', '!=', Auth::id())->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
+        // where('user_id', '!=', Auth::id())->
+        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
         $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
@@ -63,17 +64,18 @@ class UserController extends Controller
         $upcomingEvents = $new;
         $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
         $nearEvents = array();
+        if (is_array($upcomingEvents) || is_object($upcomingEvents)) {
+            foreach ($upcomingEvents as $key => $value) {
+                $latLng = explode(',', $user->lat_lng); // user lat lng
 
-        foreach ($upcomingEvents as $key => $value) {
-            $latLng = explode(',', $user->lat_lng); // user lat lng
-           
-            if (count($latLng)>1) {
-                $mile = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-                $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $value->id)->first();
-                $liveFeed = EventFeeds::where('event_id', $value->id)->latest()->first();
-                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $value->id)->first();
-                $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
+                if (count($latLng) > 1) {
+                    $mile = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                    $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $value->id)->first();
+                    $liveFeed = EventFeeds::where('event_id', $value->id)->latest()->first();
+                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                    $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $value->id)->first();
+                    $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
+                }
             }
         }
         // dd($nearEvents);

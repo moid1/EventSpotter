@@ -48,11 +48,17 @@
 
                             <div class="favourit">
                                 <div class="row">
+
                                     <div class="col-2">
-                                        <img class="" style="width: 90px;height:90px"
-                                            src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt="">
+                                        <a class="nowrap"
+                                            href="{{ url('eventDetails/' . $event['events']->id) }}">
+                                            <img class="" style="width: 90px;height:90px"
+                                                src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                                alt="">
+                                        </a>
                                     </div>
-                                    </a>
+
+
                                     <div class="col-9">
                                         <h4 class="title_favourit">{{ $event['events']->event_name }}</h4>
                                         <div class="row ">
@@ -65,7 +71,7 @@
                                             <div class="col-4">
                                                 <img class="fav_title"
                                                     src="{{ url('assets/images/location.png') }}" alt="">
-                                                {{ $event['km'] }} km
+                                                {{ $event['km'] }} Miles
                                             </div>
                                         </div><br>
                                         <div class="row">
@@ -76,35 +82,39 @@
                                             </div>
                                             <div class="center"></div>
                                             <div class="col-2">
-                                                <img class="fav_title" src="{{ url('assets/images/like.png') }}"
-                                                    alt="">
-                                                20
+                                                <i class="fa fa-thumbs-up light-grey">
+                                                  
+                                                </i>
+                                                {{ $event['events']->like->count() }}
                                             </div>
                                             <div class="center"></div>
                                             <div class="col-2">
-                                                <img class="fav_text" src="{{ url('assets/images/text.png') }}"
-                                                    alt="">
-                                                <p class="text">12</p>
-
+                                                <i class="fa fa-comment light-grey">
+                                                  
+                                                       
+                                                </i>
+                                                {{ $event['events']->comment->count() }}
                                             </div>
-                                            <div class="center"></div>
+                                            {{-- <div class="center"></div>
                                             <div class="col-1">
                                                 <img class="fav_text"
                                                     src="{{ url('assets/images/forword.png') }}" alt="">
                                                 <p class="text">15</p>
-                                            </div>
+                                            </div> --}}
                                             <div class="center"></div>
-                                            <div class="col-1">
-                                                <img class="fav_text" src="{{ url('assets/images/vid.png') }}"
-                                                    alt="">
-                                                <p class="text">40</p>
+                                            <div class="col-1 nowrap">
+                                                <i class="fa fa-play light-grey">
+
+                                                </i>
+                                                
+                                              {{ $event['events']->livefeed->count() }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-1   text-center align-items-center">
                                         <i onclick="favroute(this) " data-id="{{ $event['events']->id }}"
                                             class="fa fa-heart red "></i>
-                                        <a href="{{ url('/eventDetails/' . $event['events']->id) }}">
+                                        <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             <i class="mt-2  fa fa-info-circle light-grey "></i>
                                         </a>
 

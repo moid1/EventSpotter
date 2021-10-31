@@ -24,11 +24,13 @@
                                     <i class="fa fa-flag light-grey "></i>
                                 </div> --}}
                             </div>
-                            <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 "
-                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
-                                <span>{{ $eventDetails['event']->user->name }}</span>
-                            </div>
+                            <a href="{{ url('profile') . '/' . $eventDetails['event']->user_id }}">
+                                <div class="whiteBanner left-0  text-center align-items-center d-flex">
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                    <span>{{ $eventDetails['event']->user->name }}</span>
+                                </div>
+                            </a>
                             <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
                                     <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
@@ -86,7 +88,8 @@
                                     <span class="vertical"></span>
 
                                 </div> --}}
-                                <a href="{{ url('eventSnap/' . $eventDetails['event']->id) }}" class="nowrap">
+                                <a href="{{ url('eventSnap/' . $eventDetails['event']->id) }}"
+                                    class="nowrap">
                                     <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
                                         <i class="fa fa-play ">
                                         </i>
@@ -110,7 +113,8 @@
                             $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
                         @endphp
                         @foreach ($conditionsArr as $condition)
-                            <button class="condition_tag">{{ $condition }}</button>
+                            <button class="condition_tag" style=" overflow: hidden;
+                            text-overflow: ellipsis;">{{ $condition }}</button>
                         @endforeach
                     </div>
                     <br><br>
@@ -119,7 +123,13 @@
                     {{-- <img class="map" src="{{asset('assets/images/map.png')}}" alt=""> --}}
                     <div id="map"></div>
 
-                    <button class="map_button">Buy Ticket</button>
+                    {{-- <button class="map_button">Buy Ticket</button> --}}
+                    @if ($eventDetails['event']->user_id == Auth::id())
+                        <button onclick="deleteEvent(this)" data-id="{{ $eventDetails['event']->id }}"
+                            class="map_button mb-5" style="background: rgb(148, 0, 0);border:none;">Delete
+                            Event</button>
+
+                    @endif
 
 
 
@@ -180,6 +190,25 @@
         google.maps.event.addListener(marker, 'mouseover', function() {
             this['infowindow'].open(map, this);
         });
+    }
+
+    function deleteEvent(event) {
+        var id = $(event).attr('data-id');
+        $.ajax({
+            type: 'POST',
+            url: '/deleteEvent',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'event_id': id,
+            }
+        }).done(function(msg) {
+            showToaster(msg.message, 'success');
+            window.location = '/';
+
+        })
+
     }
 </script>
 

@@ -24,11 +24,13 @@
                                     <i class="fa fa-flag light-grey "></i>
                                 </div> --}}
                             </div>
-                            <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 "
-                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
-                                <span>{{ $eventDetails['event']->user->name }}</span>
-                            </div>
+                            <a href="{{ url('profile/' . $eventDetails['event']->user_id) }}">
+                                <div class="whiteBanner left-0  text-center align-items-center d-flex">
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                    <span>{{ $eventDetails['event']->user->name }}</span>
+                                </div>
+                            </a>
                             <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
                                     <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
@@ -103,8 +105,17 @@
                         <div class="d-flex liveFeed">
                             @foreach ($eventFeeds as $feed)
                                 <div class="liveFeedData text-center">
-                                    <img class="eventsPic mr-3 mb-2" src="{{ asset($feed->path) }}" />
-                                    <h6 class="home_km">{{ $feed->user->name }} </h6>
+                                    @if (Str::substr($feed->path, -3) == 'mp4')
+                                        <video class="eventsPic mr-3 mb-2" src="{{ asset($feed->path) }}" controls>
+                                            <source src="{{ asset($feed->path) }}" type="video/mp4">
+
+                                        </video>
+                                        <h6 class="home_km">{{ $feed->user->name }} </h6>
+
+                                    @else
+                                        <img class="eventsPic mr-3 mb-2" src="{{ asset($feed->path) }}" />
+                                        <h6 class="home_km">{{ $feed->user->name }} </h6>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
@@ -134,9 +145,17 @@
                                         </div>
                                     </div>
                                     <div class="eventsNearYou">
-                                        <img src="{{ asset($feed->path) }}" class="eventBgImage " alt="" srcset="">
-                                        {{-- <a href=""><img src="{{ asset('assets/images/play.png') }}"
+                                        @if (Str::substr($feed->path, -3) == 'mp4')
+                                            <video class="eventBgImage" src="{{ asset($feed->path) }}" controls>
+                                                <source src="{{ asset($feed->path) }}" type="video/mp4">
+
+                                            </video>
+                                        @else
+                                            <img onclick="window.open(this.src)" src="{{ asset($feed->path) }}"
+                                                class="eventBgImage " alt="" srcset="">
+                                            {{-- <a href=""><img src="{{ asset('assets/images/play.png') }}"
                                                 class="centerIcon"></a> --}}
+                                        @endif
 
                                     </div>
                                 </div>
@@ -173,9 +192,17 @@
                     <div class="col-md-7">
                         <h5>Upload Snap</h5>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 " id="infoDialog">
                         <img class="w-20" src="{{ asset('assets/images/info.png') }}" srcset="">
                     </div>
+                    <p id="infoText" style="background: #314648;
+                    border-radius: 10px;
+                    font-size: 11px;
+                    padding: 20px;
+                    display:none;
+                    color: white;">Upload a live snap of an event. This feature shows the scenery of an ongoing event
+                        to users when
+                        a live snap is uploaded from an event</p>
                 </div>
                 <div class="row mt-4 h-25">
                     <div class="col-md-6">
@@ -192,13 +219,23 @@
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10">
                         <img id="eventPictureSrc" src="{{ asset('assets/images/Frame.png') }}" alt="" srcset="">
+                        <video id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
                         <br>
                         <Button id="" onclick="getSnaps()" class="upcoming mb-3 mt-2">Upload Picture/Video</Button>
                         <input type="file" name="image" id="uploadEventSnap" class="d-none" />
 
                     </div>
-                    <button id="uploadSnap" class="snp_uplo">Upload</button>
+                
                 </div>
+
+                <div class="progress mt-3 d-none">
+                    <div class="bar"></div>
+                    <div class="percent">0%</div>
+                </div>
+
+                <button id="uploadSnap" class="snp_uplo">Upload</button>
+
+
             </div>
         </div>
     </div>
@@ -220,6 +257,10 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
     var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
 </script>
 <script>
+    var bar = $('.bar');
+    var percent = $('.percent');
+    var status = $('#status');
+
     function getSnaps() {
         $('#uploadEventSnap').click();
     }
@@ -257,11 +298,26 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
                 reader.onload = function(e) {
                     $('#eventPictureSrc').attr('src', e.target.result);
                     $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                    $('#eventPictureSrc').show();
+                    $('#eventVideoSrc').hide();
+
                 }
                 // $('.uploadCatchyText').addClass('d-none');
                 reader.readAsDataURL(input.files[0]);
 
 
+            } else if (input.files && input.files[0] && (ext == "mp4")) {
+                $('#eventPictureSrc').toggle();
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#eventVideoSrc').show();
+                    $('#eventVideoSrc').attr('src', e.target.result);
+                    $('#eventPictureSrc').hide();
+
+                    // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                }
+                // $('.uploadCatchyText').addClass('d-none');
+                reader.readAsDataURL(input.files[0]);
             } else {
                 alert('Invalid Image type');
             }
@@ -286,6 +342,27 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
             processData: false,
             contentType: false,
             enctype: 'multipart/form-data',
+            beforeSend: function() {
+                $("#uploadSnap").prop('disabled', true); //disable.
+                $('.progress').removeClass('d-none');
+            },
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+
+                        var percentVal = percentComplete + '%';
+                        bar.width(percentVal);
+                        bar.css("background","#314648");
+                        percent.html(percentVal);
+                    }
+                }, false);
+
+                return xhr;
+            },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -295,11 +372,18 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
             }
         }).done(function(msg) {
+            $("#uploadSnap").prop('disabled', false); //disable.
+            $('.progress').addClass('d-none');
+
             showToaster('Your snap has been uploaded successfully', 'success');
             $('#exampleModalCenter').modal('toggle');
-            location.reload();
+            // location.reload();
 
         })
+    });
+
+    $('#infoDialog').click(function(event) {
+        $('#infoText').toggle('hide');
     });
 </script>
 

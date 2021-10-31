@@ -617,7 +617,6 @@
             background: white;
             width: 150.3px;
             height: 46.45px;
-            top: 120.2px;
             border: 1px solid #297279;
             box-sizing: border-box;
             border-radius: 6px;
@@ -989,7 +988,7 @@
         .comment {
             width: 96%;
             height: 51.38px;
-          
+
             /* background: #F7F7F7; */
             border-radius: 10px;
             margin: 0px 17px;
@@ -1221,10 +1220,9 @@
         }
 
         .snp_uplo {
-            width: 807.23px;
+            width: 90%;
             height: 57.34px;
-            left: 314.5px;
-            top: 514.45px;
+           
             background: #314648;
             box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.25);
             border-radius: 6px;
@@ -1391,7 +1389,7 @@
             border-radius: 9px;
             display: flex;
             align-items: center;
-           
+
             padding: 30px;
         }
 
@@ -3251,9 +3249,7 @@
                 text-align: center;
             }
 
-            .eventsNearYouSection {
-                display: none;
-            }
+          
         }
 
         @media only screen and (max-width: 399px) {
@@ -3541,9 +3537,7 @@
                 margin-top: 15px;
             }
 
-            .eventsNearYouSection {
-                display: none;
-            }
+          
         }
 
         /* ==========================================
@@ -3701,6 +3695,9 @@ CUSTOM UTILS CLASSES
         .yourComment {
             background-color: #F8F5EB !important;
         }
-        .otherComment{
+
+        .otherComment {
             background-color: #F7F7F7 !important;
         }
+
+        

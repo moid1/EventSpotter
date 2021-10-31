@@ -204,7 +204,7 @@
                         <h5>Create a new event</h5>
                     </div>
                     <div class="col-md-2">
-                        <img class="w-20" src="{{ url('assets/images/info.png') }}" alt="" srcset="">
+                        {{-- <img class="w-20" src="{{ url('assets/images/info.png') }}" alt="" srcset=""> --}}
                     </div>
                 </div>
                 <div class="row mt-4 h-100">
@@ -221,9 +221,26 @@
                         <label for="eventType" class="normal-text mt-3 mb-2">Event Type</label>
                         <select class="inputFieldGreenBG d-flex even_type" name="eventType" id="eventType">
                             <option selected disabled>Select</option>
-                            <option value="crowded">Crowded</option>
-                            <option value="Adult">Adult</option>
+                            <option value="Workout">Workout</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Kickback">Kickback</option>
+                            <option value="Birthday Bash">Birthday Bash</option>
+                            <option value="Cruise">Cruise</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Movies">Movies</option>
+                            <option value="Block party ">Block party </option>
+                            <option value="Fashion">Fashion</option>
+                            <option value="Cookout">Cookout</option>
+                            <option value="Virtual event ">Virtual event</option>
+                            <option value="Cars">Cars</option>
+                            <option value="Trade show">Trade show</option>
+                            <option value="Board games">Board games</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Music/Art Events">Music/Art Events</option>
                             <option value="Family">Family</option>
+                            <option value="Children">Children</option>
+                            <option value="Adult">Adult</option>
+
                         </select>
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10">
@@ -257,7 +274,7 @@
 
                     <div class="w-100 eventsCondition">
                         <p class="event_cont eventCond">Event Conditions</p>
-                        <button onclick="eventConditions(this)" class="event_con ">Add Conditions</button>
+                        <button onclick="eventConditions(this)" class="event_con mt-2">Add Conditions</button>
                     </div>
                     <div class="w-100">
                         <p class="event_cont"><img src="{{ url('assets/images/icons/eyeDark.png') }}"
@@ -355,7 +372,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
         if (condition.innerText == 'Add Conditions') {
             var conditionText = prompt("Condition", "");
-            $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag'>" + conditionText +
+            $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" + conditionText +
                 "</button>").insertAfter(
                 '.eventCond');
             eventConditionsArray.push(conditionText);
