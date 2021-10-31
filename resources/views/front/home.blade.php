@@ -17,118 +17,121 @@
                     <p class=" ml-1 normal-text">Events near you</p>
                     @if (count($nearEvents) > 0)
                         @foreach ($nearEvents as $event)
-                        @if (count($event['events']->eventPictures)>0)
-                            
-                       
-                            <div class="eventsNearYouBG">
-                                <div class="eventsNearYou">
-                                    <a href="{{ url('eventDetails/' . $event['events']->id) }}">
-                                        <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
-                                            class="eventBgImage " alt="" srcset="">
-                                    </a>
-                                    <div class="options">
-                                        <div
-                                            class="{{ $event['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}  align-items-center d-flex">
-                                            <i class="fa fa-user-plus text-white">
-                                                <a href="{{ url('profile/' . $event['events']->user->id) }}"> <span
-                                                        class="text-white">{{ $event['Following'] == 1 ? 'Followed' : 'Follow' }}
-                                                    </span></a>
+                            @if (count($event['events']->eventPictures) > 0)
 
-                                            </i>
-                                        </div>
-                                        <div class="whiteIconsBackgroundBox ">
 
-                                            <i onclick="favroute(this) " data-id="{{ $event['events']->id }}"
-                                                class="fa fa-heart {{ $event['isFavroute'] == 1 ? 'red' : 'light-grey' }} Î "></i>
-                                        </div>
-                                        {{-- <div class="whiteIconsBackgroundBox mt-5 ">
+                                <div class="eventsNearYouBG">
+                                    <div class="eventsNearYou">
+                                        <a href="{{ url('eventDetails/' . $event['events']->id) }}">
+                                            <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                                class="eventBgImage " alt="" srcset="">
+                                        </a>
+                                        <div class="options">
+                                            <div
+                                                class="{{ $event['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}  align-items-center d-flex">
+                                                <i class="fa fa-user-plus text-white">
+                                                    <a href="{{ url('profile/' . $event['events']->user->id) }}">
+                                                        <span
+                                                            class="text-white">{{ $event['Following'] == 1 ? 'Followed' : 'Follow' }}
+                                                        </span></a>
+
+                                                </i>
+                                            </div>
+                                            <div class="whiteIconsBackgroundBox ">
+
+                                                <i onclick="favroute(this) " data-id="{{ $event['events']->id }}"
+                                                    class="fa fa-heart {{ $event['isFavroute'] == 1 ? 'red' : 'light-grey' }} Î "></i>
+                                            </div>
+                                            {{-- <div class="whiteIconsBackgroundBox mt-5 ">
                                             <i class="fa fa-flag light-grey "></i>
                                         </div> --}}
+                                        </div>
+                                        <div class="whiteBanner left-0  text-center align-items-center d-flex">
+                                            <img class="smallCircularImage mr-2 "
+                                                src="{{ url($event['events']->user->profilePicture->image) }}" />
+                                            <a style="color:black"
+                                                href="{{ url('profile/' . $event['events']->user->id) }}"><span>{{ $event['events']->user->name }}</span></a>
+                                        </div>
+                                        <div class="whiteBanner text-center align-items-center d-flex">
+                                            <i class="fa fa-user-plus">
+                                                <span>{{ $event['events']->user->followers->count() }}
+                                                    Followers</span>
+                                            </i>
+                                        </div>
                                     </div>
-                                    <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                        <img class="smallCircularImage mr-2 "
-                                            src="{{ url($event['events']->user->profilePicture->image) }}" />
-                                        <a style="color:black"
-                                            href="{{ url('profile/' . $event['events']->user->id) }}"><span>{{ $event['events']->user->name }}</span></a>
-                                    </div>
-                                    <div class="whiteBanner text-center align-items-center d-flex">
-                                        <i class="fa fa-user-plus">
-                                            <span>{{ $event['events']->user->followers->count() }} Followers</span>
-                                        </i>
-                                    </div>
-                                </div>
 
-                                <div class="eventsSubDetails row mx-auto">
-                                    <div class="col-md-7 col-sm-7 col-5">
-                                        <span class="eventsTitle">{{ $event['events']->event_name }}</span>
-                                    </div>
-                                    <div class="col-md-5 col-sm-5 col-7">
-                                        <div class="smallTextGrey row">
-                                            <div class="col-md-6 col-sm-6 col-6">
-                                                <i class="fa fa-calendar  ">
-                                                    {{-- @php
+                                    <div class="eventsSubDetails row mx-auto">
+                                        <div class="col-md-7 col-sm-7 col-5">
+                                            <span class="eventsTitle">{{ $event['events']->event_name }}</span>
+                                        </div>
+                                        <div class="col-md-5 col-sm-5 col-7">
+                                            <div class="smallTextGrey row">
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                    <i class="fa fa-calendar  ">
+                                                        {{-- @php
                                                     $event['events']->event_date =  Carbon\Carbon::parse($event['events']->event_date);
                                                 @endphp --}}
-                                                    <span
-                                                        class="text-center">{{ $event['events']->event_date }}</span>
-                                                </i>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-6 nowrap">
-                                                <i class="fa fa-map-marker ">
-                                                    <span>{{ $event['km'] }} Miles away</span>
-                                                </i>
+                                                        <span
+                                                            class="text-center">{{ $event['events']->event_date }}</span>
+                                                    </i>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-6 nowrap">
+                                                    <i class="fa fa-map-marker ">
+                                                        <span>{{ $event['km'] }} Miles away</span>
+                                                    </i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="eventOptions">
-                                    <div class="row mx-auto justify-content-between ">
-                                        <div id="isLiked" onclick="like(this)" data-id="{{ $event['events']->id }}"
-                                            class="nowrap  col-md-3 col-sm-3 col-3 {{ $event['isLiked'] == 1 ? 'blue' : 'nothing' }}">
-                                            <i class="fa fa-thumbs-up ">
-                                            </i>
-                                            <span id="totalLikes{{ $event['events']->id }}"
-                                                class="eventsDetailsHome  ">
-                                                {{ $event['events']->like->count() }}
-                                                Likes</span>
-                                            {{-- <span class="vertical"></span> --}}
-                                        </div>
-
-                                        <a class="nowrap" style="text-decoration: none"
-                                            href="{{ url('eventComment/' . $event['events']->id) }}">
-                                            <div class="  col-md-3 col-sm-3 col-3  mediumTextGrey ">
-                                                <i class="fa fa-comments">
+                                    <div class="eventOptions">
+                                        <div class="row mx-auto justify-content-between ">
+                                            <div id="isLiked" onclick="like(this)"
+                                                data-id="{{ $event['events']->id }}"
+                                                class="nowrap  col-md-3 col-sm-3 col-3 {{ $event['isLiked'] == 1 ? 'blue' : 'nothing' }}">
+                                                <i class="fa fa-thumbs-up ">
                                                 </i>
-                                                <span class="eventsDetailsHome">
-                                                    {{ $event['events']->comment->count() }} Comments</span>
-
+                                                <span id="totalLikes{{ $event['events']->id }}"
+                                                    class="eventsDetailsHome  ">
+                                                    {{ $event['events']->like->count() }}
+                                                    Likes</span>
+                                                {{-- <span class="vertical"></span> --}}
                                             </div>
-                                            {{-- <span class="vertical"></span> --}}
-                                        </a>
+
+                                            <a class="nowrap" style="text-decoration: none"
+                                                href="{{ url('eventComment/' . $event['events']->id) }}">
+                                                <div class="  col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                                    <i class="fa fa-comments">
+                                                    </i>
+                                                    <span class="eventsDetailsHome">
+                                                        {{ $event['events']->comment->count() }} Comments</span>
+
+                                                </div>
+                                                {{-- <span class="vertical"></span> --}}
+                                            </a>
 
 
 
-                                        {{-- <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                            {{-- <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
                                             <i class="fa fa-share">
                                             </i>
                                             <span class="eventsDetailsHome"> 20 Shares</span>
                                             <span class="vertical"></span>
 
                                         </div> --}}
-                                        <a href="{{ url('eventSnap/' . $event['events']->id) }}"
-                                            class="nowrap">
-                                            <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
-                                                <i class="fa fa-play">
-                                                </i>
-                                                <span class="eventsDetailsHome">
-                                                    {{ $event['events']->liveFeed->count() }}
-                                                    Live Snaps</span>
-                                            </div>
-                                        </a>
+                                            <a href="{{ url('eventSnap/' . $event['events']->id) }}"
+                                                class="nowrap">
+                                                <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
+                                                    <i class="fa fa-play">
+                                                    </i>
+                                                    <span class="eventsDetailsHome">
+                                                        {{ $event['events']->liveFeed->count() }}
+                                                        Live Snaps</span>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         @endforeach
 
@@ -263,7 +266,7 @@
                             <button id="publicBtn" onclick="makeEventPublic(1)" class="event_tag">Public</button>
                             <button id="privateBtn" onclick="makeEventPublic(0)" class="event_t">Private</button>
 
-                            <span class="ml-2"> This event will be public.
+                            <span class="ml-2" id="eventMsg"> This event will be public.
                                 Everyone on Event Spotter will be able to see this event details. </span>
                         </div>
                     </div>
@@ -373,12 +376,16 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
             $('#publicBtn').addClass('event_tag');
             $('#publicBtn').removeClass('event_t')
             $('#privateBtn').addClass('event_t');
-            $('#privateBtn').removeClass('event_tag')
+            $('#privateBtn').removeClass('event_tag');
+            $('#eventMsg').html(
+                'This event will be public. Everyone on Event Spotter will be able to see this event details.');
+
         } else {
             $('#publicBtn').addClass('event_t');
             $('#publicBtn').removeClass('event_tag');
             $('#privateBtn').addClass('event_tag');
-            $('#privateBtn').removeClass('event_t')
+            $('#privateBtn').removeClass('event_t');
+            $('#eventMsg').html('This event can only be viewed by your followers Or people you are following.');
         }
     }
 

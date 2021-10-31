@@ -71,7 +71,7 @@
                         @endif
 
                         <a href="{{ url('forgot') }}">
-                            <p class="lightGreenTeal font-weight-light textUnderline mt-3">Forget Password?</p>
+                            <p class="lightGreenTeal font-weight-light textUnderline mt-3">Forgot Password?</p>
                         </a>
                         <button type="submit" class="upcoming mt-3 w-100">
                             Login
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="w-100 text-center">
-            <span class="text-muted text-center w-100 ">Copyrights 2021. EventSpotter </br>All rights reserved</span>
+            <span class="text-muted text-center w-100 ">Copyrights 2021. EventSpotter <br>All rights reserved</span>
         </div>
         </footer>
     </div>
