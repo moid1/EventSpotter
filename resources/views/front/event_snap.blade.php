@@ -377,7 +377,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
             showToaster('Your snap has been uploaded successfully', 'success');
             $('#exampleModalCenter').modal('toggle');
-            // location.reload();
+            location.reload();
 
         })
     });
