@@ -380,7 +380,7 @@
                             response.data.forEach(function(event) {
                                 var img =
                                     window.location.origin + '/' + event.events.event_pictures[0].image_path;
-                                var url = "{{ url('eventDetails') }}" + "/" + event.id;
+                                var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
                                     "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +

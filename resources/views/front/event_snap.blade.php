@@ -225,7 +225,7 @@
                         <input type="file" name="image" id="uploadEventSnap" class="d-none" />
 
                     </div>
-                
+
                 </div>
 
                 <div class="progress mt-3 d-none">
@@ -356,7 +356,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
                         var percentVal = percentComplete + '%';
                         bar.width(percentVal);
-                        bar.css("background","#314648");
+                        bar.css("background", "#314648");
                         percent.html(percentVal);
                     }
                 }, false);
