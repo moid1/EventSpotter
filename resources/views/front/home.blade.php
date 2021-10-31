@@ -17,6 +17,9 @@
                     <p class=" ml-1 normal-text">Events near you</p>
                     @if (count($nearEvents) > 0)
                         @foreach ($nearEvents as $event)
+                        @if (count($event['events']->eventPictures)>0)
+                            
+                       
                             <div class="eventsNearYouBG">
                                 <div class="eventsNearYou">
                                     <a href="{{ url('eventDetails/' . $event['events']->id) }}">
@@ -126,6 +129,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         @endforeach
 
                     @else
