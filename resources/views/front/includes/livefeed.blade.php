@@ -6,7 +6,7 @@
                 <a href="{{ url('eventSnap/' . $event['events']->id) }}" style="color:black">
 
                     <div class="text-center">
-                        @if (Str::substr($event['livefeed']->path, -3) == 'mp4' || Str::substr($feed->path, -3) == 'mov')
+                        @if (Str::substr($event['livefeed']->path, -3) == 'mp4' || Str::substr($event['livefeed']->path, -3) == 'mov')
                             <video class="eventsPic mr-3" src="{{ asset($event['livefeed']->path) }}" controls>
                                 <source src="{{ asset($event['livefeed']->path) }}" type="video/mp4">
                             </video>
