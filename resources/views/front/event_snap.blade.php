@@ -126,25 +126,36 @@
                         <p class="mt-3 ml-1 normal-text m">Snap</p>
                         @foreach ($eventFeeds as $feed)
 
-                            <div class="mt-3 eventsNearYouBG">
-                                <div class="main_snap">
-                                    <div class="row snap_cb">
-                                        <div class="col-1 mt-2">
-                                            <img class="smallCircularImage"
-                                                src="{{ asset($feed->user->profilePicture->image) }}" />
-                                        </div>
-                                        <div class="col-9 mt-1">
-                                            <p class="snap_nm">{{ $feed->user->name }}</p>
-                                            <p class="snap_text">{{ $feed->description }}</p>
-                                        </div>
-                                        <div class="col-2  row">
-                                            {{-- <img class="img-fluid" src="{{ asset('assets/images/forword.png') }}" alt=""> --}}
-                                            <p class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}</p>
-                                            {{-- <img class="com_flag" src="{{ asset('assets/images/flag.png') }}"
-                                            alt=""> --}}
-                                        </div>
-                                    </div>
+                            <div class="mt-3 eventsNearYouBG" style="">
+                                <div class="main_snap " style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                                ">
+
                                     <div class="eventsNearYou">
+                                        <div class="row snap_cb align-items-center justify-content-between">
+                                            <div class="col-2 mt-2">
+                                                <img class="smallCircularImage"
+                                                    src="{{ asset($feed->user->profilePicture->image) }}" />
+                                            </div>
+                                            <div class="col-8 mt-1">
+                                                <p class="snap_nm">{{ $feed->user->name }}</p>
+                                                <p class="snap_text">{{ $feed->description }}</p>
+                                            </div>
+                                            <div class="col-2  row">
+                                                {{-- <img class="img-fluid" src="{{ asset('assets/images/forword.png') }}" alt=""> --}}
+                                                <span
+                                                    class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}
+                                                </span>
+
+                                                {{-- <img class="com_flag" src="{{ asset('assets/images/flag.png') }}"
+                                                alt=""> --}}
+                                            </div>
+                                            @if (Auth::id() == $feed->user_id)
+                                                <i onclick="deleteSnap(this)" data-id="{{ $feed->id }}"
+                                                    style="position: absolute;right:20px" class="fa fa-trash"></i>
+                                            @endif
+
+
+                                        </div>
                                         @if (Str::substr($feed->path, -3) == 'mp4')
                                             <video class="eventBgImage" src="{{ asset($feed->path) }}" controls>
                                                 <source src="{{ asset($feed->path) }}" type="video/mp4">
@@ -285,6 +296,24 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
         })
     }
 
+    function deleteSnap(event) {
+        var id = $(event).attr('data-id');
+        $.ajax({
+            type: 'POST',
+            url: '/deleteSnap',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'id': id,
+            }
+        }).done(function(msg) {
+            showToaster(msg.message, 'success');
+            location.reload();
+
+        })
+    }
+
     var eventSnap = null;
     $(function() {
         $('#uploadEventSnap').change(function() {
@@ -306,7 +335,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
                 reader.readAsDataURL(input.files[0]);
 
 
-            } else if (input.files && input.files[0] && (ext == "mp4" || ext=="mov")) {
+            } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
                 $('#eventPictureSrc').toggle();
                 var reader = new FileReader();
                 reader.onload = function(e) {

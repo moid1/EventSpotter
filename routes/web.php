@@ -91,8 +91,7 @@ Route::get('/getPastEvents', [EventController::class, 'getUserPastEvent']);
 Route::get('/getUpcomingEvents', [EventController::class, 'getUserUpcomingEvents']);
 Route::get('/getDraftEvents', [EventController::class, 'getDraftEvents']);
 Route::get('/eventDetails/{id}', [EventController::class, 'getEventDetail']);
-Route::post('/deleteEvent',[EventController::class,'deleteEvent']);
-
+Route::post('/deleteEvent', [EventController::class, 'deleteEvent']);
 //FavrouiteEvnets
 Route::post('/saveFavrouite', [FavrouiteController::class, 'store']);
 Route::post('/deleteFavrouite', [FavrouiteController::class, 'remove']);
@@ -111,6 +110,7 @@ Route::get('/yourDraftEvents', [EventController::class, 'yourDraftEvents']);
 
 Route::get('/eventSnap/{id}', [EventController::class, 'eventSnap']);
 Route::post('/uploadEventSnap', [EventFeedsController::class, 'store']);
+Route::post('/deleteSnap', [EventFeedsController::class, 'deleteEventSnap']);
 
 
 //COmments

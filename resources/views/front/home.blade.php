@@ -20,7 +20,8 @@
                             @if (count($event['events']->eventPictures) > 0)
 
 
-                                <div class="eventsNearYouBG">
+                                <div class="eventsNearYouBG" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                                ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
@@ -240,6 +241,7 @@
                             <option value="Family">Family</option>
                             <option value="Children">Children</option>
                             <option value="Adult">Adult</option>
+                            <option value="Other">Other</option>
 
                         </select>
                     </div>
@@ -372,7 +374,8 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
 
         if (condition.innerText == 'Add Conditions') {
             var conditionText = prompt("Condition", "");
-            $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" + conditionText +
+            $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" +
+                conditionText +
                 "</button>").insertAfter(
                 '.eventCond');
             eventConditionsArray.push(conditionText);
