@@ -306,7 +306,7 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
                 reader.readAsDataURL(input.files[0]);
 
 
-            } else if (input.files && input.files[0] && (ext == "mp4")) {
+            } else if (input.files && input.files[0] && (ext == "mp4" || ext=="mov")) {
                 $('#eventPictureSrc').toggle();
                 var reader = new FileReader();
                 reader.onload = function(e) {

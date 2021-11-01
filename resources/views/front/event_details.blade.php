@@ -205,7 +205,9 @@
             }
         }).done(function(msg) {
             showToaster(msg.message, 'success');
-            window.location = '/';
+            setTimeout(() => {
+                window.location = '/';
+            }, 1000);
 
         })
 
