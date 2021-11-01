@@ -156,7 +156,7 @@
 
 
                                         </div>
-                                        @if (Str::substr($feed->path, -3) == 'mp4')
+                                        @if (Str::substr($feed->path, -3) == 'mp4' || Str::substr($feed->path, -3) == 'mov')
                                             <video class="eventBgImage" src="{{ asset($feed->path) }}" controls>
                                                 <source src="{{ asset($feed->path) }}" type="video/mp4">
 
