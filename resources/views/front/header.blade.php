@@ -83,10 +83,17 @@
             </div>
 
         </div>
+        <div style="text-align:center;display:none"><img id="loading" src="{{ asset('loader.gif') }}" alt="" /></div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="application/javascript">
+        $("#loading").ajaxStart(function() {
+            $(this).show();
+        }).ajaxStop(function() {
+            $(this).hide();
+        });
         $(document).ready(function() {
             var down = false;
 
@@ -127,14 +134,15 @@
                             $('.searchResults').html("");
                             if (data.profile_picture !== null)
                                 var img =
-                                    "<img class='circularImage pic mr-3' src=" + data[0].profile_picture.image + " />"
+                                    "<img class='circularImage pic mr-3' src=" + data[0]
+                                    .profile_picture.image + " />"
                             else
                                 var img =
                                     "<img class='circularImage pic mr-3 mb-3' src='{{ asset('assets/images/usersImages/userPlaceHolder.png') }}' />"
                             if (data.length == 0)
                                 $('.searchResults').append(
                                     '<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>'
-                                    );
+                                );
                             $.each(data, function(key, value) {
                                 var url = "{{ url('profile') }}" + "/" + value.id;
 
