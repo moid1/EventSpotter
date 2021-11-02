@@ -8,8 +8,17 @@
                 <div class="eventsNearYouSection ">
                     <div class="eventsNearYouBG" style="box-shadow: none">
                         <div class="eventsNearYou">
-                            <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                class="eventBgImage " alt="" srcset="">
+                            @if (Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mov')
+                                <video class="eventBgImage mr-3"
+                                    src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}" controls>
+                                    <source src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                        type="video/mp4">
+                                </video>
+                            @else
+                                <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                    class="eventBgImage " alt="" srcset="">
+                            @endif
+
                             <div class="options">
                                 <div
                                     class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
