@@ -101,7 +101,7 @@ class EventFeedsController extends Controller
 
     public function deleteEventSnap(Request $request)
     {
-        EventFeeds::where('id', $request->id)->delete();
+        EventFeeds::where('id', $request->id)->get()->delete();
         return response()->json([
             'success'=>true,
             'data'=>[],
