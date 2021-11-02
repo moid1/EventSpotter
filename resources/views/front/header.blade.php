@@ -83,7 +83,7 @@
             </div>
 
         </div>
-        <div style="text-align:center;display:none"><img id="loading" src="{{ asset('loader.gif') }}" alt="" /></div>
+        <div style="text-align:center;"><img id="loading" src="{{ asset('loader.gif') }}" alt="" /></div>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
