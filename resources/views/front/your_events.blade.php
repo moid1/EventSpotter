@@ -150,12 +150,16 @@
             $.ajax({
                 type: 'GET',
                 beforeSend: function() {
+                    $('#loading').show();
+
                     $('#upcomingBtn').removeClass('past');
                     $('#upcomingBtn').addClass('upcoming');
                     $('#draftBtn').removeClass('upcoming');
                     $('#draftBtn').addClass('past');
                     $('#pastEventsBtn').removeClass('upcoming');
                     $('#pastEventsBtn').addClass('past');
+
+
 
 
                 },
@@ -236,6 +240,8 @@
                         $('.favEvent').append("<h5 class='text-center mt-5'>No Events Available</h5>");
                     }
                 }
+            }).done(function() {
+                $('#loading').hide();
 
             });
         }
