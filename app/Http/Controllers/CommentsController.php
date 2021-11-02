@@ -29,7 +29,7 @@ class CommentsController extends Controller
      */
     public function create($id)
     {
-        $event = Event::where('id', $id)->with(['eventPictures', 'user'])->first();
+        $event = Event::where('id', $id)->with(['eventPictures', 'user','like','comment','livefeed'])->first();
 
         $user = Auth::user();
         $eventFeeds = EventFeeds::where('event_id', $id)->with(['user'])->get();

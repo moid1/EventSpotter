@@ -65,10 +65,11 @@
                                     </div>
                                 </a>
                                 <div class="col-md-2  mediumTextGrey">
-                                    <i class="fa fa-thumbs-up blue">
-                                    </i>
-                                    <span class="ml-2 blue"> 12 Likes</span>
-
+                                    <span id="totalLikes{{ $eventDetails['event']->id }}"
+                                        class="eventsDetailsHome  fa fa-thumbs-up">
+                                    </span>
+                                        {{ $eventDetails['event']->like->count() }}
+                                        Likes
 
                                 </div>
                                 <div class="col-md-3 mb-2  mediumTextGrey ">

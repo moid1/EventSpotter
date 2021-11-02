@@ -18,7 +18,7 @@
                                 <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
                                     class="eventBgImage " alt="" srcset="">
                             @endif
-                         
+
                             <div class="options">
                                 <div
                                     class="{{ $eventDetails['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}   align-items-center d-flex">
@@ -206,6 +206,9 @@
         $.ajax({
             type: 'POST',
             url: '/deleteEvent',
+            beforeSend: function() {
+                $('#loading').show();
+            }
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -214,6 +217,8 @@
             }
         }).done(function(msg) {
             showToaster(msg.message, 'success');
+            $('#loading').hide();
+
             setTimeout(() => {
                 window.location = '/';
             }, 1000);
