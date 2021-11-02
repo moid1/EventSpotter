@@ -37,7 +37,7 @@ class UserController extends Controller
     {
         // where('user_id', '!=', Auth::id())->
         $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
-        $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
+        // $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
