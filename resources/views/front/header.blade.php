@@ -89,10 +89,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="application/javascript">
-        $("#loading").ajaxStart(function() {
-            $(this).show();
-        }).ajaxStop(function() {
-            $(this).hide();
+        $(document).ready(function() {
+            $("#loading").ajaxStart(function() {
+                $(this).show();
+            }).ajaxStop(function() {
+                $(this).hide();
+            });
         });
         $(document).ready(function() {
             var down = false;
