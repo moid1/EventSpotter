@@ -40,7 +40,7 @@ class UserController extends Controller
         $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
-        $followingss = Following::where('user_id', Auth::id(), 'is_accepted', 1)->get()->pluck('following_id');
+        $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
         foreach ($upcomingEvents as $key => $value) {
             $flag = false;
             if ($value->is_public == 0) {
