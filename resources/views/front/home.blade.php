@@ -25,7 +25,7 @@
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
-                                                <video class="eventsPic mr-3"
+                                                <video class="eventBgImage mr-3"
                                                     src="{{ asset($event['events']->eventPictures[0]->image_path) }}" controls>
                                                     <source src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
                                                         type="video/mp4">
