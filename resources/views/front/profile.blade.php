@@ -260,6 +260,8 @@
             $.ajax({
                     type: 'POST',
                     url: '/following',
+                    async: true,                       
+
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
