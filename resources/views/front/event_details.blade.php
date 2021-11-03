@@ -134,7 +134,7 @@
 
                     {{-- <button class="map_button">Buy Ticket</button> --}}
                     @if ($eventDetails['event']->user_id == Auth::id())
-                        <button onclick="deleteEvent(this)" data-id="{{ $eventDetails['event']->id }}"
+                        <button onclick="deleteEvent(this)" data-id="{{ $eventDetails['event']->id }}" id="deleteEvent"
                             class="map_button mb-5" style="background: rgb(148, 0, 0);border:none;">Delete
                             Event</button>
 
@@ -208,7 +208,8 @@
             url: '/deleteEvent',
             beforeSend: function() {
                 $('#loading').show();
-            }
+                $('#deleteEvent').html('Deleting');
+            },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -218,10 +219,8 @@
         }).done(function(msg) {
             showToaster(msg.message, 'success');
             $('#loading').hide();
-
-            setTimeout(() => {
-                window.location = '/';
-            }, 1000);
+            window.location = '/';
+        
 
         })
 
