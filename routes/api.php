@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
@@ -14,8 +15,18 @@ use Illuminate\Support\Facades\Password;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::post('/create-account', [AuthController::class, 'createAccount']);
+Route::post('/login', [AuthController::class, 'functionLogin']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/logged-in', function (Request $request) {
+        return response()->json([
+            'success' => true,
+            'data' => auth()->user(),
+            'message' => 'Logged In User'
+        ]);
+    });
+    Route::post('/logout', [AuthenticationController::class, 'logout']);
 });
-
-
