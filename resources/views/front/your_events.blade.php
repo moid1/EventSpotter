@@ -1,11 +1,15 @@
-@include('layouts.head')
+@extends('layouts.main')
+<link rel="stylesheet" href="{{asset('assets/style/style.css')}}">
 
-<body>
-    @include('front.header')
+@section('title', 'Your Events')
+{{-- <link rel="stylesheet" href="{{asset('assets/style/style.css')}}"> --}}
+@section('content')
     <div class="container-fluid">
         <div class="row">
+            
             <div class="col-md-3  float-left">
-                <div class="sidebar ">
+
+                <div class="sidebar">
                     <div>
                         <i class="fa fa-location-arrow mr-3 ml-3" aria-hidden="true"></i>
                         <a class="side_tag" href="{{ '/' }}">Explore events</a>
@@ -33,7 +37,7 @@
                     <hr>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <div class="top_button">
                     <button id="upcomingBtn" onclick="getUserUpcomingEvents()" class='upcoming'>Upcoming</button>
                     <button id="pastEventsBtn" onclick="getUserPastEvents()" class='past'>Past
@@ -50,9 +54,8 @@
             @include('front.right_side')
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
+@endsection
+@section('script')
     <script>
         function getUserPastEvents() {
             $.ajax({
@@ -378,8 +381,4 @@
             getUserUpcomingEvents();
         };
     </script>
-</body>
-
-
-
-</html>
+@endsection

@@ -51,12 +51,6 @@
 
             <div class="col-md-2 topMargin ">
                 <div class="row align-items-center tools">
-                    {{-- <div class="col-md-3 col-sm-4 col-4">
-                        <div class="iconsBackgroundBox">
-                            <a href="chat.html"> <img class="img-fluid"
-                                    src="{{ url('assets/images/icons/emailIcon.png') }}" /></a>
-                        </div>
-                    </div> --}}
                     <div class="col-md-4 col-sm-4 col-4">
                         <div class="iconsBackgroundBox ">
                             <a href="{{ url('notifications') }}"><img class="img-fluid "

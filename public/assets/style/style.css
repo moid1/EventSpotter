@@ -2531,8 +2531,11 @@
             }
 
             .eventsPic {
-                width: 90px;
-                height: 90px;
+                width: 70px;
+                height: auto;
+            }
+            .home_km{
+                font-size: 10px ;
             }
 
             .whiteBanner {

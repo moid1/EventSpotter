@@ -1,7 +1,6 @@
-@include('layouts.head')
-
-<body>
-    @include('front.header')
+@extends('layouts.main')
+@section('title', 'Event Snaps')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9 mx-auto">
@@ -73,8 +72,7 @@
                                     class="nowrap  col-md-3 col-sm-3 col-3 {{ $eventDetails['isLiked'] == 1 ? 'blue' : 'nothing' }} ">
                                     <i class="fa fa-thumbs-up ">
                                     </i>
-                                    <span id="totalLikes{{ $eventDetails['event']->id }}"
-                                        class="eventsDetailsHome  ">
+                                    <span id="totalLikes{{ $eventDetails['event']->id }}" class="eventsDetailsHome  ">
                                         {{ $eventDetails['event']->like->count() }}
                                         Likes</span>
                                     {{-- <span class="vertical"></span> --}}
@@ -137,7 +135,7 @@
 
                             <div class="mt-3 eventsNearYouBG" style="">
                                 <div class="main_snap " style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                ">
+                                            ">
 
                                     <div class="eventsNearYou">
                                         <div class="row snap_cb align-items-center justify-content-between">
@@ -151,8 +149,7 @@
                                             </div>
                                             <div class="col-2  row">
                                                 {{-- <img class="img-fluid" src="{{ asset('assets/images/forword.png') }}" alt=""> --}}
-                                                <span
-                                                    class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}
+                                                <span class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}
                                                 </span>
 
                                                 {{-- <img class="com_flag" src="{{ asset('assets/images/flag.png') }}"
@@ -197,8 +194,8 @@
             @include('front.right_side')
         </div>
     </div>
+@endsection
 
-</body>
 <!-- createEventModal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -265,165 +262,157 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+@section('script')
+    <script>
+        var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
+    </script>
+    <script>
+        var bar = $('.bar');
+        var percent = $('.percent');
+        var status = $('#status');
 
-<script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
-<script>
-    var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
-</script>
-<script>
-    var bar = $('.bar');
-    var percent = $('.percent');
-    var status = $('#status');
+        function getSnaps() {
+            $('#uploadEventSnap').click();
+        }
 
-    function getSnaps() {
-        $('#uploadEventSnap').click();
-    }
+        function like(event) {
+            var id = $(event).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '/like',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'event_id': id,
+                }
+            }).done(function(msg) {
+                showToaster(msg.message, 'success');
+                $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
+                $(event).removeClass('blue');
+                $(event).addClass(msg.className);
 
-    function like(event) {
-        var id = $(event).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: '/like',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'event_id': id,
+            })
+        }
+
+        function deleteSnap(event) {
+            var id = $(event).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '/deleteSnap',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'id': id,
+                }
+            }).done(function(msg) {
+                showToaster(msg.message, 'success');
+                location.reload();
+
+            })
+        }
+
+        var eventSnap = null;
+        $(function() {
+            $('#uploadEventSnap').change(function() {
+                var input = this;
+                eventSnap = input;
+                var url = $(this).val();
+                var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+                if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
+                        ext == "jpg")) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#eventPictureSrc').attr('src', e.target.result);
+                        $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                        $('#eventPictureSrc').show();
+                        $('#eventVideoSrc').hide();
+
+                    }
+                    // $('.uploadCatchyText').addClass('d-none');
+                    reader.readAsDataURL(input.files[0]);
+
+
+                } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
+                    $('#eventPictureSrc').toggle();
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#eventVideoSrc').show();
+                        $('#eventVideoSrc').attr('src', e.target.result);
+                        $('#eventPictureSrc').hide();
+
+                        // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                    }
+                    // $('.uploadCatchyText').addClass('d-none');
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    alert('Invalid Image type');
+                }
+            });
+
+        });
+        $('#uploadSnap').click(function(event) {
+            event.preventDefault();
+            var form_data = new FormData();
+            if (eventSnap == null) {
+                showToaster('Snap is required', '');
+                return;
             }
-        }).done(function(msg) {
-            showToaster(msg.message, 'success');
-            $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
-            $(event).removeClass('blue');
-            $(event).addClass(msg.className);
+            form_data.append("path", eventSnap.files[0]);
+            form_data.append('description', $('#snapDescription').val());
+            form_data.append('event_id', eventss.id);
 
-        })
-    }
+            $.ajax({
+                type: 'POST',
+                url: '/uploadEventSnap',
+                mimeType: "multipart/form-data",
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                beforeSend: function() {
+                    $("#uploadSnap").prop('disabled', true); //disable.
+                    $('.progress').removeClass('d-none');
+                },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
 
-    function deleteSnap(event) {
-        var id = $(event).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: '/deleteSnap',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'id': id,
-            }
-        }).done(function(msg) {
-            showToaster(msg.message, 'success');
-            location.reload();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
 
-        })
-    }
+                            var percentVal = percentComplete + '%';
+                            bar.width(percentVal);
+                            bar.css("background", "#314648");
+                            percent.html(percentVal);
+                        }
+                    }, false);
 
-    var eventSnap = null;
-    $(function() {
-        $('#uploadEventSnap').change(function() {
-            var input = this;
-            eventSnap = input;
-            var url = $(this).val();
-            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
-                    ext == "jpg")) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#eventPictureSrc').attr('src', e.target.result);
-                    $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
-                    $('#eventPictureSrc').show();
-                    $('#eventVideoSrc').hide();
+                    return xhr;
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                error: function(res) {
+                    var errors = JSON.parse(res.responseText);
 
                 }
-                // $('.uploadCatchyText').addClass('d-none');
-                reader.readAsDataURL(input.files[0]);
+            }).done(function(msg) {
+                $("#uploadSnap").prop('disabled', false); //disable.
+                $('.progress').addClass('d-none');
 
+                showToaster('Your snap has been uploaded successfully', 'success');
+                $('#exampleModalCenter').modal('toggle');
+                location.reload();
 
-            } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
-                $('#eventPictureSrc').toggle();
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#eventVideoSrc').show();
-                    $('#eventVideoSrc').attr('src', e.target.result);
-                    $('#eventPictureSrc').hide();
-
-                    // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
-                }
-                // $('.uploadCatchyText').addClass('d-none');
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                alert('Invalid Image type');
-            }
+            })
         });
 
-    });
-    $('#uploadSnap').click(function(event) {
-        event.preventDefault();
-        var form_data = new FormData();
-        if (eventSnap == null) {
-            showToaster('Snap is required', '');
-            return;
-        }
-        form_data.append("path", eventSnap.files[0]);
-        form_data.append('description', $('#snapDescription').val());
-        form_data.append('event_id', eventss.id);
+        $('#infoDialog').click(function(event) {
+            $('#infoText').toggle('hide');
+        });
+    </script>
 
-        $.ajax({
-            type: 'POST',
-            url: '/uploadEventSnap',
-            mimeType: "multipart/form-data",
-            processData: false,
-            contentType: false,
-            enctype: 'multipart/form-data',
-            beforeSend: function() {
-                $("#uploadSnap").prop('disabled', true); //disable.
-                $('.progress').removeClass('d-none');
-            },
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-
-                xhr.upload.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-
-                        var percentVal = percentComplete + '%';
-                        bar.width(percentVal);
-                        bar.css("background", "#314648");
-                        percent.html(percentVal);
-                    }
-                }, false);
-
-                return xhr;
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data,
-            error: function(res) {
-                var errors = JSON.parse(res.responseText);
-
-            }
-        }).done(function(msg) {
-            $("#uploadSnap").prop('disabled', false); //disable.
-            $('.progress').addClass('d-none');
-
-            showToaster('Your snap has been uploaded successfully', 'success');
-            $('#exampleModalCenter').modal('toggle');
-            location.reload();
-
-        })
-    });
-
-    $('#infoDialog').click(function(event) {
-        $('#infoText').toggle('hide');
-    });
-</script>
-
-
-</html>
+@endsection

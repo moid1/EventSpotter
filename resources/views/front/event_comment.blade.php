@@ -1,7 +1,7 @@
-@include('layouts.head')
+@extends('layouts.main')
+@section('title', 'Event Comments')
 
-<body>
-    @include('front.header')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9 mx-auto">
@@ -68,14 +68,15 @@
                                     <span id="totalLikes{{ $eventDetails['event']->id }}"
                                         class="eventsDetailsHome  fa fa-thumbs-up">
                                     </span>
-                                        {{ $eventDetails['event']->like->count() }}
-                                        Likes
+                                    {{ $eventDetails['event']->like->count() }}
+                                    Likes
 
                                 </div>
                                 <div class="col-md-3 mb-2  mediumTextGrey ">
 
                                     <span class="ml-1 b_comment"><img class="comt_img"
-                                            src="{{ asset('assets/images/chatwhite.png') }}" alt=""> {{ $comments->count() }}
+                                            src="{{ asset('assets/images/chatwhite.png') }}" alt="">
+                                        {{ $comments->count() }}
                                         Comments</span>
 
 
@@ -86,8 +87,7 @@
                                     <span class="ml-5 center"></span>
 
                                 </div> --}}
-                                <a class="nowrap"
-                                    href="{{ url('eventSnap/' . $eventDetails['event']->id) }}">
+                                <a class="nowrap" href="{{ url('eventSnap/' . $eventDetails['event']->id) }}">
                                     <div class="col-md-2  mediumTextGrey">
                                         <img src="{{ asset('assets/images/sna.png') }}" alt="">
                                         <span class="ml-2 "> {{ $eventFeeds->count() }} Live Snaps</span>
@@ -101,7 +101,8 @@
                 <div class="eventsComment">
                     <span class="commentTitle "> {{ $comments->count() }} Comments</span>
                     @foreach ($comments as $comment)
-                        <div class="{{ Auth::id() == $comment->user_id ? 'yourComment ' : 'otherComment' }} comments mt-2">
+                        <div
+                            class="{{ Auth::id() == $comment->user_id ? 'yourComment ' : 'otherComment' }} comments mt-2">
                             <div class="row ">
                                 <img class="smallCircularImage "
                                     src="{{ asset($comment->user->profilePicture->image) }}" />
@@ -133,37 +134,33 @@
             @include('front.right_side')
         </div>
     </div>
-    <script src="https://use.fontawesome.com/382f336cbc.js"></script>
+@endsection
+
+@section('script')
+    <script>
+        var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
+        $('#commentBtn').click(function(event) {
+            event.preventDefault();
+            var formData = {
+                event_id: eventss.id,
+                comment: $('#comment').val(),
+            };
 
 
-</body>
-<script>
-    var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
-</script>
-<script>
-    $('#commentBtn').click(function(event) {
-        event.preventDefault();
-        var formData = {
-            event_id: eventss.id,
-            comment: $('#comment').val(),
-        };
+            $.ajax({
+                type: 'POST',
+                url: '/storeComment',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                error: function(res) {
+                    var errors = JSON.parse(res.responseText);
 
-
-        $.ajax({
-            type: 'POST',
-            url: '/storeComment',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: formData,
-            error: function(res) {
-                var errors = JSON.parse(res.responseText);
-
-            }
-        }).done(function(msg) {
-location.reload();
-        })
-    });
-</script>
-
-</html>
+                }
+            }).done(function(msg) {
+                location.reload();
+            })
+        });
+    </script>
+@endsection

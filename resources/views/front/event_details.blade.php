@@ -1,7 +1,7 @@
-@include('layouts.head')
+@extends('layouts.main')
+@section('title', 'Event Details')
 
-<body>
-    @include('front.header')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9">
@@ -73,8 +73,7 @@
                                     class="nowrap  col-md-3 col-sm-3 col-3 {{ $eventDetails['isLiked'] == 1 ? 'blue' : 'nothing' }} ">
                                     <i class="fa fa-thumbs-up ">
                                     </i>
-                                    <span id="totalLikes{{ $eventDetails['event']->id }}"
-                                        class="eventsDetailsHome  ">
+                                    <span id="totalLikes{{ $eventDetails['event']->id }}" class="eventsDetailsHome  ">
                                         {{ $eventDetails['event']->like->count() }}
                                         Likes</span>
                                     {{-- <span class="vertical"></span> --}}
@@ -97,8 +96,7 @@
                                     <span class="vertical"></span>
 
                                 </div> --}}
-                                <a href="{{ url('eventSnap/' . $eventDetails['event']->id) }}"
-                                    class="nowrap">
+                                <a href="{{ url('eventSnap/' . $eventDetails['event']->id) }}" class="nowrap">
                                     <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
                                         <i class="fa fa-play ">
                                         </i>
@@ -116,6 +114,9 @@
                 <div class="event_comment">
                     <div class="event_tit">Details </div>
                     <p class="event_desc"> {{ $eventDetails['event']->event_description }}</p>
+                    <span>Ticket Link <br>
+                        {{ $eventDetails['event']->event_description }}
+                    </span>
                     <div class="event_tit">Conditions </div>
                     <div class="con_tag">
                         @php
@@ -123,7 +124,7 @@
                         @endphp
                         @foreach ($conditionsArr as $condition)
                             <button class="condition_tag" style=" overflow: hidden;
-                            text-overflow: ellipsis;">{{ $condition }}</button>
+                                        text-overflow: ellipsis;">{{ $condition }}</button>
                         @endforeach
                     </div>
                     <br><br>
@@ -151,80 +152,78 @@
 
         </div>
     </div>
-</body>
+@endsection
 
+@section('script')
+    <script>
+        function like(event) {
+            var id = $(event).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '/like',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'event_id': id,
+                }
+            }).done(function(msg) {
+                showToaster(msg.message, 'success');
+                $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
+                $(event).removeClass('blue');
+                $(event).addClass(msg.className);
 
-<script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
-<script>
-    function like(event) {
-        var id = $(event).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: '/like',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'event_id': id,
-            }
-        }).done(function(msg) {
-            showToaster(msg.message, 'success');
-            $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
-            $(event).removeClass('blue');
-            $(event).addClass(msg.className);
-
-        })
-    }
-    var event = {!! json_encode($eventDetails['event']->toArray()) !!};
-
-    function initialize() {
-        var myLatlng = new google.maps.LatLng(event.lat, event.lng);
-        var myOptions = {
-            zoom: 16,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            })
         }
-        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        var event = {!! json_encode($eventDetails['event']->toArray()) !!};
 
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            title: "Fast marker"
-        });
-
-        marker['infowindow'] = new google.maps.InfoWindow({
-            content: event.location
-        });
-
-        google.maps.event.addListener(marker, 'mouseover', function() {
-            this['infowindow'].open(map, this);
-        });
-    }
-
-    function deleteEvent(event) {
-        var id = $(event).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: '/deleteEvent',
-            beforeSend: function() {
-                $('#loading').show();
-                $('#deleteEvent').html('Deleting');
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'event_id': id,
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(event.lat, event.lng);
+            var myOptions = {
+                zoom: 16,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             }
-        }).done(function(msg) {
-            showToaster(msg.message, 'success');
-            $('#loading').hide();
-            window.location = '/';
-        
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
 
-        })
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: "Fast marker"
+            });
 
-    }
-</script>
+            marker['infowindow'] = new google.maps.InfoWindow({
+                content: event.location
+            });
 
-</html>
+            google.maps.event.addListener(marker, 'mouseover', function() {
+                this['infowindow'].open(map, this);
+            });
+        }
+
+        function deleteEvent(event) {
+            var id = $(event).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '/deleteEvent',
+                beforeSend: function() {
+                    $('#loading').show();
+                    $('#deleteEvent').html('Deleting');
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'event_id': id,
+                }
+            }).done(function(msg) {
+                showToaster(msg.message, 'success');
+                $('#loading').hide();
+                window.location = '/';
+
+
+            })
+
+        }
+    </script>
+@endsection

@@ -1,14 +1,13 @@
-@include('layouts.head')
-
-<body>
-    @include('front.header')
+@extends('layouts.main')
+@section('title', 'HomePage')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             @include('front.left_side')
             <div class="col-md-6 mx-auto">
                 <div class="createEventBG">
-                    <a class="create_account text-white" href="#" data-toggle="modal"
-                        data-target="#createEventModal"><img src="{{ asset('assets/images/plus.png') }}" alt="">
+                    <a class="create_account text-white" href="#" data-toggle="modal" data-target="#createEventModal"><img
+                            src="{{ asset('assets/images/plus.png') }}" alt="">
                         Create
                         a new event</a>
                 </div>
@@ -18,16 +17,16 @@
                     @if (count($nearEvents) > 0)
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
-
-
                                 <div class="eventsNearYouBG" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                ">
+                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
                                                 <video class="eventBgImage mr-3"
-                                                    src="{{ asset($event['events']->eventPictures[0]->image_path) }}" controls>
-                                                    <source src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                                    src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                                    controls>
+                                                    <source
+                                                        src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
                                                         type="video/mp4">
                                                 </video>
                                             @else
@@ -74,29 +73,23 @@
                                             <span class="eventsTitle">{{ $event['events']->event_name }}</span>
                                         </div>
                                         <div class="col-md-5 col-sm-5 col-7">
-                                            <div class="smallTextGrey row">
-                                                <div class="col-md-6 col-sm-6 col-6">
-                                                    <i class="fa fa-calendar  ">
-                                                        {{-- @php
-                                                    $event['events']->event_date =  Carbon\Carbon::parse($event['events']->event_date);
-                                                @endphp --}}
-                                                        <span
-                                                            class="text-center">{{ $event['events']->event_date }}</span>
-                                                    </i>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-6 nowrap">
-                                                    <i class="fa fa-map-marker ">
-                                                        <span>{{ $event['km'] }} Miles away</span>
-                                                    </i>
-                                                </div>
+                                            <div class="smallTextGrey d-flex justify-content-around ">
+                                                <i class="fa fa-calendar nowrap ">
+                                                    <span
+                                                        class="text-center">{{ $event['events']->event_date }}</span>
+                                                </i>
+                                                &nbsp;&nbsp;
+                                                <i class="fa fa-map-marker nowrap">
+                                                    <span>{{ $event['km'] }} Miles away</span>
+                                                </i>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="eventOptions">
-                                        <div class="row mx-auto justify-content-between ">
-                                            <div id="isLiked" onclick="like(this)"
-                                                data-id="{{ $event['events']->id }}"
+                                        <div class="row mx-auto justify-content-between align-items-center ">
+                                            <div id="isLiked" onclick="like(this)" data-id="{{ $event['events']->id }}"
                                                 class="nowrap  col-md-3 col-sm-3 col-3 {{ $event['isLiked'] == 1 ? 'blue' : 'nothing' }}">
                                                 <i class="fa fa-thumbs-up ">
                                                 </i>
@@ -198,7 +191,7 @@
             @include('front.right_side')
         </div>
     </div>
-</body>
+@endsection
 <!-- createEventModal -->
 <div class="modal  bd-example-modal-lg" id="createEventModal" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -312,238 +305,249 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+@section('script')
+    <script type="text/javascript">
+        var eventConditionsArray = [];
+        let is_public = 0;
+        var lat, lng;
+        var geocoder;
 
-<script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
-
-<script type="text/javascript">
-    var eventConditionsArray = [];
-    let is_public = 0;
-    var lat, lng;
-    var geocoder;
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
-    }
-    //Get the latitude and the longitude;
-    function successFunction(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        codeLatLng(lat, lng);
-    }
-
-    function errorFunction(error) {
-        alert(error.message);
-    }
-
-    function initialize() {
-        var places = new google.maps.places.Autocomplete(document.getElementById('venue'));
-        console.log(places);
-        google.maps.event.addListener(places, 'place_changed', function() {
-            var place = places.getPlace();
-            console.log(place);
-            var address = place.formatted_address;
-            lat = place.geometry.location.lat();
-            lng = place.geometry.location.lng();
-
-
-        });
-        geocoder = new google.maps.Geocoder();
-    }
-
-    function codeLatLng(lat, lng) {
-        var latlng = new google.maps.LatLng(lat, lng);
-        console.log(lat + '  ' + lng);
-        $.ajax({
-            type: 'POST',
-            url: '/save-lat-lng',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                "lat": lat,
-                'lng': lng,
-            }
-        }).done(function(msg) {
-
-        })
-    }
-
-    function myfunction() {
-        location.replace("your_event.html")
-    }
-
-    function eventConditions(condition) {
-
-        if (condition.innerText == 'Add Conditions') {
-            var conditionText = prompt("Condition", "");
-            $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" +
-                conditionText +
-                "</button>").insertAfter(
-                '.eventCond');
-            eventConditionsArray.push(conditionText);
-
-        } else {
-
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
         }
-    }
-
-    function removeConditions(condition) {
-        $('#' + condition.innerText).remove();
-        eventConditionsArray = eventConditionsArray.filter(item => item !== condition.innerText)
-    }
-
-    function makeEventPublic(val) {
-        is_public = val;
-        if (val == 1) {
-            $('#publicBtn').addClass('event_tag');
-            $('#publicBtn').removeClass('event_t')
-            $('#privateBtn').addClass('event_t');
-            $('#privateBtn').removeClass('event_tag');
-            $('#eventMsg').html(
-                'This event will be public. Everyone on Event Spotter will be able to see this event details.');
-
-        } else {
-            $('#publicBtn').addClass('event_t');
-            $('#publicBtn').removeClass('event_tag');
-            $('#privateBtn').addClass('event_tag');
-            $('#privateBtn').removeClass('event_t');
-            $('#eventMsg').html('This event can only be viewed by your followers Or people you are following.');
+        //Get the latitude and the longitude;
+        function successFunction(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            codeLatLng(lat, lng);
         }
-    }
 
-
-    $('#createEventButton').click(function(event) {
-        event.preventDefault();
-        var form_data = new FormData();
-        if (eventImages1 == null) {
-            showToaster('Image is required', '');
-            return;
+        function errorFunction(error) {
+            alert(error.message);
         }
-        form_data.append("image", eventImages1.files[0]);
-        form_data.append('event_name', $('#eventName').val());
-        form_data.append('event_description', $('#eventDescription').val());
-        form_data.append('event_type', $('#eventType :selected').text());
-        form_data.append('location', $('#venue').val());
-        form_data.append('event_date', $('#event_date').val());
-        form_data.append('ticket_link', $('#ticket_link').val());
-        form_data.append('conditions', eventConditionsArray);
-        form_data.append('is_public', is_public);
-        form_data.append('lat', lat);
-        form_data.append('lng', lng);
-        $.ajax({
-            type: 'POST',
-            url: '/createEvent',
-            mimeType: "multipart/form-data",
-            processData: false,
-            contentType: false,
-            enctype: 'multipart/form-data',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data,
-            error: function(res) {
-                var errors = JSON.parse(res.responseText);
-                console.log(errors);
-                if (errors.errors.event_date) {
-                    showToaster('Date is not valid.', 'error');
+
+        function initialize() {
+            var places = new google.maps.places.Autocomplete(document.getElementById('venue'));
+            console.log(places);
+            google.maps.event.addListener(places, 'place_changed', function() {
+                var place = places.getPlace();
+                console.log(place);
+                var address = place.formatted_address;
+                lat = place.geometry.location.lat();
+                lng = place.geometry.location.lng();
+
+
+            });
+            geocoder = new google.maps.Geocoder();
+        }
+
+        function codeLatLng(lat, lng) {
+            var latlng = new google.maps.LatLng(lat, lng);
+            console.log(lat + '  ' + lng);
+            $.ajax({
+                type: 'POST',
+                url: '/save-lat-lng',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    "lat": lat,
+                    'lng': lng,
                 }
+            }).done(function(msg) {
 
-            }
-        }).done(function(msg) {
-            showToaster('Your event has been created successfully', 'success');
-            $('#createEventModal').modal('toggle');
-        })
-    });
+            })
+        }
 
-    //draft event
+        function myfunction() {
+            location.replace("your_event.html")
+        }
 
-    $('#draftEvent').click(function(event) {
-        event.preventDefault();
-        var form_data = new FormData();
-        if (eventImages1.files[0] != null)
-            form_data.append("image", eventImages1.files[0]);
-        form_data.append('event_name', $('#eventName').val());
-        form_data.append('event_description', $('#eventDescription').val());
-        form_data.append('event_type', $('#eventType :selected').text());
-        form_data.append('location', $('#venue').val());
-        form_data.append('ticket_link', $('#ticket_link').val());
-        form_data.append('conditions', eventConditionsArray);
-        form_data.append('is_public', is_public);
+        function eventConditions(condition) {
 
-        $.ajax({
-            type: 'POST',
-            url: '/draftEvent',
-            mimeType: "multipart/form-data",
-            processData: false,
-            contentType: false,
-            enctype: 'multipart/form-data',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: form_data
-        }).done(function(msg) {
-            showToaster('Your event has been drafted', 'success');
-
-        })
-    });
-
-    //upload Event Pictures & Videos
-
-    function getImages() {
-        $('#uploadEventPicture').click();
-    }
-    var eventImages1 = null;
-    $(function() {
-        $('#uploadEventPicture').change(function() {
-            var input = this;
-            eventImages1 = input;
-            var url = $(this).val();
-            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
-                    ext == "jpg")) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#eventPictureSrc').attr('src', e.target.result);
-                    $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
-                }
-                $('.uploadCatchyText').addClass('d-none');
-                reader.readAsDataURL(input.files[0]);
-
+            if (condition.innerText == 'Add Conditions') {
+                var conditionText = prompt("Condition", "");
+                $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" +
+                    conditionText +
+                    "</button>").insertAfter(
+                    '.eventCond');
+                eventConditionsArray.push(conditionText);
 
             } else {
-                alert('Invalid Image type');
+
             }
+        }
+
+        function removeConditions(condition) {
+            $('#' + condition.innerText).remove();
+            eventConditionsArray = eventConditionsArray.filter(item => item !== condition.innerText)
+        }
+
+        function makeEventPublic(val) {
+            is_public = val;
+            if (val == 1) {
+                $('#publicBtn').addClass('event_tag');
+                $('#publicBtn').removeClass('event_t')
+                $('#privateBtn').addClass('event_t');
+                $('#privateBtn').removeClass('event_tag');
+                $('#eventMsg').html(
+                    'This event will be public. Everyone on Event Spotter will be able to see this event details.');
+
+            } else {
+                $('#publicBtn').addClass('event_t');
+                $('#publicBtn').removeClass('event_tag');
+                $('#privateBtn').addClass('event_tag');
+                $('#privateBtn').removeClass('event_t');
+                $('#eventMsg').html('This event can only be viewed by your followers Or people you are following.');
+            }
+        }
+
+
+        $('#createEventButton').click(function(event) {
+            event.preventDefault();
+            var form_data = new FormData();
+            if (eventImages1 == null) {
+                showToaster('Image is required', '');
+                return;
+            }
+            form_data.append("image", eventImages1.files[0]);
+            form_data.append('event_name', $('#eventName').val());
+            form_data.append('event_description', $('#eventDescription').val());
+            form_data.append('event_type', $('#eventType :selected').text());
+            form_data.append('location', $('#venue').val());
+            form_data.append('event_date', $('#event_date').val());
+            form_data.append('ticket_link', $('#ticket_link').val());
+            form_data.append('conditions', eventConditionsArray);
+            form_data.append('is_public', is_public);
+            form_data.append('lat', lat);
+            form_data.append('lng', lng);
+            $.ajax({
+                type: 'POST',
+                url: '/createEvent',
+                mimeType: "multipart/form-data",
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                error: function(res) {
+                    var errors = JSON.parse(res.responseText);
+                    console.log(errors);
+                    if (errors.errors.event_date) {
+                        showToaster('Date is not valid.', 'error');
+                    }
+
+                }
+            }).done(function(msg) {
+                showToaster('Your event has been created successfully', 'success');
+                $('#createEventModal').modal('toggle');
+            })
         });
 
-    });
+        //draft event
 
-    function favroute(icon, eventId) {
-        var id = $(icon).attr('data-id');
-        if ($(icon).hasClass("light-grey")) {
+        $('#draftEvent').click(function(event) {
+            event.preventDefault();
+            var form_data = new FormData();
+            if (eventImages1.files[0] != null)
+                form_data.append("image", eventImages1.files[0]);
+            form_data.append('event_name', $('#eventName').val());
+            form_data.append('event_description', $('#eventDescription').val());
+            form_data.append('event_type', $('#eventType :selected').text());
+            form_data.append('location', $('#venue').val());
+            form_data.append('ticket_link', $('#ticket_link').val());
+            form_data.append('conditions', eventConditionsArray);
+            form_data.append('is_public', is_public);
+
             $.ajax({
                 type: 'POST',
-                url: '/saveFavrouite',
+                url: '/draftEvent',
+                mimeType: "multipart/form-data",
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {
-                    'event_id': id,
-                }
+                data: form_data
             }).done(function(msg) {
-                showToaster(msg.message, 'success');
-                $(icon).removeClass('light-grey');
-                $(icon).addClass('red');
+                showToaster('Your event has been drafted', 'success');
+
             })
-        } else if ($(icon).hasClass('red')) {
+        });
+
+        //upload Event Pictures & Videos
+
+        function getImages() {
+            $('#uploadEventPicture').click();
+        }
+        var eventImages1 = null;
+        $(function() {
+            $('#uploadEventPicture').change(function() {
+                var input = this;
+                eventImages1 = input;
+                var url = $(this).val();
+                var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+                if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
+                        ext == "jpg")) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#eventPictureSrc').attr('src', e.target.result);
+                        $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                    }
+                    $('.uploadCatchyText').addClass('d-none');
+                    reader.readAsDataURL(input.files[0]);
+
+
+                } else {
+                    alert('Invalid Image type');
+                }
+            });
+
+        });
+
+        function favroute(icon, eventId) {
+            var id = $(icon).attr('data-id');
+            if ($(icon).hasClass("light-grey")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/saveFavrouite',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'event_id': id,
+                    }
+                }).done(function(msg) {
+                    showToaster(msg.message, 'success');
+                    $(icon).removeClass('light-grey');
+                    $(icon).addClass('red');
+                })
+            } else if ($(icon).hasClass('red')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/deleteFavrouite',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'event_id': id,
+                    }
+                }).done(function(msg) {
+                    showToaster(msg.message, 'success');
+                    $(icon).addClass('light-grey');
+                    $(icon).removeClass('red');
+                })
+            }
+        }
+
+        function like(event) {
+            var id = $(event).attr('data-id');
             $.ajax({
                 type: 'POST',
-                url: '/deleteFavrouite',
+                url: '/like',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -552,31 +556,11 @@ integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZf
                 }
             }).done(function(msg) {
                 showToaster(msg.message, 'success');
-                $(icon).addClass('light-grey');
-                $(icon).removeClass('red');
+                $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
+                $(event).removeClass('blue');
+                $(event).addClass(msg.className);
+
             })
         }
-    }
-
-    function like(event) {
-        var id = $(event).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: '/like',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'event_id': id,
-            }
-        }).done(function(msg) {
-            showToaster(msg.message, 'success');
-            $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
-            $(event).removeClass('blue');
-            $(event).addClass(msg.className);
-
-        })
-    }
-</script>
-
-</html>
+    </script>
+@endsection

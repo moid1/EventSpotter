@@ -1,7 +1,8 @@
-@include('layouts.head')
+@extends('layouts.main')
+<link rel="stylesheet" href="{{ asset('assets/style/style.css') }}">
 
-<body>
-    @include('front.header')
+@section('title', 'Followers')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3  float-left">
@@ -70,8 +71,8 @@
                         <a href="{{ url('profile/' . $follower->user->id) }}" style="color: black">
                             <div class="data text-left">
                                 @if ($follower->user->profilePicture)
-                                    <img class="circularImage"
-                                        src="{{ asset($follower->user->profilePicture->image) }}" alt="">
+                                    <img class="circularImage" src="{{ asset($follower->user->profilePicture->image) }}"
+                                        alt="">
                                 @else
                                     <img class="circularImage"
                                         src="{{ asset('assets/images/usersImages/userPlaceHolder.png') }}" alt="">
@@ -103,9 +104,8 @@
 
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
+@endsection
+@section('script')
     <script>
         function acceptFollowingRequest(id) {
             $.ajax({
@@ -167,8 +167,4 @@
                 })
         }
     </script>
-</body>
-
-
-
-</html>
+@endsection

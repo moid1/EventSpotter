@@ -28,13 +28,17 @@ class FavrouiteController extends Controller
     public function create()
     {
         $favrouite = Favrouite::where('user_id', Auth::id())->with('event')->get();
+
         $user = Auth::user();
         $favUpcomingEvent = array();
         $favrouiteEvent = array();
         foreach ($favrouite as $key => $value) {
-            $today = Carbon::now();
-            if ($value->event->event_date >= $today) {
-                $favUpcomingEvent[] = $value->event;
+
+            if ($value->event != null) {
+                $today = Carbon::now();
+                if ($value->event->event_date >= $today) {
+                    $favUpcomingEvent[] = $value->event;
+                }
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
@@ -135,10 +139,12 @@ class FavrouiteController extends Controller
         $favEvents = Favrouite::where('user_id', Auth::id())->with('event')->get();
         $favUpcomingEvent = array();
         $favrouiteEvent = array();
+        $today = Carbon::now();
         foreach ($favEvents as $key => $value) {
-            $today = Carbon::now();
-            if ($value->event->event_date < $today) {
-                $favUpcomingEvent[] = $value->event;
+            if ($value->event != null) {
+                if ($value->event->event_date < $today) {
+                    $favUpcomingEvent[] = $value->event;
+                }
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
@@ -164,8 +170,10 @@ class FavrouiteController extends Controller
         $favrouiteEvent = array();
         foreach ($favEvents as $key => $value) {
             $today = Carbon::now();
-            if ($value->event->event_date >= $today) {
-                $favUpcomingEvent[] = $value->event;
+            if ($value->event != null) {
+                if ($value->event->event_date >= $today) {
+                    $favUpcomingEvent[] = $value->event;
+                }
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {

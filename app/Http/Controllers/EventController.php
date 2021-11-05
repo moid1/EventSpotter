@@ -62,6 +62,7 @@ class EventController extends Controller
             'lng' => $request->lng,
             'is_public' => intVal($request->is_public),
             'user_id' => Auth::user()->id,
+            'ticket_link' => $request->ticket_link, 
         ]);
 
         $imageName = time() . '.' . $request->image->extension();

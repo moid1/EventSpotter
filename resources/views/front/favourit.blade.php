@@ -1,7 +1,8 @@
-@include('layouts.head')
+@extends('layouts.main')
+@section('title', 'Favourite Events')
+<link rel="stylesheet" href="{{asset('assets/style/style.css')}}">
 
-<body>
-    @include('front.header')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3  float-left">
@@ -53,8 +54,7 @@
                                         <a class="nowrap"
                                             href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             <img class="" style="width: 90px;height:90px"
-                                                src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
-                                                alt="">
+                                                src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt="">
                                         </a>
                                     </div>
 
@@ -69,8 +69,8 @@
                                             </div>
                                             <div class="center location"></div>
                                             <div class="col-4">
-                                                <img class="fav_title"
-                                                    src="{{ url('assets/images/location.png') }}" alt="">
+                                                <img class="fav_title" src="{{ url('assets/images/location.png') }}"
+                                                    alt="">
                                                 {{ $event['km'] }} Miles
                                             </div>
                                         </div><br>
@@ -83,15 +83,15 @@
                                             <div class="center"></div>
                                             <div class="col-2">
                                                 <i class="fa fa-thumbs-up light-grey">
-                                                  
+
                                                 </i>
                                                 {{ $event['events']->like->count() }}
                                             </div>
                                             <div class="center"></div>
                                             <div class="col-2">
                                                 <i class="fa fa-comment light-grey">
-                                                  
-                                                       
+
+
                                                 </i>
                                                 {{ $event['events']->comment->count() }}
                                             </div>
@@ -106,8 +106,8 @@
                                                 <i class="fa fa-play light-grey">
 
                                                 </i>
-                                                
-                                              {{ $event['events']->livefeed->count() }}
+
+                                                {{ $event['events']->livefeed->count() }}
                                             </div>
                                         </div>
                                     </div>
@@ -133,9 +133,8 @@
             @include('front.right_side')
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
+@endsection
+@section('script')
     <script>
         function getFavouriteUserPastEvents() {
             window.location.href = "/getFavouriteUserPastEvents";
@@ -180,8 +179,4 @@
             }
         }
     </script>
-</body>
-
-
-
-</html>
+@endsection
