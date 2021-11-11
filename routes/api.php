@@ -28,5 +28,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             'message' => 'Logged In User'
         ]);
     });
-    Route::post('/logout', [AuthenticationController::class, 'logout']);
+    // Route::post('/logout', [AuthenticationController::class, 'logout']);
 });

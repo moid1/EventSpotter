@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventFeeds;
+use App\Models\EventTypes;
 use App\Models\Favrouite;
 use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Likes;
 use App\Models\ProfileImage;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +37,28 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role == 'admin') {
+            $user = User::where('id', Auth::id())->with('profilePicture')->first();
+            $totalEvents = Event::all()->count();
+            $totalUsers = User::all()->except(Auth::id())->count();
+            $lastMonthUsers  = User::where(
+                'created_at',
+                '>=',
+                Carbon::now()->firstOfMonth()->toDateTimeString()
+            )->get()->count();
+            $lastMonthEvents =  Event::where(
+                'created_at',
+                '>=',
+                Carbon::now()->firstOfMonth()->toDateTimeString()
+            )->get()->count();
+
+            $latestUsers = User::latest()->take(10)->get();
+
+
+
+            return view('admin.index', compact('user', 'totalEvents', 'totalUsers', 'lastMonthUsers', 'lastMonthEvents','latestUsers'));
+        }
+        $eventTypes = EventTypes::all();
         // where('user_id', '!=', Auth::id())->
         $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
         // $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
@@ -84,7 +108,7 @@ class UserController extends Controller
             }
         }
         // dd($nearEvents);
-        return view('front.home')->with(compact('user', 'nearEvents'));
+        return view('front.home')->with(compact('user', 'nearEvents', 'eventTypes'));
     }
 
     /**

@@ -16,7 +16,9 @@
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.0",
         "munafio/chatify": "^1.2",
-        "stevebauman/location": "^6.2"
+        "stevebauman/location": "^6.2",
+        "yoeunes/toastr": "^1.2"
+
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

@@ -18,7 +18,7 @@
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                    ">
+                                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -223,27 +223,11 @@
                         <label for="eventType" class="normal-text mt-3 mb-2">Event Type</label>
                         <select class="inputFieldGreenBG d-flex even_type" name="eventType" id="eventType">
                             <option selected disabled>Select</option>
-                            <option value="Workout">Workout</option>
-                            <option value="Workshop">Workshop</option>
-                            <option value="Kickback">Kickback</option>
-                            <option value="Birthday Bash">Birthday Bash</option>
-                            <option value="Cruise">Cruise</option>
-                            <option value="Gaming">Gaming</option>
-                            <option value="Movies">Movies</option>
-                            <option value="Block party ">Block party </option>
-                            <option value="Fashion">Fashion</option>
-                            <option value="Cookout">Cookout</option>
-                            <option value="Virtual event ">Virtual event</option>
-                            <option value="Cars">Cars</option>
-                            <option value="Trade show">Trade show</option>
-                            <option value="Board games">Board games</option>
-                            <option value="Networking">Networking</option>
-                            <option value="Music/Art Events">Music/Art Events</option>
-                            <option value="Family">Family</option>
-                            <option value="Children">Children</option>
-                            <option value="Adult">Adult</option>
-                            <option value="Other">Other</option>
+                            @foreach ($eventTypes as $type)
+                                <option value="{{ $type->type }}">{{ $type->type }}</option>
+                            @endforeach
 
+                            Î
                         </select>
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10">

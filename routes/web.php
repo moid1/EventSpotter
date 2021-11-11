@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthResetPasswordController;
@@ -123,3 +124,12 @@ Route::post('storeComment', [CommentsController::class, 'store']);
 Route::post('like', [LikesController::class, 'store']);
 
 Route::get('filter/{filter}', [EventController::class, 'filterEvent']);
+
+
+
+// admin
+Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
+    Route::get('addEventTypes', [Admin::class, 'create']);
+    Route::post('addEventTypes', [Admin::class, 'addEventType']);
+    Route::get('deleteEventType/{id}', [Admin::class, 'deleteEventType']);
+});

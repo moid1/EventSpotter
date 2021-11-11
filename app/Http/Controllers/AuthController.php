@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+   
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -17,7 +20,10 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/');
+            if (Auth::user()->role == 'user')
+                return redirect()->intended('/');
+            elseif (Auth::user()->role == 'admin')
+                return redirect()->intended('/admin');
         }
 
         return back()->withErrors([
@@ -54,7 +60,7 @@ class AuthController extends Controller
 
     public function createAccount(Request $request)
     {
-       $userData =  Validator::make($request->all(),[
+        $userData =  Validator::make($request->all(), [
             'name' => 'required|min:2|max:50',
             'phone_number' => 'required|numeric',
             'email' => 'required|email|unique:users',
