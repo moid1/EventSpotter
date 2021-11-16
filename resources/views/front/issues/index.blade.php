@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @section('title')
-    Today Events
+    All Users
 @endsection
 @section('content')
     <div class="page-content-wrapper ">
@@ -11,31 +11,33 @@
                         <div class="col-12">
                             <div class="card m-b-20">
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">Today Events </h4>
+                                    <h4 class="mt-0 header-title">All Users </h4>
                                     <p class="text-muted m-b-30 font-14"></p>
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap" cellspacing="0"
                                         width="100%">
                                         <thead>
                                             <tr>
                                                 <th>Sr.no</th>
-                                                <th>Event Name</th>
-                                                <th>Event Description</th>
-                                                <th>Event Type</th>
-                                                <th>Created By</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th> Type</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
                                                 <th>Created Date</th>
 
                                                 {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($todayEvents as $key => $event)
+                                            @foreach ($issues as $key => $issue)
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $event->event_name }}</td>
-                                                    <td>{{\Illuminate\Support\Str::limit($event->event_description,50,$end='...')}}</td>
-                                                    <th>{{ $event->event_type }}</th>
-                                                    <td>{{ $event->user->name }}</td>
-                                                    <td>{{ $event->created_at->toDateString() }}</td>
+                                                    <td>{{ $issue->name }}</td>
+                                                    <td>{{ $issue->email }}</td>
+                                                    <td><span class="badge badge-danger">{{ $issue->type }}</span></td>
+                                                    <td>{{ $issue->description }}</td>
+                                                    <td><span class="badge badge-primary">{{ $issue->status }}</span></td>
+                                                    <td>{{ $issue->created_at->toDateString() }}</td>
                                                     {{-- <td><img src="{{asset($user->image)}}" width="50" height="50" />
                                                 <style>
                                                     img {
@@ -52,7 +54,14 @@
                                                 @endif
                                             </td> --}}
 
+                                                    {{-- <td> --}}
 
+                                                    {{-- <a href="{{route('user.show',$user->id)}}" class="btn btn-success "><i class="fa fa-eye"></i></a> --}}
+                                                    {{-- <a onclick="return confirm('Do you want to delete this record ?')" href="#" class="btn btn-primary btn-xs"><i class="fa fa-trash-o "></i></a> --}}
+
+
+
+                                                    {{-- </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>

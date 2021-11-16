@@ -104,9 +104,12 @@
                             </a>
                             <ul class="list-unstyled">
                                 {{-- <li><a href="{{ url('user') }}"> <i class="mdi mdi-clock "> Home Top Data</i> --}}
-                                <li><a href="{{ url('admin-upcoming-events') }}"> <i class="mdi mdi-clock ">Upcoming Events</i>
-                                <li><a href="{{ url('admin-today-events') }}"> <i class="mdi mdi-clock ">Todays Events</i>
-                                <li><a href="{{ url('admin-past-events') }}"> <i class="mdi mdi-clock "> Past Events</i>
+                                <li><a href="{{ url('admin-upcoming-events') }}"> <i class="mdi mdi-clock ">Upcoming
+                                            Events</i>
+                                <li><a href="{{ url('admin-today-events') }}"> <i class="mdi mdi-clock ">Todays
+                                            Events</i>
+                                <li><a href="{{ url('admin-past-events') }}"> <i class="mdi mdi-clock "> Past
+                                            Events</i>
                                     </a>
                             </ul>
                         </li>
@@ -117,11 +120,13 @@
                             <ul class="list-unstyled">
                                 {{-- <li><a href="{{ url('user') }}"> <i class="mdi mdi-clock "> Home Top Data</i> --}}
                                 <li><a href="{{ url('allUsers') }}"> <i class="mdi mdi-clock ">All Users</i>
-                                {{-- <li><a href="{{ url('accordion') }}"> <i class="mdi mdi-clock ">Blocked Users</i> --}}
-                                {{-- <li><a href="{{ url('counter') }}"> <i class="mdi mdi-clock "> Online Users</i> --}}
+                                        {{-- <li><a href="{{ url('accordion') }}"> <i class="mdi mdi-clock ">Blocked Users</i> --}}
+                                        {{-- <li><a href="{{ url('counter') }}"> <i class="mdi mdi-clock "> Online Users</i> --}}
                                     </a>
                             </ul>
                         </li>
+
+
 
                         <li class="has_sub ">
                             <a href="#" class="waves-effect "><i class="mdi mdi-buffer "></i> <span>Event
@@ -135,7 +140,14 @@
 
                             </ul>
                         </li>
-                
+
+                        <li>
+                            <a href="{{ url('/get-all-issues') }}" class="waves-effect ">
+                                <i class="mdi mdi-view-dashboard"></i>
+                                <span> Issues <span class="badge badge-primary pull-right"></span></span>
+                            </a>
+                        </li>
+
 
 
 
@@ -170,7 +182,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="GET"
                                         class="d-none">
                                         @csrf
                                     </form>

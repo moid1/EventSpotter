@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventTypes;
+use App\Models\Issues;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,5 +65,11 @@ class Admin extends Controller
     {
         $pastEvents = Event::where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->get();
         return view('admin.events.past_events', compact('pastEvents'));
+    }
+
+    public function getAllIssues()
+    {
+        $issues = Issues::orderBy('created_at', 'DESC')->get();
+        return view('front.issues.index', compact('issues'));
     }
 }

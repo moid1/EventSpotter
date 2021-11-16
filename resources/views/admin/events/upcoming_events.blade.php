@@ -32,7 +32,7 @@ Upcoming Events
                                         <tr>
                                             <td>{{$key+1}}</td>
                                             <td>{{$event->event_name}}</td>
-                                            <td>{{\Illuminate\Support\Str::limit($event->event_description,50,$end='...Î')}}</td>
+                                            <td>{{\Illuminate\Support\Str::limit($event->event_description,50,$end='...')}}</td>
                                             <th>{{$event->event_type}}</th>
                                             <td>{{$event->user->name}}</td>
                                             <td>{{($event->created_at)->toDateString()}}</td>

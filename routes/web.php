@@ -13,6 +13,7 @@ use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\IssuesController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\NotificationsController;
 use App\Models\Event;
@@ -125,6 +126,10 @@ Route::post('like', [LikesController::class, 'store']);
 
 Route::get('filter/{filter}', [EventController::class, 'filterEvent']);
 
+//Issues
+Route::get('reportIssue', [IssuesController::class, 'create']);
+Route::post('storeIssue', [IssuesController::class, 'store']);
+
 
 
 // admin
@@ -136,6 +141,5 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::get('admin-upcoming-events', [Admin::class, 'adminUpcomingEvents']);
     Route::get('admin-today-events', [Admin::class, 'adminTodayEvents']);
     Route::get('admin-past-events', [Admin::class, 'adminPastEvents']);
-
-
+    Route::get('get-all-issues', [Admin::class, 'getAllIssues']);
 });

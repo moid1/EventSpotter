@@ -8,9 +8,9 @@
     <title>
         @yield('title')
     </title>
-    
+
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="{{asset('assets/style/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/style/style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/libraries/css/bootstrap.min.css') }}">
@@ -25,7 +25,7 @@
     <script>
         var user = {!! json_encode((array) auth()->user()) !!};
     </script>
-    
+
 </head>
 
 <body>

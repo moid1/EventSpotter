@@ -22,9 +22,9 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
@@ -201,8 +201,8 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Yoeunes\\Toastr\\' => 
         array (
@@ -577,6 +577,7 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'App\\Http\\Controllers\\Admin' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\AuthResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthResetPasswordController.php',
+        'App\\Http\\Controllers\\BugTypesController' => __DIR__ . '/../..' . '/app/Http/Controllers/BugTypesController.php',
         'App\\Http\\Controllers\\CommentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/CommentsController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/EventController.php',
@@ -585,6 +586,7 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'App\\Http\\Controllers\\FollowerController' => __DIR__ . '/../..' . '/app/Http/Controllers/FollowerController.php',
         'App\\Http\\Controllers\\FollowingController' => __DIR__ . '/../..' . '/app/Http/Controllers/FollowingController.php',
         'App\\Http\\Controllers\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/ForgotPasswordController.php',
+        'App\\Http\\Controllers\\IssuesController' => __DIR__ . '/../..' . '/app/Http/Controllers/IssuesController.php',
         'App\\Http\\Controllers\\LikesController' => __DIR__ . '/../..' . '/app/Http/Controllers/LikesController.php',
         'App\\Http\\Controllers\\NotificationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationsController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
@@ -600,6 +602,7 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Middleware\\checkAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/checkAdmin.php',
         'App\\Models\\Address' => __DIR__ . '/../..' . '/app/Models/Address.php',
+        'App\\Models\\BugTypes' => __DIR__ . '/../..' . '/app/Models/BugTypes.php',
         'App\\Models\\Comments' => __DIR__ . '/../..' . '/app/Models/Comments.php',
         'App\\Models\\Event' => __DIR__ . '/../..' . '/app/Models/Event.php',
         'App\\Models\\EventFeeds' => __DIR__ . '/../..' . '/app/Models/EventFeeds.php',
@@ -608,6 +611,7 @@ class ComposerStaticInita0737408a2daa5ddd49fa9b789a067d1
         'App\\Models\\Favrouite' => __DIR__ . '/../..' . '/app/Models/Favrouite.php',
         'App\\Models\\Follower' => __DIR__ . '/../..' . '/app/Models/Follower.php',
         'App\\Models\\Following' => __DIR__ . '/../..' . '/app/Models/Following.php',
+        'App\\Models\\Issues' => __DIR__ . '/../..' . '/app/Models/Issues.php',
         'App\\Models\\Likes' => __DIR__ . '/../..' . '/app/Models/Likes.php',
         'App\\Models\\Notifications' => __DIR__ . '/../..' . '/app/Models/Notifications.php',
         'App\\Models\\Profile' => __DIR__ . '/../..' . '/app/Models/Profile.php',

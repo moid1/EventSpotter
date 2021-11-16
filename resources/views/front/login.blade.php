@@ -90,15 +90,14 @@
     <div class="footer">
         <footer class="w-100">
             <div class="container">
-                <div class="row align-items-center ">
-                    <div class="col-lg-4 col-md-6">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
                         <h5 class="h1 text-white text-center"><img src="{{ url('assets/images/moid1.png') }}" alt="">
                         </h5>
                         <h1 class="text-white text-center" style="font-size: 33px;">Event Spotter</h1>
-                        <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                        <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">Bootstrapious.com</a></p> -->
+
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <h5 class=" mb-3" style="color: #74ABB0;">Quick links</h5>
                         <ul class="list-unstyled text-muted">
                             <li class="mb-2">
@@ -123,29 +122,20 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-3">Quick links</h5>
-                        <ul class="list-unstyled text-muted">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Get started</a></li>
-                            <li><a href="#">FAQ</a></li>
-                        </ul>
-                    </div> -->
-                    <div class="col-lg-4 col-md-6">
+
+                    <div class="col-lg-3 col-md-6">
                         <h5 class=" mb-3" style="color: #74ABB0;">Contact Us</h5>
-                        <h3 class="text-white">Coming Soon</h3>
+                        <ul class="list-unstyled text-muted">
+                            <li class="mb-2"><a target="_blank" href="{{ url('reportIssue') }}"
+                                    style="color: white;">Report a Issue</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-white">Coming Soon</h4>
                         <a href=""><img class="mb-3" src="{{ url('assets/images/df.jpeg') }}"
                                 alt=""></a><br>
                         <a href="" class=""><img src="{{ url('assets/images/apple2.jpeg') }}"
                                 alt=""></a>
-                        <!-- <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p> -->
-                        <!-- <form action="#">
-                            <div class="input-group mb-3">
-                                <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
-                            </div>
-                        </form> -->
                     </div>
                 </div>
             </div>
