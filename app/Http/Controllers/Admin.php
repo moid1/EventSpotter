@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\EventTypes;
+use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class Admin extends Controller
 {
@@ -39,5 +41,28 @@ class Admin extends Controller
             toastr()->error('Delete Successfully');
         }
         return redirect()->back();
+    }
+
+    public function getAllUsers()
+    {
+        $users = User::all()->except(Auth::id());
+        return view('admin.users.index', compact('users'));
+    }
+
+    public function adminUpcomingEvents()
+    {
+        $upcomingEvents = Event::where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->get();
+        return view('admin.events.upcoming_events', compact('upcomingEvents'));
+    }
+    public function adminTodayEvents()
+    {
+        $todayEvents = Event::where('event_date', '=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->get();
+        return view('admin.events.today_events', compact('todayEvents'));
+    }
+
+    public function adminPastEvents()
+    {
+        $pastEvents = Event::where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user'])->get();
+        return view('admin.events.past_events', compact('pastEvents'));
     }
 }

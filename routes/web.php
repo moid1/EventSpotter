@@ -132,4 +132,10 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::get('addEventTypes', [Admin::class, 'create']);
     Route::post('addEventTypes', [Admin::class, 'addEventType']);
     Route::get('deleteEventType/{id}', [Admin::class, 'deleteEventType']);
+    Route::get('allUsers', [Admin::class, 'getAllUsers']);
+    Route::get('admin-upcoming-events', [Admin::class, 'adminUpcomingEvents']);
+    Route::get('admin-today-events', [Admin::class, 'adminTodayEvents']);
+    Route::get('admin-past-events', [Admin::class, 'adminPastEvents']);
+
+
 });

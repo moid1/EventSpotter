@@ -104,9 +104,9 @@
                             </a>
                             <ul class="list-unstyled">
                                 {{-- <li><a href="{{ url('user') }}"> <i class="mdi mdi-clock "> Home Top Data</i> --}}
-                                <li><a href="{{ url('title') }}"> <i class="mdi mdi-clock ">Upcoming Events</i>
-                                <li><a href="{{ url('accordion') }}"> <i class="mdi mdi-clock ">Todays Events</i>
-                                <li><a href="{{ url('counter') }}"> <i class="mdi mdi-clock "> Past Events</i>
+                                <li><a href="{{ url('admin-upcoming-events') }}"> <i class="mdi mdi-clock ">Upcoming Events</i>
+                                <li><a href="{{ url('admin-today-events') }}"> <i class="mdi mdi-clock ">Todays Events</i>
+                                <li><a href="{{ url('admin-past-events') }}"> <i class="mdi mdi-clock "> Past Events</i>
                                     </a>
                             </ul>
                         </li>
@@ -116,9 +116,9 @@
                             </a>
                             <ul class="list-unstyled">
                                 {{-- <li><a href="{{ url('user') }}"> <i class="mdi mdi-clock "> Home Top Data</i> --}}
-                                <li><a href="{{ url('title') }}"> <i class="mdi mdi-clock ">All Users</i>
-                                <li><a href="{{ url('accordion') }}"> <i class="mdi mdi-clock ">Blocked Users</i>
-                                <li><a href="{{ url('counter') }}"> <i class="mdi mdi-clock "> Online Users</i>
+                                <li><a href="{{ url('allUsers') }}"> <i class="mdi mdi-clock ">All Users</i>
+                                {{-- <li><a href="{{ url('accordion') }}"> <i class="mdi mdi-clock ">Blocked Users</i> --}}
+                                {{-- <li><a href="{{ url('counter') }}"> <i class="mdi mdi-clock "> Online Users</i> --}}
                                     </a>
                             </ul>
                         </li>
@@ -229,6 +229,8 @@
     <script src="{{ asset('asset/plugins/moment/moment.js') }}"></script>
 
     <!--Data tabel-->
+    <script src="{{ asset('asset/plugins/datatables/responsive.bootstrap4.min.js') }}"></script>
+
     <script src="{{ asset('asset/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('asset/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
