@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @section('title')
-    All Users
+    All Issues
 @endsection
 @section('content')
     <div class="page-content-wrapper ">
@@ -11,7 +11,7 @@
                         <div class="col-12">
                             <div class="card m-b-20">
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">All Users </h4>
+                                    <h4 class="mt-0 header-title">All Issues </h4>
                                     <p class="text-muted m-b-30 font-14"></p>
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap" cellspacing="0"
                                         width="100%">
