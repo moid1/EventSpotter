@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BugTypes;
 use App\Models\Event;
 use App\Models\EventTypes;
 use App\Models\Issues;
@@ -39,6 +40,16 @@ class Admin extends Controller
         $eventType = EventTypes::findOrFail($id);
         if ($eventType) {
             $eventType->delete();
+            toastr()->error('Delete Successfully');
+        }
+        return redirect()->back();
+    }
+
+    public function deleteBugType($id)
+    {
+        $bugType = BugTypes::findOrFail($id);
+        if ($bugType) {
+            $bugType->delete();
             toastr()->error('Delete Successfully');
         }
         return redirect()->back();
@@ -86,10 +97,10 @@ class Admin extends Controller
             $user->is_block = 'true';
             $user->save();
         }
-
         toastr()->success('User has been blocked successfully');
         return redirect()->back();
     }
+
     public function unBlockUser($id)
     {
         $user = User::findorFail($id);
@@ -99,6 +110,19 @@ class Admin extends Controller
         }
 
         toastr()->success('User has been unblocked successfully');
+        return redirect()->back();
+    }
+
+    public function addIssueTypes()
+    {
+        $issueTypes = BugTypes::all();
+        return view('front.issues.add_issue_types', compact('issueTypes'));
+    }
+
+    public function addBugType(Request $request)
+    {
+        BugTypes::create($request->all());
+        toastr()->success('Data Saved Successfully');
         return redirect()->back();
     }
 }

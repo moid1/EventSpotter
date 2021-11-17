@@ -145,5 +145,9 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::get('showIssue/{id}',[Admin::class,'getIssueDetails']);
     Route::get('block-user/{id}',[Admin::class,'blockUser']);
     Route::get('unblock-user/{id}',[Admin::class,'unblockUser']);
+    Route::get('addIssueTypes', [Admin::class, 'addIssueTypes']);
+    Route::post('addBugType',[Admin::class,'addBugType']);
+    Route::get('deleteBugType/{id}', [Admin::class, 'deleteBugType']);
+
 
 });

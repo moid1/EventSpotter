@@ -23,6 +23,7 @@
                                                 <th>Event Type</th>
                                                 <th>Created By</th>
                                                 <th>Created Date</th>
+                                                <th>Actions</th>
 
                                                 {{-- <th>Action</th> --}}
                                             </tr>
@@ -32,10 +33,13 @@
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $event->event_name }}</td>
-                                                    <td>{{\Illuminate\Support\Str::limit($event->event_description,50,$end='...')}}</td>
+                                                    <td>{{ \Illuminate\Support\Str::limit($event->event_description, 50, $end = '...') }}
+                                                    </td>
                                                     <th>{{ $event->event_type }}</th>
                                                     <td>{{ $event->user->name }}</td>
                                                     <td>{{ $event->created_at->toDateString() }}</td>
+                                                    <td> <a href="{{ url('eventDetails', $event->id) }}"
+                                                            class="btn btn-danger "> <i class="fa fa-eye"></i></a></td>
                                                     {{-- <td><img src="{{asset($user->image)}}" width="50" height="50" />
                                                 <style>
                                                     img {

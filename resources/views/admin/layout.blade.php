@@ -141,11 +141,21 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="{{ url('/get-all-issues') }}" class="waves-effect ">
-                                <i class="mdi mdi-view-dashboard"></i>
-                                <span> Issues <span class="badge badge-primary pull-right"></span></span>
+                        <li class="has_sub ">
+                            <a href="#" class="waves-effect "><i class="mdi mdi-buffer "></i> <span>Issues</span>
                             </a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ url('/get-all-issues') }}" class="waves-effect ">
+                                        <i class="mdi mdi-clock ">All Issues</i>
+
+                                    </a></li>
+
+   
+
+                                <li><a href="{{ url('/addIssueTypes') }}"> <i class="mdi mdi-clock ">Add Issue
+                                            Types</i></a></li>
+                            </ul>
+
                         </li>
 
 
