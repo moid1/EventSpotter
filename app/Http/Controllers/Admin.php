@@ -72,4 +72,33 @@ class Admin extends Controller
         $issues = Issues::orderBy('created_at', 'DESC')->get();
         return view('front.issues.index', compact('issues'));
     }
+
+    public function getIssueDetails($id)
+    {
+        $issue = Issues::findOrFail($id);
+        return view('front.issues.show', compact('issue'));
+    }
+
+    public function blockUser($id)
+    {
+        $user = User::findorFail($id);
+        if ($user) {
+            $user->is_block = 'true';
+            $user->save();
+        }
+
+        toastr()->success('User has been blocked successfully');
+        return redirect()->back();
+    }
+    public function unBlockUser($id)
+    {
+        $user = User::findorFail($id);
+        if ($user) {
+            $user->is_block = 'false';
+            $user->save();
+        }
+
+        toastr()->success('User has been unblocked successfully');
+        return redirect()->back();
+    }
 }

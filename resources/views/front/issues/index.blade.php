@@ -18,26 +18,33 @@
                                         <thead>
                                             <tr>
                                                 <th>Sr.no</th>
-                                                <th>Full Name</th>
                                                 <th>Email</th>
                                                 <th> Type</th>
                                                 <th>Description</th>
                                                 <th>Status</th>
                                                 <th>Created Date</th>
 
-                                                {{-- <th>Action</th> --}}
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($issues as $key => $issue)
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $issue->name }}</td>
                                                     <td>{{ $issue->email }}</td>
                                                     <td><span class="badge badge-danger">{{ $issue->type }}</span></td>
                                                     <td>{{ $issue->description }}</td>
                                                     <td><span class="badge badge-primary">{{ $issue->status }}</span></td>
                                                     <td>{{ $issue->created_at->toDateString() }}</td>
+
+                                                    <td>
+
+                                                    <a href="{{url('showIssue',$issue->id)}}"  class="btn btn-primary "><i style="color: white" class="fa fa-eye white"></i></a>
+                                                    {{-- <a onclick="return confirm('Do you want to delete this record ?')" href="#" class="btn btn-primary btn-xs"><i class="fa fa-trash-o "></i></a> --}}
+
+
+
+                                                    </td>
                                                     {{-- <td><img src="{{asset($user->image)}}" width="50" height="50" />
                                                 <style>
                                                     img {

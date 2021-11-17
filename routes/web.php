@@ -142,4 +142,8 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::get('admin-today-events', [Admin::class, 'adminTodayEvents']);
     Route::get('admin-past-events', [Admin::class, 'adminPastEvents']);
     Route::get('get-all-issues', [Admin::class, 'getAllIssues']);
+    Route::get('showIssue/{id}',[Admin::class,'getIssueDetails']);
+    Route::get('block-user/{id}',[Admin::class,'blockUser']);
+    Route::get('unblock-user/{id}',[Admin::class,'unblockUser']);
+
 });

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
-   
+
 
     public function login(Request $request)
     {
@@ -18,12 +18,20 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            if ($user->is_block == 'true') {
+                return back()->withErrors([
+                    'email' => 'Your account is blocked by admin',
+                ]);
+            }
+        }
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 'user')
+
+         
                 return redirect()->intended('/');
-            elseif (Auth::user()->role == 'admin')
-                return redirect()->intended('/admin');
+         
         }
 
         return back()->withErrors([
