@@ -71,9 +71,11 @@
                 <div class="personalDetailsBg mb-5 ">
                     <div class="ml-4 mb-5">
                         <div class="mt-3">
-                            <button class="upcomingProfile ml-3  medium-text">Personal Details</button>
+                            <button id="personDetailsBtn" class="upcomingProfile ml-3  medium-text">Personal
+                                Details</button>
                             @if (Auth::User()->id == $user->id)
-                                <button class="pastOutlineButton ml-3">Settings</button>
+                                <button id="settingButton" onclick="openSettings()"
+                                    class="pastOutlineButton ml-3">Settings</button>
                             @endif
                         </div>
                         <div class="w-100 d-flex justify-content-center ">
@@ -143,8 +145,62 @@
                                 Save Details
                             </Button>
                         </div>
+
+                        {{-- settingContent --}}
+                        @if (Auth::User()->id == $user->id)
+                            <div class="settingContent ml-3 mt-3 " style="display: none">
+                                @if (Auth::User()->id == $user->id)
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class=" w-50 d-flex align-items-center mt-2">
+                                                Use Your Location
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="useYourLocation">
+                                                    <label class="labelSwitch" for="useYourLocation"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <div class=" w-50 d-flex align-items-center mt-2">
+                                                Allow Direct Message
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="allowDirectMessage">
+                                                    <label class="labelSwitch" for="allowDirectMessage"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2"></div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-5">
+                                            <div class=" w-50 d-flex align-items-center mt-2">
+                                                Make your profile private
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="makeProfilePrivate">
+                                                    <label class="labelSwitch" for="makeProfilePrivate"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                @endif
+                                <Button id="saveBtn" class="upcoming mt-5 mb-5 d-none">
+                                    Save Details
+                                </Button>
+                            </div>
+                        @endif
                     </div>
                 </div>
+
+
             </div>
             @include('front.right_side')
         </div>
@@ -164,6 +220,24 @@
             $('#makePhonePrivate').prop("checked", true);
         else
             $('#makePhonePrivate').prop("checked", false);
+
+        if (user.use_location == '1')
+            $('#useYourLocation').prop("checked", true);
+        else
+            $('#useYourLocation').prop("checked", false);
+
+        if (user.allow_direct_message == '1')
+            $('#allowDirectMessage').prop("checked", true);
+        else
+            $('#allowDirectMessage').prop("checked", false);
+
+        if (user.profile_private == '1')
+            $('#makeProfilePrivate').prop("checked", true);
+        else
+            $('#makeProfilePrivate').prop("checked", false);
+
+
+
 
 
         // var isFollowing = {!! json_encode($isFollowing) !!};
@@ -260,7 +334,7 @@
             $.ajax({
                     type: 'POST',
                     url: '/following',
-                    async: true,                       
+                    async: true,
 
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -286,6 +360,67 @@
                     },
                     data: {
                         "isPrivate": this.checked ? 1 : 0,
+                    },
+                    success: function(response) {
+                        showToaster(response.message, 'success');
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+
+        //useYourLocation
+
+        $('#useYourLocation').change(function() {
+            $.ajax({
+                    type: 'POST',
+                    url: '/useLocation',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "use_location": this.checked ? '1' : '0',
+                    },
+                    success: function(response) {
+                        showToaster(response.message, 'success');
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+
+        //allowDirectMsg
+        $('#allowDirectMessage').change(function() {
+            $.ajax({
+                    type: 'POST',
+                    url: '/allowDirectMessage',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "allow_direct_message": this.checked ? '1' : '0',
+                    },
+                    success: function(response) {
+                        showToaster(response.message, 'success');
+                    }
+                })
+                .done(function() {
+
+                })
+        });
+
+        //makeProfilePrivate
+        $('#makeProfilePrivate').change(function() {
+            $.ajax({
+                    type: 'POST',
+                    url: '/makeProfilePrivate',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "profile_private": this.checked ? '1' : '0',
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
@@ -381,7 +516,8 @@
                         if (response.data.length > 0) {
                             response.data.forEach(function(event) {
                                 var img =
-                                    window.location.origin + '/' + event.events.event_pictures[0].image_path;
+                                    window.location.origin + '/' + event.events.event_pictures[0]
+                                    .image_path;
                                 var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
@@ -392,11 +528,11 @@
                                     "<h6 class='eventsTitleProfile'>" + event
                                     .events.event_name +
                                     "</h6>" +
-                                    "<img class ='fav_title' src='{{asset('assets/images/date.png')}}'>" +
+                                    "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
                                     "<span class='smallTextGrey'> " + event.events.event_date +
                                     "</span>" +
                                     "<br>" +
-                                    "<image class='fav_title' src ='{{asset('assets/images/location.png')}}'>" +
+                                    "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
                                     "<span class='smallTextGrey'> " + event.km +
                                     " Miles away</span> " +
                                     "</div>" +
@@ -472,6 +608,29 @@
                 .done(function() {
 
                 })
+        });
+
+        //setting oopen 
+
+        $('#settingButton').click(function(event) {
+            event.preventDefault();
+            $(this).addClass('upcomingProfile');
+            $(this).removeClass('pastOutlineButton');
+            $('#personDetailsBtn').removeClass('upcomingProfile');
+            $('#personDetailsBtn').addClass('pastOutlineButton');
+            $('.personalDetailsContent').hide();
+            $('.settingContent').show();
+
+        });
+
+        $('#personDetailsBtn').click(function(event) {
+            event.preventDefault();
+            $('#settingButton').addClass('pastOutlineButton');
+            $('#settingButton').removeClass('upcomingProfile');
+            $('#personDetailsBtn').removeClass('pastOutlineButton');
+            $('#personDetailsBtn').addClass('upcomingProfile');
+            $('.personalDetailsContent').show()
+            $('.settingContent').hide();
         });
     </script>
 

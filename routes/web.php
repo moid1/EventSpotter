@@ -130,6 +130,11 @@ Route::get('filter/{filter}', [EventController::class, 'filterEvent']);
 Route::get('reportIssue', [IssuesController::class, 'create']);
 Route::post('storeIssue', [IssuesController::class, 'store']);
 
+Route::post('useLocation', [UserController::class, 'useYourLocation']);
+Route::post('allowDirectMessage', [UserController::class, 'allowDirectMessage']);
+Route::post('makeProfilePrivate', [UserController::class, 'makeProfilePrivate']);
+
+
 
 
 // admin
@@ -142,12 +147,10 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::get('admin-today-events', [Admin::class, 'adminTodayEvents']);
     Route::get('admin-past-events', [Admin::class, 'adminPastEvents']);
     Route::get('get-all-issues', [Admin::class, 'getAllIssues']);
-    Route::get('showIssue/{id}',[Admin::class,'getIssueDetails']);
-    Route::get('block-user/{id}',[Admin::class,'blockUser']);
-    Route::get('unblock-user/{id}',[Admin::class,'unblockUser']);
+    Route::get('showIssue/{id}', [Admin::class, 'getIssueDetails']);
+    Route::get('block-user/{id}', [Admin::class, 'blockUser']);
+    Route::get('unblock-user/{id}', [Admin::class, 'unblockUser']);
     Route::get('addIssueTypes', [Admin::class, 'addIssueTypes']);
-    Route::post('addBugType',[Admin::class,'addBugType']);
+    Route::post('addBugType', [Admin::class, 'addBugType']);
     Route::get('deleteBugType/{id}', [Admin::class, 'deleteBugType']);
-
-
 });

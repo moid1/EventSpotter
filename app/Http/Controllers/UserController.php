@@ -56,7 +56,7 @@ class UserController extends Controller
 
 
 
-            return view('admin.index', compact('user', 'totalEvents', 'totalUsers', 'lastMonthUsers', 'lastMonthEvents','latestUsers'));
+            return view('admin.index', compact('user', 'totalEvents', 'totalUsers', 'lastMonthUsers', 'lastMonthEvents', 'latestUsers'));
         }
         $eventTypes = EventTypes::all();
         // where('user_id', '!=', Auth::id())->
@@ -234,6 +234,45 @@ class UserController extends Controller
             'success' => true,
             'data' => $user,
             'message' => 'Phone No Status Changed Successfully',
+        ]);
+    }
+
+    public function useYourLocation(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->use_location = $request->use_location;
+        $user->update();
+
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Use Location Status Changed Successfully',
+        ]);
+    }
+
+    public function allowDirectMessage(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->allow_direct_message = $request->allow_direct_message;
+        $user->update();
+
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Direct Message Status Changed Successfully',
+        ]);
+    }
+
+    public function makeProfilePrivate(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->profile_private = $request->profile_private;
+        $user->update();
+
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Profile Status Changed Successfully',
         ]);
     }
 

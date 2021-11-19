@@ -112,11 +112,16 @@
                 </div>
 
                 <div class="event_comment">
-                    <div class="event_tit">Details </div>
-                    <p class="event_desc"> {{ $eventDetails['event']->event_description }}</p>
-                    <span>Ticket Link <br>
-                        {{ $eventDetails['event']->event_description }}
-                    </span>
+                    <div class="event_tit">Details
+                        <p class="event_desc"> {{ $eventDetails['event']->event_description }}</p>
+                        @if ($eventDetails['event']->ticket_link != null)
+                            Ticket Link
+                            <a class="event_desc" href="{{ $eventDetails['event']->ticket_link }}">
+                                {{ $eventDetails['event']->ticket_link }}
+                            </a>
+                        @endif
+                    </div>
+
                     <div class="event_tit">Conditions </div>
                     <div class="con_tag">
                         @php
@@ -124,7 +129,7 @@
                         @endphp
                         @foreach ($conditionsArr as $condition)
                             <button class="condition_tag" style=" overflow: hidden;
-                                        text-overflow: ellipsis;">{{ $condition }}</button>
+                                                            text-overflow: ellipsis;">{{ $condition }}</button>
                         @endforeach
                     </div>
                     <br><br>

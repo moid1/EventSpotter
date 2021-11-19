@@ -1,5 +1,14 @@
 @extends('layouts.main')
 @section('title', 'Event Snaps')
+<style>
+    .modal-dialog {
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 20px !important;
+    }
+
+</style>
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -135,7 +144,7 @@
 
                             <div class="mt-3 eventsNearYouBG" style="">
                                 <div class="main_snap " style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                            ">
+                                                ">
 
                                     <div class="eventsNearYou">
                                         <div class="row snap_cb align-items-center justify-content-between">
@@ -197,7 +206,7 @@
 @endsection
 
 <!-- createEventModal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+<div class="modal " id="exampleModalCenter" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg  ">
         <div class="modal-content">
