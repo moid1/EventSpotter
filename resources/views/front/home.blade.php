@@ -27,7 +27,7 @@
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                ">
+                                                                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -243,6 +243,12 @@
                         <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />
+                        <video id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
+                        <div class="progress mt-3 d-none">
+                            <div class="bar"></div>
+                            <div class="percent">0%</div>
+                        </div>
+
 
                         <Button onclick="getImages()" class="upcoming mb-3">Upload Picture/Video</Button>
                         <div class="d-flex eventPictures">
@@ -425,6 +431,27 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: form_data,
+                beforeSend: function() {
+                    // $("#uploadSnap").prop('disabled', true); //disable.
+                    $('.progress').removeClass('d-none');
+                },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+
+                            var percentVal = percentComplete + '%';
+                            bar.width(percentVal);
+                            bar.css("background", "#314648");
+                            percent.html(percentVal);
+                        }
+                    }, false);
+
+                    return xhr;
+                },
                 error: function(res) {
                     var errors = JSON.parse(res.responseText);
                     console.log(errors);
@@ -435,6 +462,8 @@
                 }
             }).done(function(msg) {
                 showToaster('Your event has been created successfully', 'success');
+                $('.progress').addClass('d-none');
+
                 $('#createEventModal').modal('toggle');
             })
         });
@@ -494,6 +523,18 @@
                     reader.readAsDataURL(input.files[0]);
 
 
+                } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
+                    $('#eventPictureSrc').toggle();
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#eventVideoSrc').show();
+                        $('#eventVideoSrc').attr('src', e.target.result);
+                        $('#eventPictureSrc').hide();
+
+                        // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                    }
+                    // $('.uploadCatchyText').addClass('d-none');
+                    reader.readAsDataURL(input.files[0]);
                 } else {
                     alert('Invalid Image type');
                 }

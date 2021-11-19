@@ -453,7 +453,10 @@
                     if (response.data.length > 0) {
                         response.data.forEach(function(event) {
 
-                            var img =
+                            var img = event.events.event_pictures[0]
+                                .image_path.split('.').pop() == 'mp4' || event.events
+                                .event_pictures[0]
+                                .image_path.split('.').pop() == 'mov' ? '{{ asset("download.png") }}' :
                                 window.location.origin + '/' + event.events.event_pictures[0]
                                 .image_path;
                             var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
