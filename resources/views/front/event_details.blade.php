@@ -19,6 +19,9 @@
                                     <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
                                         class="eventBgImage " alt="" srcset="">
                                 @endif
+                            @else
+                                <img src="{{ asset('placeholder.jpg') }}"
+                                    class="eventBgImage " alt="" srcset="">
                             @endif
 
                             <div class="options">
@@ -131,7 +134,7 @@
                         @endphp
                         @foreach ($conditionsArr as $condition)
                             <button class="condition_tag" style=" overflow: hidden;
-                                                                text-overflow: ellipsis;">{{ $condition }}</button>
+                                                                    text-overflow: ellipsis;">{{ $condition }}</button>
                         @endforeach
                     </div>
                     <br><br>
