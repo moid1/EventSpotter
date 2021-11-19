@@ -8,15 +8,17 @@
                 <div class="eventsNearYouSection ">
                     <div class="eventsNearYouBG">
                         <div class="eventsNearYou">
-                            @if (Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mov')
-                                <video class="eventBgImage mr-3"
-                                    src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}" controls>
-                                    <source src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                        type="video/mp4">
-                                </video>
-                            @else
-                                <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                    class="eventBgImage " alt="" srcset="">
+                            @if (count($eventDetails['event']->eventPictures) > 0)
+                                @if (Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mov')
+                                    <video class="eventBgImage mr-3"
+                                        src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}" controls>
+                                        <source src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                            type="video/mp4">
+                                    </video>
+                                @else
+                                    <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
+                                        class="eventBgImage " alt="" srcset="">
+                                @endif
                             @endif
 
                             <div class="options">
@@ -129,7 +131,7 @@
                         @endphp
                         @foreach ($conditionsArr as $condition)
                             <button class="condition_tag" style=" overflow: hidden;
-                                                            text-overflow: ellipsis;">{{ $condition }}</button>
+                                                                text-overflow: ellipsis;">{{ $condition }}</button>
                         @endforeach
                     </div>
                     <br><br>
