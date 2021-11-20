@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,5 +29,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             'message' => 'Logged In User'
         ]);
     });
-    // Route::post('/logout', [AuthenticationController::class, 'logout']);
+
+    Route::post('/saveLatLng', [AuthController::class, 'saveLatLng']);
+    Route::get('/logout', [AuthController::class, 'appLogout']);
+    Route::get('/getEvents', [EventController::class, 'getEvents']);
 });

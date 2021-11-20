@@ -29,9 +29,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-         
-                return redirect()->intended('/');
-         
+
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -99,6 +98,39 @@ class AuthController extends Controller
             'data' => $user,
             'token' => $token,
             'message' => 'User Created Successfully',
+        ]);
+    }
+
+    public function saveLatLng(Request $request)
+    {
+        $user = Auth::user();
+        if ($user) {
+            $user = User::find($user->id);
+            $user->lat_lng = $request->lat_lng;
+            $user->update();
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+                'message' => 'Lat Lng updated successfully',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Authentication Required',
+            ]);
+        }
+    }
+
+    public function appLogout()
+    {
+        $user = User::find(Auth::user()->id);
+        $user->is_online = false;
+        $user->tokens()->delete();
+        return response()->json([
+            'success' => true,
+            'data' => [],
+            'message' => 'Logout Successfully',
         ]);
     }
 }
