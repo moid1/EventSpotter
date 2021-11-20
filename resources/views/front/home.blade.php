@@ -311,6 +311,11 @@
         var lat, lng;
         var geocoder;
 
+        var bar = $('.bar');
+        var percent = $('.percent');
+        var status = $('#status');
+
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
         }
