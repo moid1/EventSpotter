@@ -125,20 +125,20 @@
                             </a>
                         @endif
                     </div>
-
-                    <div class="event_tit">Conditions </div>
-                    <div class="con_tag">
-                        @php
-                            $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
-                        @endphp
-                        @if (count($conditionsArr) > 0)
+                    @php
+                        $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
+                    @endphp
+                    @if (count($conditionsArr) > 0)
+                        <div class="event_tit">Conditions </div>
+                        <div class="con_tag">
                             @foreach ($conditionsArr as $condition)
-                                <button class="condition_tag" style=" overflow: hidden;
-                                                                    text-overflow: ellipsis;">{{ $condition }}</button>
+                                <button class="condition_tag"
+                                    style=" overflow: hidden; text-overflow: ellipsis;">{{ $condition }}</button>
                             @endforeach
-                        @endif
+                        </div>
+                    @endif
 
-                    </div>
+
                     <br><br>
                     <div class="location_title">Location </div>
                     <p class="event_desc"> {{ $eventDetails['event']->location }}</p>
