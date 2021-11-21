@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                            ">
+                                                                                                                                ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -244,7 +244,8 @@
                         <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />
-                        <video playsinline id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
+                        <video playsinline id="eventVideoSrc" src="" class="eventBgImage"
+                            style="display: none"></video>
                         <div class="progress mt-3 d-none">
                             <div class="bar"></div>
                             <div class="percent">0%</div>
@@ -318,7 +319,7 @@
 
         var myDate = document.querySelector('event_date');
         var today = new Date();
-        $('#event_date').val( today.toISOString().substr(0, 10));
+        $('#event_date').val(today.toISOString().substr(0, 10));
 
 
         if (navigator.geolocation) {
@@ -527,7 +528,6 @@
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         $('#eventVideoSrc').hide();
-
                         $('#eventPictureSrc').attr('src', e.target.result);
                         $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
                         $('#eventPictureSrc').show();
@@ -542,7 +542,9 @@
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         $('#eventVideoSrc').show();
-                        $('#eventVideoSrc').attr('src', e.target.result);
+                        var $source = $('#eventVideoSrc');
+                        $source[0].src = URL.createObjectURL(this.files[0]);
+                        $source.parent()[0].load();
                         $('#eventPictureSrc').hide();
 
                         // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
