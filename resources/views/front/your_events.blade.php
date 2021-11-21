@@ -188,7 +188,7 @@
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
                                 "<a href=" + url + ">" +
-                                "<img style='width:90px;height:90px' src=" img ">" +
+                                "<img style='width:90px;height:90px' src=" +img+ ">" +
                                 "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
