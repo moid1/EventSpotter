@@ -530,6 +530,8 @@
 
                         $('#eventPictureSrc').attr('src', e.target.result);
                         $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                        $('#eventPictureSrc').show();
+
                     }
                     $('.uploadCatchyText').addClass('d-none');
                     reader.readAsDataURL(input.files[0]);
