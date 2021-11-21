@@ -26,8 +26,9 @@
                     @if (count($nearEvents) > 0)
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
-                                <div class="eventsNearYouBG" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                        ">
+                                <div class="eventsNearYouBG"
+                                    style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                                                                                                                            ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -258,8 +259,7 @@
 
 
 
-                    <input class=" event_date" value="d|m|y"  type="date" name="event_date" id="event_date"
-                        placeholder="d|m|y"/>
+                    <input class=" event_date" v type="date" name="event_date" id="event_date" placeholder="d|m|y" />
                     <div class="d-flex w-100 align-items-center inputFieldGreenBG mt-3 ml-3 mr-3">
                         <img class="img-fluid ml-2" src="{{ asset('assets/images/loc.png') }}" alt="">
                         <input type="text" id="venue" autocomplete="off" class="ml-2" name="location"
@@ -315,6 +315,10 @@
         var bar = $('.bar');
         var percent = $('.percent');
         var status = $('#status');
+
+        var myDate = document.querySelector('event_date');
+        var today = new Date();
+        myDate.value = today.toISOString().substr(0, 10);
 
 
         if (navigator.geolocation) {
