@@ -544,7 +544,7 @@
                         $('#eventVideoSrc').show();
                         var $source = $('#eventVideoSrc');
                         $source[0].src = URL.createObjectURL(input.files[0]);
-                        $source.parent()[0].load();
+                        $source.parent().load();
                         $('#eventPictureSrc').hide();
 
                         // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
