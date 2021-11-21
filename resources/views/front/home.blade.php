@@ -534,12 +534,11 @@
 
 
                 } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
-                    $('#eventPictureSrc').toggle();
+                    $('#eventPictureSrc').hide();
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         $('#eventVideoSrc').show();
                         $('#eventVideoSrc').attr('src', e.target.result);
-                        $('#eventPictureSrc').hide();
 
                         // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
                     }
