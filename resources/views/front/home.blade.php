@@ -244,7 +244,7 @@
                         <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />
-                        <video playsinline id="eventVideoSrc" src="" class="eventBgImage" style="display: none">
+                        <video autoplay playsinline id="eventVideoSrc" src="" class="eventBgImage" style="display: none">
                             Your browser does not support HTML5 video.
 
 
