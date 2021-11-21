@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                                ">
+                                                                                                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -492,6 +492,8 @@
                 $('.progress').addClass('d-none');
 
                 $('#createEventModal').modal('toggle');
+                location.reload();
+
             })
         });
 

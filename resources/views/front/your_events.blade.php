@@ -168,10 +168,6 @@
                     $('#draftBtn').addClass('past');
                     $('#pastEventsBtn').removeClass('upcoming');
                     $('#pastEventsBtn').addClass('past');
-
-
-
-
                 },
                 url: '/yourEvents',
                 headers: {
@@ -179,7 +175,6 @@
                 },
                 success: function(response) {
                     $('#loading').hide();
-
                     $('.favEvent').html('');
                     if (response.data.length > 0) {
                         $.each(response.data, function(key, data) {

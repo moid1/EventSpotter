@@ -176,7 +176,7 @@ class EventController extends Controller
     public function getUserUpcomingEvents()
     {
         $user = Auth::user();
-        $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
         $nearEvents = array();
         foreach ($upcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
