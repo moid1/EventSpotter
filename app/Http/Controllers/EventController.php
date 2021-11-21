@@ -9,6 +9,7 @@ use App\Models\Favrouite;
 use App\Models\Following;
 use App\Models\Likes;
 use Carbon\Carbon;
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,7 +63,7 @@ class EventController extends Controller
             'lng' => $request->lng,
             'is_public' => intVal($request->is_public),
             'user_id' => Auth::user()->id,
-            'ticket_link' => $request->ticket_link, 
+            'ticket_link' => $request->ticket_link,
         ]);
 
         $imageName = time() . '.' . $request->image->extension();
@@ -200,22 +201,23 @@ class EventController extends Controller
 
     function distance($lat1, $lon1, $lat2, $lon2)
     {
+        if (IsNumeric($lon1) && IsNumeric($lon2)) {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+            return $miles;
+            // $unit = strtoupper($unit);
 
-        $theta = $lon1 - $lon2;
-        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-        $dist = acos($dist);
-        $dist = rad2deg($dist);
-        $miles = $dist * 60 * 1.1515;
-        return $miles;
-        // $unit = strtoupper($unit);
-
-        // if ($unit == "K") {
-        return ($miles * 1.609344);
-        // } else if ($unit == "N") {
-        //     return ($miles * 0.8684);
-        // } else {
-        //     return $miles;
-        // }
+            // if ($unit == "K") {
+            return ($miles * 1.609344);
+            // } else if ($unit == "N") {
+            //     return ($miles * 0.8684);
+            // } else {
+            //     return $miles;
+            // }
+        }
     }
 
     public function getEventDetail($id)
