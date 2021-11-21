@@ -180,7 +180,7 @@
                             var extension = data['events'].event_pictures[0].image_path.split('.')
                         .pop();
                             if (extension == 'mp4' || extension == 'mov') {
-                                img = location.hostname + '/' + 'download.png';
+                                img = 'www.'+location.hostname + '/' + 'download.png';
                             } else {
                                 img = data['events'].event_pictures[0].image_path;
                             }
