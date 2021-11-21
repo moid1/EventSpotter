@@ -338,7 +338,7 @@
         }
 
         function errorFunction(error) {
-            alert(error.message);
+            alert('Please enable location');
         }
 
         function initialize() {
