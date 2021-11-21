@@ -318,7 +318,7 @@
 
         var myDate = document.querySelector('event_date');
         var today = new Date();
-        myDate.value = today.toISOString().substr(0, 10);
+        $('#event_date').val( today.toISOString().substr(0, 10));
 
 
         if (navigator.geolocation) {
