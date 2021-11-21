@@ -20,8 +20,7 @@
                                         class="eventBgImage " alt="" srcset="">
                                 @endif
                             @else
-                                <img src="{{ asset('placeholder.jpg') }}"
-                                    class="eventBgImage " alt="" srcset="">
+                                <img src="{{ asset('placeholder.jpg') }}" class="eventBgImage " alt="" srcset="">
                             @endif
 
                             <div class="options">
@@ -132,10 +131,13 @@
                         @php
                             $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
                         @endphp
-                        @foreach ($conditionsArr as $condition)
-                            <button class="condition_tag" style=" overflow: hidden;
+                        @if (count($conditonArr) > 0)
+                            @foreach ($conditionsArr as $condition)
+                                <button class="condition_tag" style=" overflow: hidden;
                                                                     text-overflow: ellipsis;">{{ $condition }}</button>
-                        @endforeach
+                            @endforeach
+                        @endif
+
                     </div>
                     <br><br>
                     <div class="location_title">Location </div>
