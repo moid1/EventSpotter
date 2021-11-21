@@ -225,7 +225,7 @@ class EventController extends Controller
         $event = Event::where('id', $id)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->first();
 
         $user = Auth::user();
-        if ($user->lat_lng)
+        if ($user->lat_lng != null)
             $latLng = explode(',', $user->lat_lng); // user lat lng
         $eventDetails = null;
         if (is_array($latLng)) {
