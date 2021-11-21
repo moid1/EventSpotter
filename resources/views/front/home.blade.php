@@ -259,7 +259,7 @@
 
 
                     <input class="event_date" onfocus="(this.type='date')"  onblur="if(this.value==''){this.type='text'}" type="date" name="event_date" id="event_date"
-                        placeholder="Event Date">
+                        placeholder="d|m|y>
                     <div class="d-flex w-100 align-items-center inputFieldGreenBG mt-3 ml-3 mr-3">
                         <img class="img-fluid ml-2" src="{{ asset('assets/images/loc.png') }}" alt="">
                         <input type="text" id="venue" autocomplete="off" class="ml-2" name="location"
