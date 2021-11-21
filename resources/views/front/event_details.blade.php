@@ -131,7 +131,7 @@
                         @php
                             $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
                         @endphp
-                        @if (count($conditonArr) > 0)
+                        @if (count($conditionsArr) > 0)
                             @foreach ($conditionsArr as $condition)
                                 <button class="condition_tag" style=" overflow: hidden;
                                                                     text-overflow: ellipsis;">{{ $condition }}</button>
