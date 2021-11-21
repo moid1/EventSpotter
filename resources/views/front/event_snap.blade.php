@@ -245,7 +245,7 @@
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10">
                         <img id="eventPictureSrc" src="{{ asset('assets/images/Frame.png') }}" alt="" srcset="">
-                        <video id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
+                        <video autoplay id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
                         <br>
                         <Button id="" onclick="getSnaps()" class="upcoming mb-3 mt-2">Upload Picture/Video</Button>
                         <input type="file" name="image" id="uploadEventSnap" class="d-none" />
