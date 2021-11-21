@@ -244,7 +244,7 @@
                         <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />
-                        <video id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
+                        <video playsinline id="eventVideoSrc" src="" class="eventBgImage" style="display: none"></video>
                         <div class="progress mt-3 d-none">
                             <div class="bar"></div>
                             <div class="percent">0%</div>
