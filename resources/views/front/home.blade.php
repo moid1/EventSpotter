@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                ">
+                                                                                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -244,11 +244,10 @@
                         <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />
-                        <video playsinline id="eventVideoSrc" src="" class="eventBgImage"
-                            style="display: none">
+                        <video playsinline id="eventVideoSrc" src="" class="eventBgImage" style="display: none">
                             Your browser does not support HTML5 video.
 
-                        
+
                         </video>
                         <div class="progress mt-3 d-none">
                             <div class="bar"></div>
@@ -544,11 +543,15 @@
                 } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
                     $('#eventPictureSrc').toggle();
                     var reader = new FileReader();
+                    let file = input.files[0];
+                    let blobURL = URL.createObjectURL(file);
+                    document.querySelector("video").style.display = 'block';
+                    document.querySelector("video").src = blobURL;
                     reader.onload = function(e) {
                         $('#eventVideoSrc').show();
-                        var $source = $('#eventVideoSrc');
-                        $source[0].src = URL.createObjectURL(input.files[0]);
-                        $source.parent().load();
+                        // var $source = $('#eventVideoSrc');
+                        // $source[0].src = URL.createObjectURL(input.files[0]);
+                        // $source.parent().load();
                         $('#eventPictureSrc').hide();
 
                         // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
