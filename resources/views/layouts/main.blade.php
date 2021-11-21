@@ -111,7 +111,7 @@
                         },
                         success: function(data) {
                             $('.searchResults').html("");
-                            if (data.profile_picture !== null)
+                            if (data[0].profile_picture !== null)
                                 var img =
                                     "<img class='circularImage pic mr-3' src=" + data[0]
                                     .profile_picture.image + " />"
