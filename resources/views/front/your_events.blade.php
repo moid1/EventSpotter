@@ -174,8 +174,8 @@
 
                     $('.favEvent').html('');
                     if (response.data.length > 0) {
-                        $.each(response.data, function(key, data) {
-                            console.log(data['events']);
+                        $.each(response.data, function(key, event) {
+                            console.log(event['events']);
                             var img = event.events.hasOwnProperty('event_pictures') ?
                                 event.events.event_pictures.image_path.split('.').pop() == 'mp4' ||
                                 event.events
@@ -235,7 +235,7 @@
                                 "</div>" +
                                 "</div>" +
                                 "<div class='col-1 text-center align-items-center'>" +
-                                "<i onclick='favroute(this)' data-id=" + data['events'].id +
+                                "<i onclick='favroute(this)' data-id=" + event['events'].id +
                                 "class='fa fa-heart red '></i>" +
                                 "<a href=" + url + ">" +
                                 "<i class='mt-2  fa fa-info-circle light-grey '></i>" +
