@@ -1,12 +1,12 @@
 @extends('layouts.main')
-<link rel="stylesheet" href="{{ asset('assets/style/style.css') }}">
+<link rel="stylesheet" href="{{asset('assets/style/style.css')}}">
 
 @section('title', 'Your Events')
 {{-- <link rel="stylesheet" href="{{asset('assets/style/style.css')}}"> --}}
 @section('content')
     <div class="container-fluid">
         <div class="row">
-
+            
             <div class="col-md-3  float-left">
 
                 <div class="sidebar">
@@ -174,22 +174,16 @@
 
                     $('.favEvent').html('');
                     if (response.data.length > 0) {
-                        $.each(response.data, function(key, event) {
-                            console.log(event['events']);
-                            var img = event.events.hasOwnProperty('event_pictures') ?
-                                event.events.event_pictures.image_path.split('.').pop() == 'mp4' ||
-                                event.events
-                                .event_pictures[0]
-                                .image_path.split('.').pop() == 'mov' ?
-                                '{{ asset('download.png') }}' :
-                                window.location.origin + '/' + event.events.event_pictures[0]
-                                .image_path : '{{ asset('download.png') }}';
+                        $.each(response.data, function(key, data) {
+                            console.log(data['events']);
+
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
                                 "<a href=" + url + ">" +
-                                "<img style='width:90px;height:90px' src=" + img + ">" +
+                                "<img style='width:90px;height:90px' src=" + data['events']
+                                .event_pictures[0].image_path + ">" +
                                 "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
@@ -235,7 +229,7 @@
                                 "</div>" +
                                 "</div>" +
                                 "<div class='col-1 text-center align-items-center'>" +
-                                "<i onclick='favroute(this)' data-id=" + event['events'].id +
+                                "<i onclick='favroute(this)' data-id=" + data['events'].id +
                                 "class='fa fa-heart red '></i>" +
                                 "<a href=" + url + ">" +
                                 "<i class='mt-2  fa fa-info-circle light-grey '></i>" +
