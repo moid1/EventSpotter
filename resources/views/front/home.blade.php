@@ -543,7 +543,7 @@
                     reader.onload = function(e) {
                         $('#eventVideoSrc').show();
                         var $source = $('#eventVideoSrc');
-                        $source[0].src = URL.createObjectURL(this.files[0]);
+                        $source[0].src = URL.createObjectURL(input.files[0]);
                         $source.parent()[0].load();
                         $('#eventPictureSrc').hide();
 
