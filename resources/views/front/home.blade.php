@@ -27,7 +27,7 @@
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                    ">
+                                                                                                                        ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -147,7 +147,7 @@
                         @endforeach
 
                     @else
-                        <h6 class="text-center ">No Events Available </h6>
+                        <h6 class="text-center mt-5">No Events Available </h6>
 
                     @endif
 
@@ -262,7 +262,8 @@
                         placeholder="Event Date">
                     <div class="d-flex w-100 align-items-center inputFieldGreenBG mt-3 ml-3 mr-3">
                         <img class="img-fluid ml-2" src="{{ asset('assets/images/loc.png') }}" alt="">
-                        <input type="text" id="venue" class="ml-2" name="location" placeholder="Venue">
+                        <input type="text" id="venue" autocomplete="off" class="ml-2" name="location"
+                            placeholder="Venue">
                         {{-- <button class="loction_select"><img src="{{ asset('assets/images/loctin.png') }}" alt=""> Add
                             location from
                             map</button> --}}
@@ -276,14 +277,14 @@
 
                     <div class="w-100 eventsCondition">
                         <p class="event_cont eventCond">Event Conditions</p>
-                        <button onclick="eventConditions(this)" class="event_con mt-2">Add Conditions</button>
+                        <button onclick="eventConditions(this)" class="event_con mt-2 ml-3">Add Conditions</button>
                     </div>
                     <div class="w-100">
                         <p class="event_cont"><img src="{{ url('assets/images/icons/eyeDark.png') }}"
                                 class="mr-2 ">Event privacy</p>
-                        <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex w-100 ml-3 ">
                             <button id="publicBtn" onclick="makeEventPublic(1)" class="event_tag">Public</button>
-                            <button id="privateBtn" onclick="makeEventPublic(0)" class="event_t">Private</button>
+                            <button id="privateBtn" onclick="makeEventPublic(0)" class="event_t ml-2">Private</button>
 
                             <span class="ml-2" id="eventMsg"> This event will be public.
                                 Everyone on Event Spotter will be able to see this event details. </span>

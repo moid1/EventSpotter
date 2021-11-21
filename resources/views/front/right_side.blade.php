@@ -1,5 +1,6 @@
 <div class="col-md-3">
     <div class="notifications mx-auto">
+        @if (count(\App\Models\Notifications::where('user_id',Auth::id())->get())>0)
         <p class="margin-left-20"> Notifications</p>
         @foreach (\App\Models\Notifications::where('user_id', Auth::id())->take(5)->orderBy('created_at', 'DESC')->get()
     as $noti)
@@ -13,5 +14,7 @@
             <hr>
         @endforeach
         <hr>
+        @endif
+ 
     </div>
 </div>

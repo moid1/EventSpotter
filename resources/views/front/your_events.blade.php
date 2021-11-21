@@ -176,14 +176,19 @@
                     if (response.data.length > 0) {
                         $.each(response.data, function(key, data) {
                             console.log(data['events']);
-
+                            var img = event.events.event_pictures[0]
+                                    .image_path.split('.').pop() == 'mp4' || event.events
+                                    .event_pictures[0]
+                                    .image_path.split('.').pop() == 'mov' ?
+                                    '{{ asset('download.png') }}' :
+                                    window.location.origin + '/' + event.events.event_pictures[0]
+                                    .image_path;
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
                                 "<a href=" + url + ">" +
-                                "<img style='width:90px;height:90px' src=" + data['events']
-                                .event_pictures[0].image_path + ">" +
+                                "<img style='width:90px;height:90px' src=" img ">" +
                                 "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
