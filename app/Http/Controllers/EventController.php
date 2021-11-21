@@ -50,6 +50,8 @@ class EventController extends Controller
             'event_date' => 'required|date|after_or_equal:today',
             'location' => 'required',
             'is_public' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
         ]);
 
         $event =    Event::create([
