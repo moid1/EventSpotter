@@ -526,6 +526,8 @@
                         ext == "jpg")) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
+                        $('#eventVideoSrc').hide();
+
                         $('#eventPictureSrc').attr('src', e.target.result);
                         $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
                     }
