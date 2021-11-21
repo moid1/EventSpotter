@@ -583,7 +583,7 @@
 
                         if (response.data.length > 0) {
                             response.data.forEach(function(event) {
-                                if (event.events.event_pictures != null) {
+                                if ('event_pictures' in event.events) {
                                     var img = event.events.event_pictures[0]
                                         .image_path.split('.').pop() == 'mp4' || event.events
                                         .event_pictures[0]
