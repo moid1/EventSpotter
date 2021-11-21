@@ -151,10 +151,10 @@ class FavrouiteController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-                if ($km <= 100) {
+         
                     $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
                     $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                }
+                
             }
         }
 
@@ -180,10 +180,10 @@ class FavrouiteController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-                if ($km <= 100) {
+           
                     $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
                     $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                }
+                
             }
         }
         $metaData = false;
