@@ -78,14 +78,21 @@
                     if (response.data.length > 0) {
                         $.each(response.data, function(key, data) {
                             console.log(data['events']);
+                            var img;
+                            var extension = data['events'].event_pictures[0].image_path.split('.')
+                                .pop();
+                            if (extension == 'mp4' || extension == 'mov') {
+                                img = 'download.png';
+                            } else {
+                                img = data['events'].event_pictures[0].image_path;
+                            }
 
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
                                 "<a href=" + url + ">" +
-                                "<img style='width:90px;height:90px' src=" + data['events']
-                                .event_pictures[0].image_path + ">" +
+                                "<img style='width:90px;height:90px' src=" + img + ">" +
                                 "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
@@ -171,6 +178,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    $('#loading').hide();
 
                     $('.favEvent').html('');
                     if (response.data.length > 0) {
@@ -178,9 +186,9 @@
                             console.log(data['events']);
                             var img;
                             var extension = data['events'].event_pictures[0].image_path.split('.')
-                        .pop();
+                                .pop();
                             if (extension == 'mp4' || extension == 'mov') {
-                                img ='download.png';
+                                img = 'download.png';
                             } else {
                                 img = data['events'].event_pictures[0].image_path;
                             }
@@ -278,14 +286,22 @@
                     if (response.data.length > 0) {
                         $.each(response.data, function(key, data) {
                             console.log(data['events']);
+                            var img;
+                            var extension = data['events'].event_pictures[0].image_path.split('.')
+                                .pop();
+                            if (extension == 'mp4' || extension == 'mov') {
+                                img = 'download.png';
+                            } else {
+                                img = data['events'].event_pictures[0].image_path;
+                            }
+
 
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
                                 "<div class='col-2'>" +
                                 "<a href=" + url + ">" +
-                                "<img style='width:90px;height:90px' src=" + data['events']
-                                .event_pictures[0].image_path + ">" +
+                                "<img style='width:90px;height:90px' src=" + img + ">" +
                                 "</a>" +
                                 "</div>" +
                                 "<div class='col-9'>" +
