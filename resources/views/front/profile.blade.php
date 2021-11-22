@@ -588,7 +588,7 @@
                                     .event_pictures[0]
                                     .image_path.split('.').pop() == 'mov' ?
                                     '{{ asset('download.png') }}' :
-                                    window.location.origin + '/' + event.events?.event_pictures[0]
+                                    window.location.origin + '/' + event.events.event_pictures[0]
                                     .image_path;
                                 
                                 var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
