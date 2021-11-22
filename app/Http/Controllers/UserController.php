@@ -67,7 +67,9 @@ class UserController extends Controller
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
         foreach ($upcomingEvents as $key => $value) {
             $flag = false;
-            if ($value->is_public == 0) {
+            if ($value->user_id == Auth::id()) {
+                $new[] = $value;
+            } else  if ($value->is_public == 0) {
                 foreach ($followingss as $key => $follow) {
                     if ($value->user_id == $follow) {
                         $new[] = $value;

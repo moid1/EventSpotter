@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                                    ">
+                                                                                                                                                        ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -45,16 +45,18 @@
                                             @endif
                                         </a>
                                         <div class="options">
-                                            <div
-                                                class="{{ $event['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}  align-items-center d-flex">
-                                                <i class="fa fa-user-plus text-white">
-                                                    <a href="{{ url('profile/' . $event['events']->user->id) }}">
-                                                        <span
-                                                            class="text-white">{{ $event['Following'] == 1 ? 'Followed' : 'Follow' }}
-                                                        </span></a>
+                                            @if (Auth::id() != $event['events']->user_id)
+                                                <div
+                                                    class="{{ $event['Following'] == 1 ? 'darkGreenBanner' : 'greenBanner' }}  align-items-center d-flex">
+                                                    <i class="fa fa-user-plus text-white">
+                                                        <a href="{{ url('profile/' . $event['events']->user->id) }}">
+                                                            <span
+                                                                class="text-white">{{ $event['Following'] == 1 ? 'Followed' : 'Follow' }}
+                                                            </span></a>
 
-                                                </i>
-                                            </div>
+                                                    </i>
+                                                </div>
+                                            @endif
                                             <div class="whiteIconsBackgroundBox ">
 
                                                 <i onclick="favroute(this) " data-id="{{ $event['events']->id }}"
