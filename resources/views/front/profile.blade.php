@@ -590,7 +590,7 @@
                                     window.location.origin + '/' + event.events?.event_pictures[0]
                                     .image_path;
                                 
-                                var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
+                                var url = "{{ url('eventDetails') }}" + "/" + event.events?.id;
 
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
