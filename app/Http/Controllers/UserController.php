@@ -69,7 +69,9 @@ class UserController extends Controller
             $flag = false;
             if ($value->user_id == Auth::id()) {
                 $new[] = $value;
-            } else  if ($value->is_public == 0) {
+                $flag = true;
+            }
+            if ($flag==false&&$value->is_public == 0) {
                 foreach ($followingss as $key => $follow) {
                     if ($value->user_id == $follow) {
                         $new[] = $value;
