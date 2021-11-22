@@ -77,22 +77,8 @@ class UserController extends Controller
                         $new[] = $value;
                     }
                 }
-                // foreach ($followerss as $key => $follow) {
-                //     if ($value->user_id == $follow) {
-                //         $new[] = $value;
-                //         $flag = true;
-                //     }
-                // }
-                // if (!$flag) {
-                //     foreach ($followingss as $key => $follow) {
-                //         if ($value->user_id == $follow) {
-                //             $new[] = $value;
-                //         }
-                //     }
-                // }
-            } else {
-                $new[] = $value;
-            }
+               
+            } 
         }
         $upcomingEvents = $new;
         $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
