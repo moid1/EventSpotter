@@ -139,8 +139,13 @@
 @section('script')
     <script>
         var eventss = {!! json_encode($eventDetails['event']->toArray()) !!};
+
         $('#commentBtn').click(function(event) {
             event.preventDefault();
+            if ($('#comment').val().length > 0) {
+                alert('Comment required to post');
+                return;
+            }
             var formData = {
                 event_id: eventss.id,
                 comment: $('#comment').val(),

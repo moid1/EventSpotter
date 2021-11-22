@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                                        ">
+                                                                                                                                                                            ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -67,10 +67,18 @@
                                         </div> --}}
                                         </div>
                                         <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                            <img class="smallCircularImage mr-2 "
-                                                src="{{ url($event['events']->user->profilePicture->image) }}" />
-                                            <a style="color:black"
-                                                href="{{ url('profile/' . $event['events']->user->id) }}"><span>{{ $event['events']->user->name }}</span></a>
+                                            @if ($event['events']->user->profilePicture != null)
+                                                <img class="smallCircularImage mr-2 "
+                                                    src="{{ url($event['events']->user->profilePicture->image) }}" />
+                                                <a style="color:black"
+                                                    href="{{ url('profile/' . $event['events']->user->id) }}"><span>{{ $event['events']->user->name }}</span></a>
+                                            @else
+                                                <img class="smallCircularImage mr-2 "
+                                                    src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                                <a style="color:black"
+                                                    href="{{ url('profile/' . $event['events']->user->id) }}"><span>{{ $event['events']->user->name }}</span></a>
+                                            @endif
+
                                         </div>
                                         <div class="whiteBanner text-center align-items-center d-flex">
                                             <i class="fa fa-user-plus">
