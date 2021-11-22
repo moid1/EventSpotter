@@ -595,19 +595,23 @@
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
                                     "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
-                                    "<img class='profileEvents' src=" + img + " >" +
+                                    "<img class='profileEvents' style='border-radius:10px' src=" +
+                                    img + " >" +
                                     "<div class ='ml-3'>" +
-                                    "<h6 class='eventsTitleProfile'>" + event.event_name +
+                                    "<h6 class='eventsTitleProfile'>" + event
+                                    .events.event_name +
                                     "</h6>" +
-                                    "<img class ='fav_title' src='assets/images/date.png'>" +
-                                    "<span class='smallTextGrey'>" + event.event_date +
+                                    "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
+                                    "<span class='smallTextGrey'> " + event.events.event_date +
                                     "</span>" +
                                     "<br>" +
-                                    "<image class='fav_title' src ='assets/images/location.png'>" +
-                                    "<span class='smallTextGrey'>5KM Away</span> " +
+                                    "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
+                                    "<span class='smallTextGrey'> " + event.km +
+                                    " Miles away</span> " +
                                     "</div>" +
                                     "</div>" +
                                     "</div></a>"
+                                );
                                 );
 
                             });
