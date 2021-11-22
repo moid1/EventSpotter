@@ -353,12 +353,12 @@
 
         .createEventBG {
             width: 100%;
-            height: 3%;
+
             justify-content: center;
             align-items: center;
             display: flex;
             background-color: black;
-            min-height: 50px !important;
+            height: 50px !important;
 
             /* background: url('../images/Rectangle 23.png'); */
             background-repeat: no-repeat;
@@ -1224,7 +1224,7 @@
         .snp_uplo {
             width: 90%;
             height: 57.34px;
-           
+
             background: #314648;
             box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.25);
             border-radius: 6px;
@@ -1610,7 +1610,7 @@
 
             .createEventBG {
                 width: 100%;
-                height: 5%;
+                height: 50px !important;
                 margin-bottom: 2%;
             }
 
@@ -1718,7 +1718,7 @@
 
             .createEventBG {
                 width: 100%;
-                height: 5%;
+                height: 50px !important;
                 margin-bottom: 2%;
                 margin-left: -12px;
             }
@@ -1837,7 +1837,7 @@
 
             .createEventBG {
                 width: 100%;
-                height: 5%;
+                height: 50px !important;
                 margin-bottom: 2%;
                 margin-left: -12px;
             }
@@ -1989,7 +1989,7 @@
 
             .createEventBG {
                 width: 100%;
-                height: 5%;
+                height: 50px !important;
                 margin-bottom: 2%;
                 margin-left: -12px;
             }
@@ -2166,8 +2166,8 @@
 
             .createEventBG {
                 width: 100%;
-                height: 5%;
-                min-height: 50px!important;
+                height: 50px !important;
+                min-height: 50px !important;
                 margin-bottom: 2%;
                 margin-left: -12px;
             }
@@ -2478,7 +2478,7 @@
 
             .createEventBG {
                 width: 100%;
-                height: 5%;
+                height: 50px !important;
                 min-height: 50px !important;
                 margin-bottom: 2%;
                 margin-left: -12px;
@@ -2538,8 +2538,9 @@
                 width: 70px;
                 height: auto;
             }
-            .home_km{
-                font-size: 10px ;
+
+            .home_km {
+                font-size: 10px;
             }
 
             .whiteBanner {
@@ -3256,7 +3257,7 @@
                 text-align: center;
             }
 
-          
+
         }
 
         @media only screen and (max-width: 399px) {
@@ -3544,7 +3545,7 @@
                 margin-top: 15px;
             }
 
-          
+
         }
 
         /* ==========================================
@@ -3706,5 +3707,3 @@ CUSTOM UTILS CLASSES
         .otherComment {
             background-color: #F7F7F7 !important;
         }
-
-        
