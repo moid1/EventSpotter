@@ -142,7 +142,7 @@
 
         $('#commentBtn').click(function(event) {
             event.preventDefault();
-            if ($('#comment').val().length > 0) {
+            if ($('#comment').val().length == 0) {
                 alert('Comment required to post');
                 return;
             }
