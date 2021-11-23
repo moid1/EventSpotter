@@ -11,6 +11,12 @@ class Event extends Model
 
     protected $guarded = [];
 
+    public function getConditionsAttribute($value)
+    {
+        return isset($value) ? explode(',', unserialize($value)) : $value;
+    }
+
+
     public function eventPictures()
     {
         return $this->hasMany(EventsPictures::class);
@@ -30,7 +36,12 @@ class Event extends Model
         return $this->hasMany(Likes::class);
     }
 
-    public function livefeed(){
+    public function livefeed()
+    {
         return $this->hasMany(EventFeeds::class);
+    }
+    public function unserializeData($data)
+    {
+        return unserialize($data);
     }
 }
