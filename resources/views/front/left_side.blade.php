@@ -61,7 +61,7 @@
             <div class="row ">
                 <span class="leftMenuHeading ml-3">Conditions</span>
             </div>
-            @php
+            {{-- @php
                 $events = \App\Models\Event::latest()->get();
                 
                 $eventConditionsArray = [];
@@ -69,9 +69,9 @@
                 foreach ($events as $key => $event) {
                     $eventConditionsArray = explode(',', unserialize($event->conditions));
                 }
-            @endphp
+            @endphp --}}
             <div class="row tagsParent">
-                @foreach ($eventConditionsArray as $condition)
+                @foreach ($$event->conditions as $condition)
                     <div class=" tags">
                         {{ $condition }}
                     </div>
