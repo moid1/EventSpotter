@@ -126,7 +126,7 @@
                         @endif
                     </div>
                     @php
-                        $conditionsArr = explode(',', unserialize($eventDetails['event']->conditions));
+                        $conditionsArr = $eventDetails['event']->conditions;
                     @endphp
                     @if (count($conditionsArr) > 0)
                         <div class="event_tit">Conditions </div>
