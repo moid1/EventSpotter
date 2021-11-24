@@ -58,8 +58,9 @@ class AuthController extends Controller
         if (!Auth::attempt($attr)) {
             return $this->error('Credentials not match', 401);
         }
+        $user = User::where('id',Auth::id())->with('profilePicture')->first();
         return response()->json([
-            'user' => Auth::user(),
+            'user' => $user,
             'token' => auth()->user()->createToken('API Token')->plainTextToken,
             'message' => 'Login Successfully',
         ]);
