@@ -70,6 +70,52 @@ class EventController extends Controller
         }
     }
 
+    public function getUserUpcomingEvents()
+    {
+        $user = Auth::user();
+        $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        $nearEvents = array();
+        foreach ($upcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+            $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $nearEvents,
+            'message' => 'All Upcoming Events',
+        ]);
+    }
+
+    public function getUserPastEvent()
+    {
+        $user = Auth::user();
+        $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
+        $nearEvents = array();
+        foreach ($upcomingEvents as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+            $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $nearEvents,
+            'message' => 'All Past Events',
+        ]);
+    }
+
+    public function getUserDraftEvents()
+    {
+        $draftEvents = Event::where('user_id', Auth::id())->where('is_drafted', 1)->with('eventPictures')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $draftEvents,
+            'message' => 'All Drafted Events',
+        ]);
+    }
+
     function distance($lat1, $lon1, $lat2, $lon2)
     {
 

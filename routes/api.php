@@ -34,5 +34,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/saveLatLng', [AuthController::class, 'saveLatLng']);
     Route::get('/logout', [AuthController::class, 'appLogout']);
     Route::get('/getEvents', [EventController::class, 'getEvents']);
+    Route::get('/getUserUpcomingEvents', [EventController::class, 'getUserUpcomingEvents']);
+    Route::get('/getUserPastEvent', [EventController::class, 'getUserPastEvent']);
+    Route::get('/getUserDraftEvent', [EventController::class, 'getUserDraftEvents']);
+
+
     Route::get('/notifications', [NotificationsController::class, 'getUserNotifications']);
 });
