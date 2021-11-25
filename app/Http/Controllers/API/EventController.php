@@ -80,6 +80,7 @@ class EventController extends Controller
             $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
             $nearEvents[] = array('events' => $value, 'km' => number_format($km, 1));
         }
+        array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
 
         return response()->json([
             'success' => true,
