@@ -25,8 +25,13 @@
                                 </div> --}}
                             </div>
                             <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 "
-                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                @if ($eventDetails['event']->user->profilePicture != null)
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
+                                @else
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                @endif
                                 <span>{{ $eventDetails['event']->user->name }}</span>
                             </div>
                             <div class="whiteBanner text-center align-items-center d-flex">
@@ -104,8 +109,14 @@
                         <div
                             class="{{ Auth::id() == $comment->user_id ? 'yourComment ' : 'otherComment' }} comments mt-2">
                             <div class="row ">
-                                <img class="smallCircularImage "
-                                    src="{{ asset($comment->user->profilePicture->image) }}" />
+                                @if ($comment->user->profilePicture != null)
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url($comment->user->profilePicture->image) }}" />
+                                @else
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                @endif
+
                                 <span
                                     class="commenterName">{{ Auth::id() == $comment->user_id ? 'You' : $comment->user->name }}
                                 </span>

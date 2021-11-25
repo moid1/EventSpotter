@@ -42,7 +42,6 @@
                                     @if ($eventDetails['event']->user->profilePicture != null)
                                         <img class="smallCircularImage mr-2 "
                                             src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
-
                                     @else
                                         <img class="smallCircularImage mr-2 "
                                             src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
