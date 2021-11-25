@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController as APIAuthController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\AuthController;
@@ -38,6 +39,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getUserPastEvent', [EventController::class, 'getUserPastEvent']);
     Route::get('/getUserDraftEvent', [EventController::class, 'getUserDraftEvents']);
 
-
+    Route::get('/profile', [APIAuthController::class, 'getUserProfile']);
     Route::get('/notifications', [NotificationsController::class, 'getUserNotifications']);
 });
