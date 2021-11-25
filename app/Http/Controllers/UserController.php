@@ -58,9 +58,11 @@ class UserController extends Controller
 
             return view('admin.index', compact('user', 'totalEvents', 'totalUsers', 'lastMonthUsers', 'lastMonthEvents', 'latestUsers'));
         }
+
         $eventTypes = EventTypes::all();
         // where('user_id', '!=', Auth::id())->
-        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
+        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
+
         // $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
@@ -70,18 +72,16 @@ class UserController extends Controller
             if ($value->user_id == Auth::id()) {
                 $new[] = $value;
                 $flag = true;
-            }
-            else {
+            } else {
                 $new[] = $value;
             }
-            if ($flag==false&&$value->is_public == 0) {
+            if ($flag == false && $value->is_public == 0) {
                 foreach ($followingss as $key => $follow) {
                     if ($value->user_id == $follow) {
                         $new[] = $value;
                     }
                 }
-               
-            } 
+            }
         }
         $upcomingEvents = $new;
         $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
@@ -89,7 +89,6 @@ class UserController extends Controller
         if (is_array($upcomingEvents) || is_object($upcomingEvents)) {
             foreach ($upcomingEvents as $key => $value) {
                 $latLng = explode(',', $user->lat_lng); // user lat lng
-
                 if (count($latLng) > 1) {
                     $mile = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
                     $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $value->id)->first();
@@ -99,7 +98,11 @@ class UserController extends Controller
                     $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
                 }
             }
+            array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
+
         }
+
+
         // dd($nearEvents);
         return view('front.home')->with(compact('user', 'nearEvents', 'eventTypes'));
     }

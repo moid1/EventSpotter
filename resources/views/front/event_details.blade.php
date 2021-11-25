@@ -39,8 +39,14 @@
                             </div>
                             <a href="{{ url('profile') . '/' . $eventDetails['event']->user_id }}">
                                 <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                    <img class="smallCircularImage mr-2 "
-                                        src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                    @if ($eventDetails['event']->user->profilePicture != null)
+                                        <img class="smallCircularImage mr-2 "
+                                            src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
+
+                                    @else
+                                        <img class="smallCircularImage mr-2 "
+                                            src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                    @endif
                                     <span>{{ $eventDetails['event']->user->name }}</span>
                                 </div>
                             </a>
