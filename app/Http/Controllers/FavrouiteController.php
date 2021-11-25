@@ -36,7 +36,7 @@ class FavrouiteController extends Controller
         foreach ($favrouite as $key => $value) {
 
             if ($value->event != null) {
-              
+
                 if ($value->event->event_date >= $today) {
                     $favUpcomingEvent[] = $value->event;
                 }
@@ -46,10 +46,9 @@ class FavrouiteController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-              
-                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
 
@@ -69,15 +68,24 @@ class FavrouiteController extends Controller
     {
         $eventId = $request->event_id;
         $userId = Auth::id();
-        $favroute =  Favrouite::create([
-            'event_id' => $eventId,
-            'user_id' => $userId,
-        ]);
-        return response()->json([
-            'success' => true,
-            'data' => $favroute,
-            'message' => 'Event has been favorited',
-        ]);
+        $isAlreadyFav = Favrouite::where('user_id', Auth::id())->where('event_id', $eventId)->get()->first();
+        if (!$isAlreadyFav) {
+            $favroute =  Favrouite::create([
+                'event_id' => $eventId,
+                'user_id' => $userId,
+            ]);
+            return response()->json([
+                'success' => true,
+                'data' => $favroute,
+                'message' => 'Event has been favorited',
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+                'message' => 'Event is already favorited',
+            ]);
+        }
     }
 
     /**
@@ -152,10 +160,9 @@ class FavrouiteController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-         
-                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
 
@@ -181,10 +188,9 @@ class FavrouiteController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-           
-                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
         $metaData = false;
