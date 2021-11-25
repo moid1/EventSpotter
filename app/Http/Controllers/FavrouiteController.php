@@ -149,6 +149,7 @@ class FavrouiteController extends Controller
         $favUpcomingEvent = array();
         $favrouiteEvent = array();
         $today = Carbon::now();
+        dd($today);
         foreach ($favEvents as $key => $value) {
             if ($value->event != null) {
                 if ((Carbon::parse($value->event->event_date))->lt($today)) {
