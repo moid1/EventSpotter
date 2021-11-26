@@ -143,15 +143,18 @@ class FavrouiteController extends Controller
     public function getFavouritePastEvents()
     {
         $user = Auth::user();
-        $favEvents = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $today = Carbon::now();
+// dd($today);
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '<', Carbon::now());
+        })->get();
         $favUpcomingEvent = array();
         $favrouiteEvent = array();
-        $today = Carbon::now();
         foreach ($favEvents as $key => $value) {
             if ($value->event != null) {
-                if ($value->event->event_date < $today) {
+                // if ($value->event->event_date < $today) {
                     $favUpcomingEvent[] = $value->event;
-                }
+                // }
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
