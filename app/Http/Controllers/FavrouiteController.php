@@ -81,7 +81,7 @@ class FavrouiteController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => [],
-                'message' => 'Event is favorited',
+                'message' => 'Event is already favorited',
             ]);
         }
     }
@@ -144,7 +144,7 @@ class FavrouiteController extends Controller
     {
         $user = Auth::user();
         $today = Carbon::now();
-// dd($today);
+        // dd($today);
         $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
             $query->where('event_date', '<', Carbon::now());
         })->get();
@@ -153,7 +153,7 @@ class FavrouiteController extends Controller
         foreach ($favEvents as $key => $value) {
             if ($value->event != null) {
                 // if ($value->event->event_date < $today) {
-                    $favUpcomingEvent[] = $value->event;
+                $favUpcomingEvent[] = $value->event;
                 // }
             }
         }
