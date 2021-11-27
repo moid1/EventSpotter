@@ -16,10 +16,6 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\IssuesController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\NotificationsController;
-use App\Models\Event;
-use App\Models\Favrouite;
-use App\Models\Following;
-use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Support\Facades\Route;
 
 /*

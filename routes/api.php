@@ -5,6 +5,8 @@ use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavrouiteController;
+use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\FollowingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
@@ -47,4 +49,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/favrouite', [FavrouiteController::class, 'store']);
     Route::post('/unfavrouit', [FavrouiteController::class, 'remove']);
+
+    Route::post('/following', [FollowingController::class, 'store']);
+    Route::post('unfollow', [FollowerController::class, 'unfollow']);
+
 });
