@@ -250,7 +250,7 @@
                             Î
                         </select>
                     </div>
-                    <div class=" col-md-5 text-center greyBorder borderRadius10">
+                    <div class=" col-md-5 text-center greyBorder borderRadius10 mt-3">
                         <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />

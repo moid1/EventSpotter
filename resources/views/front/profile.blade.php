@@ -61,7 +61,7 @@
                             <button id="draftEventsBtn" class="pastOutlineButton pro ml-3">Drafts</button>
                         </div>
 
-                        <div class=" scroll " id="events">
+                        <div class="d-flex scroll " id="events">
 
 
                         </div>
