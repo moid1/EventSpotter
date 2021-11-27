@@ -59,6 +59,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //COMMENT
     Route::post('storeComment', [CommentsController::class, 'store']);
 
-
-
+    Route::post('getUserFollowingStatus', [EventController::class, 'getUserFollowingStatus']);
 });

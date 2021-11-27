@@ -136,4 +136,38 @@ class EventController extends Controller
         //     return $miles;
         // }
     }
+
+    public function getUserFollowingStatus(Request $request)
+    {
+        $status = null;
+        if (!$request->has('following_id')) {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Following Id is required',
+            ]);
+        } else {
+            $following = Following::where('user_id', Auth::id())->where('following_id', $request->following_id)->first();
+            if ($following) {
+                if ($following->is_accepted == 1)
+                    $status = 'Following';
+                else if ($following->is_accpted == 2)
+                    $status = 'Pending';
+                else
+                    $status = 'Nothing';
+                $user = User::with(['address', 'profilePicture', 'followers', 'following', 'events'])->find($request->following_id);
+                return response()->json([
+                    'success' => true,
+                    'data' => $user,
+                    'status' => $status,
+                ]);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => [],
+                    'message' => 'You are not following',
+                ]);
+            }
+        }
+    }
 }
