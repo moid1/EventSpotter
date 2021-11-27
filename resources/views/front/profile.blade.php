@@ -465,7 +465,7 @@
 
                             $('#events').append("<a href=" + url +
                                 "> <div class='eventsCard'>" +
-                                "<div class ='mx-auto  align-items-center justify-content-center'> " +
+                                "<div class ='mx-auto d-flex  align-items-center justify-content-center'> " +
                                 "<img class='profileEvents' style='border-radius:10px' src=" +
                                 img + " >" +
                                 "<div class ='ml-3'>" +
