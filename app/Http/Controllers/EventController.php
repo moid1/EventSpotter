@@ -245,7 +245,7 @@ class EventController extends Controller
     public function yourEvents()
     {
         $user = Auth::user();
-        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
         // foreach ($yourUpcomingEvents as $key => $value) {
@@ -273,7 +273,7 @@ class EventController extends Controller
     public function yourPastEvents()
     {
         $user = Auth::user();
-        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<',Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
         // foreach ($yourUpcomingEvents as $key => $value) {
