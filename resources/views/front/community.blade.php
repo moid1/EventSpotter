@@ -253,6 +253,230 @@
                                 </div>
                                 
                             </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
+                        </li>          <li>
+                            <div class="conversation-list">
+                                <div class="chat-avatar">
+                                    <img src="{{url('chat/assets/images/users/avatar-4.jpg')}}" alt="">
+                                </div>
+
+                                <div class="user-chat-content">
+                                    
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                Yeah everything is fine
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+           
+                                    </div>
+
+                                    <div class="ctext-wrap">
+                                        <div class="ctext-wrap-content">
+                                            <p class="mb-0">
+                                                & Next meeting tomorrow 10.00AM
+                                            </p>
+                                            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">10:05</span></p>
+                                        </div>
+             
+                                    </div>
+                                    
+                                    <div class="conversation-name">Doris Brown</div>
+                                </div>
+                                
+                            </div>
                         </li>
                     
 
