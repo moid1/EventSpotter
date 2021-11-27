@@ -7,7 +7,7 @@
             <div class="col-md-9 col-sm-12 col-12 mx-auto ">
                 <div class="profileSection">
                     <h6 class="mb-3 medium-text ml-4">Profile</h6>
-                    <div class="profileInfo d-flex align-items-center mt-2 ml-3">
+                    <div class="profileInfo  align-items-center mt-2 ml-3">
                         <img class="circularImage" id="profileImage"
                             src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
                         <input type="file" name="image" id="ownProfilePic" class="d-none" />
@@ -17,22 +17,22 @@
                             <span
                                 class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
                         </div>
-                        <div class="personFollowersInfo d-flex mx-auto justify-content-center align-items-center">
+                        <div class="personFollowersInfo  mx-auto justify-content-center align-items-center">
                             <a href="{{ url('/follower') }}">
-                                <div class="grey-background margin-left-20 borderRadius5 text-center pl-3 pr-3">
+                                <div class="grey-background pro margin-left-20 borderRadius5 text-center pl-3 pr-3">
                                     <span class="large-text">{{ $followers }}</span>
                                     <br>
                                     <span class="notifications-primary-text">Followers</span>
                                 </div>
                             </a>
                             <a href="{{ url('/following') }}">
-                                <div class="grey-background borderRadius5 margin-left-20 text-center pl-3 pr-3 ">
+                                <div class="grey-background pro borderRadius5 margin-left-20 text-center pl-3 pr-3 ">
                                     <span class="large-text">{{ $following }}</span>
                                     <br>
                                     <span class="notifications-primary-text">Following</span>
                                 </div>
                             </a>
-                            <div class="grey-background borderRadius5  margin-left-20 text-center pl-3 pr-3">
+                            <div class="grey-background pro borderRadius5  margin-left-20 text-center pl-3 pr-3">
                                 <span class="large-text">{{ $totalEvents ?? '0' }}</span>
                                 <br>
                                 <span class="notifications-primary-text">Events</span>
@@ -54,14 +54,14 @@
                 @if (Auth::User()->id == $user->id)
 
                     <div class="yourEvents">
-                        <div class="d-flex align-items-center">
+                        <div class=" align-items-center">
                             <h6 class=" medium-text ml-4 mt-2">Your Events</h6>
                             <button id="upcomingEventsBtn" class="upcomingProfile ml-3">Upcoming</button>
-                            <button id="pastEventsBtn" class="pastOutlineButton ml-3">Past Events</button>
-                            <button id="draftEventsBtn" class="pastOutlineButton ml-3">Drafts</button>
+                            <button id="pastEventsBtn" class="pastOutlineButton proo ml-3">Past Events</button>
+                            <button id="draftEventsBtn" class="pastOutlineButton pro ml-3">Drafts</button>
                         </div>
 
-                        <div class="d-flex scroll " id="events">
+                        <div class=" scroll " id="events">
 
 
                         </div>
@@ -75,10 +75,10 @@
                                 Details</button>
                             @if (Auth::User()->id == $user->id)
                                 <button id="settingButton" onclick="openSettings()"
-                                    class="pastOutlineButton ml-3">Settings</button>
+                                    class="pastOutlineButton pro ml-3">Settings</button>
                             @endif
                         </div>
-                        <div class="w-100 d-flex justify-content-center ">
+                        <div class="w-100  justify-content-center ">
                             <div id="editSuccessMsg" class="alert alert-success w-50 mt-3 text-center d-none "
                                 role="alert">
                                 You can edit the details now
@@ -86,52 +86,52 @@
                         </div>
                         <div class="personalDetailsContent ml-3 ">
                             <label for="email" class="normal-text mt-3">Email</label>
-                            <div class="inputFieldGreenBG d-flex ">
+                            <div class="inputFieldGreenBG ">
                                 <input type="email" class="headerSearchColor ml-3" name="email"
-                                    value={{ $user->email }} id="email" disabled>
+                                    value={{ $user->email }} id="email" disabled style="margin-top: 10px;">
                             </div>
                             @if (Auth::User()->id == $user->id || $user->mobile_is_private == 0)
                                 <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
-                                <div class="inputFieldGreenBG d-flex ">
+                                <div class="inputFieldGreenBG  ">
                                     <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
-                                        value={{ $user->phone_number }} id="phoneNumber" disabled>
+                                        value={{ $user->phone_number }} id="phoneNumber" disabled style="margin-top: 10px;">
                                 </div>
                             @endif
 
                             @if (Auth::User()->id == $user->id)
-                                <div class=" w-50 d-flex align-items-center mt-2">
+                                <div class=" w-50 align-items-center mt-2">
                                     Make Private
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="makePhonePrivate">
+                                        <input class="form-check-input" type="checkbox" id="makePhonePrivate" style="margin-top: 10px;">
                                         <label class="labelSwitch" for="makePhonePrivate"></label>
                                     </div>
                                 </div>
                             @endif
 
 
-                            <div class="d-flex">
+                            <div class="">
                                 <div class="field">
                                     <label for="address" class="normal-text mt-3">Address</label>
-                                    <div class="inputFieldGreenBG d-flex ">
+                                    <div class="inputFieldGreenBG  ">
                                         <input type="text" class="headerSearchColor ml-3 inputDisabled" name="address"
                                             value={{ $address ? $address->address : 'Not-Available' }} id="address"
-                                            disabled>
+                                            disabled style="margin-top: 10px;">
                                     </div>
                                 </div>
-                                <div class="field ml-3">
+                                <div class="field ">
                                     <label for="city" class="normal-text mt-3">City</label>
-                                    <div class="smallInputFieldGreenBG d-flex ">
+                                    <div class="smallInputFieldGreenBG  ">
                                         <input type="text" class="headerSearchColor ml-3 inputDisabled" name="city"
                                             value={{ $address ? $address->city : 'Not-Available' }} id="city"
-                                            disabled>
+                                            disabled style="margin-top: 10px;">
                                     </div>
                                 </div>
-                                <div class="field ml-3">
+                                <div class="field">
                                     <label for="country" class="normal-text mt-3">Country</label>
-                                    <div class="smallInputFieldGreenBG d-flex ">
+                                    <div class="smallInputFieldGreenBG  ">
                                         <input type="text" class="headerSearchColor ml-3 inputDisabled" name="country"
                                             value={{ $address ? $address->country : 'Not-Available' }} id="country"
-                                            disabled>
+                                            disabled style="margin-top: 10px;">
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                                 @if (Auth::User()->id == $user->id)
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <div class=" w-50 d-flex align-items-center mt-2">
+                                            <div class=" w-50  align-items-center mt-2">
                                                 Use Your Location
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox"
@@ -163,7 +163,7 @@
                                         </div>
 
                                         <div class="col-md-5">
-                                            <div class=" w-50 d-flex align-items-center mt-2">
+                                            <div class=" w-50 align-items-center mt-2">
                                                 Allow Direct Message
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox"
@@ -179,7 +179,7 @@
                                     <div class="row">
 
                                         <div class="col-md-5">
-                                            <div class=" w-50 d-flex align-items-center mt-2">
+                                            <div class=" w-50 align-items-center mt-2">
                                                 Make your profile private
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox"
@@ -465,7 +465,7 @@
 
                             $('#events').append("<a href=" + url +
                                 "> <div class='eventsCard'>" +
-                                "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                "<div class ='mx-auto  align-items-center justify-content-center'> " +
                                 "<img class='profileEvents' style='border-radius:10px' src=" +
                                 img + " >" +
                                 "<div class ='ml-3'>" +
@@ -529,7 +529,7 @@
                                 var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
-                                    "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                    "<div class ='mx-auto  align-items-center justify-content-center'> " +
                                     "<img class='profileEvents' style='border-radius:10px' src=" +
                                     img + " >" +
                                     "<div class ='ml-3'>" +
@@ -594,7 +594,7 @@
 
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
-                                    "<div class ='mx-auto d-flex align-items-center justify-content-center'> " +
+                                    "<div class ='mx-auto  align-items-center justify-content-center'> " +
                                     "<img class='profileEvents' style='border-radius:10px' src=" +
                                     img + " >" +
                                     "<div class ='ml-3'>" +

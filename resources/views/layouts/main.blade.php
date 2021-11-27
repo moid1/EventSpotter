@@ -69,6 +69,14 @@
 
                         </div>
 
+                    </div>                
+                    <div class="col-md-4 col-sm-4 col-4">
+                        <div class="iconsBackgroundBox ">
+                            <a href="{{ url('community') }}"><img class="img-fluid "
+                                    src="{{ asset('assets/images/icons/notificationBellIcon.png') }}" /></a>
+                                <div class="notificationDot"></div>
+                        </div>
+
                     </div>
                     <div class="col-md-4 col-sm-4 col-4">
                         @if ($userWithImage->profilePicture != null)
