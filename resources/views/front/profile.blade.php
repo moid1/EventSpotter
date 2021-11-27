@@ -11,7 +11,7 @@
                         <img class="circularImage" id="profileImage"
                             src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
                         <input type="file" name="image" id="ownProfilePic" class="d-none" />
-                        <div class="personInfo ml-3 ">
+                        <div class="personInfo ml-2 ">
                             <span>{{ $user->name }}</span>
                             <br>
                             <span

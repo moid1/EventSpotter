@@ -2649,7 +2649,7 @@
             }
 
             .logout {
-                width: 90px;
+                width: 25%;
                 margin-left: 15px;
                 margin-right: 15px;
                 background: #314648;
@@ -2816,6 +2816,16 @@
         }
 
         @media only screen and (max-width: 575px) and (min-width:541px) {
+            .logout {
+                width: 122px;
+                height: 46.45px;
+                margin-left: 25%;
+                background: #314648;
+                box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+                border-radius: 6px;
+                color: white;
+                border: none;
+            }
             .personFollowersInfo{
                 padding: 13px;
            }  
@@ -2960,6 +2970,11 @@
         }
 
         @media only screen and (max-width: 540px) and (min-width:534px) {
+            .logout {
+            
+                margin-left: 25%;
+            
+            }
             .personFollowersInfo{
                 padding: 13px;
            }  
@@ -3104,6 +3119,11 @@
         }
 
         @media only screen and (max-width: 533px) and (min-width:400px) {
+            .logout {
+            
+                margin-left: 25%;
+            
+            }
             .pro{
                 margin: 10px;
             }
@@ -3312,6 +3332,11 @@
         }
 
         @media only screen and (max-width: 399px) {
+            .logout {
+            
+                margin-left: 25%;
+            
+            }
             .pro{
                 margin: 10px;
             } .proo{
