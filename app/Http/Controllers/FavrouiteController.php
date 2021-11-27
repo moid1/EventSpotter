@@ -27,7 +27,9 @@ class FavrouiteController extends Controller
      */
     public function create()
     {
-        $favrouite = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $favrouite = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '>=', Carbon::today())->get();
+        })->get();
 
         $user = Auth::user();
         $favUpcomingEvent = array();
@@ -35,10 +37,7 @@ class FavrouiteController extends Controller
         foreach ($favrouite as $key => $value) {
 
             if ($value->event != null) {
-                $today = Carbon::now();
-                if ($value->event->event_date >= $today) {
-                    $favUpcomingEvent[] = $value->event;
-                }
+                $favUpcomingEvent[] = $value->event;
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
