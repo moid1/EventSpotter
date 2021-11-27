@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController as APIAuthController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavrouiteController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
@@ -52,5 +53,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/following', [FollowingController::class, 'store']);
     Route::post('unfollow', [FollowerController::class, 'unfollow']);
+    Route::post('/acceptFollowingRequest', [FollowingController::class, 'acceptFollowingRequest']);
+    Route::post('/cancelPendingRequest', [FollowerController::class, 'cancelPendingRequest']);
+
+    //COMMENT
+    Route::post('storeComment', [CommentsController::class, 'store']);
+
+
 
 });

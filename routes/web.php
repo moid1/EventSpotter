@@ -67,7 +67,7 @@ Route::post('/following', [FollowingController::class, 'store']);
 Route::get('following', [FollowingController::class, 'create']);
 Route::post('/unfollowing', [FollowingController::class, 'unfollow']); //from followingtable
 //Followers
-Route::post('/follower', [FollowerController::class, 'store']);
+// Route::post('/follower', [FollowerController::class, 'store']);
 Route::get('follower', [FollowerController::class, 'create']);
 Route::post('/acceptFollowingRequest', [FollowingController::class, 'acceptFollowingRequest']);
 Route::post('/cancelPendingRequest', [FollowerController::class, 'cancelPendingRequest']);
