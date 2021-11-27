@@ -298,11 +298,11 @@
                     <div class="w-100">
                         <p class="event_cont"><img src="{{ url('assets/images/icons/eyeDark.png') }}"
                                 class="mr-2 ">Event privacy</p>
-                        <div class="d-flex w-100 ml-3 ">
+                        <div class=" w-100 ml-3 ">
                             <button id="publicBtn" onclick="makeEventPublic(1)" class="event_tag">Public</button>
                             <button id="privateBtn" onclick="makeEventPublic(0)" class="event_t ml-2">Private</button>
 
-                            <span class="ml-2" id="eventMsg"> This event will be public.
+                            <span class="ml-2" id="eventMsg" style="display: block"> This event will be public.
                                 Everyone on Event Spotter will be able to see this event details. </span>
                         </div>
                     </div>

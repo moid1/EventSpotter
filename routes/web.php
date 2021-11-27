@@ -47,6 +47,7 @@ Route::view('forgot', 'front.forgot');
 Route::view('left', 'front.left');
 Route::view('right', 'front.right');
 Route::view('header', 'front.header');
+Route::view('community', 'front.community')->name('community');
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth');
 Route::get('profile/{id}', [ProfileController::class, 'userProfile']);
 Route::get('/', [UserController::class, 'create'])->middleware('auth');
