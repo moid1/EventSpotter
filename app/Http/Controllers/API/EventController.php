@@ -151,7 +151,7 @@ class EventController extends Controller
             if ($following) {
                 if ($following->is_accepted == 1)
                     $status = 'Following';
-                else if ($following->is_accpted == 2)
+                else if ($following->is_accepted == 2)
                     $status = 'Pending';
                 else
                     $status = 'Nothing';
