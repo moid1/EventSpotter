@@ -61,16 +61,9 @@ class UserController extends Controller
 
         $eventTypes = EventTypes::all();
         // where('user_id', '!=', Auth::id())->
-        $upcomingEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
-        $ss = array();
-        foreach ($upcomingEvents as $key => $value) {
-            if ($value->event_date >= date('Y-m-d') || $value->event_date >= Carbon::parse($value->event_date)->addDays(1)) {
-                $ss[] = $value;
-            }
-        }
-        $upcomingEvents=$ss;
+        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
 
-
+        
 
         // $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $new = null;
@@ -106,6 +99,7 @@ class UserController extends Controller
                 }
             }
             array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
+
         }
 
 
