@@ -61,10 +61,14 @@ class UserController extends Controller
 
         $eventTypes = EventTypes::all();
         // where('user_id', '!=', Auth::id())->
-        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->get()->orWhere(function ($query) {
-            $afterOneDay = Carbon::parse($query->event_date)->addDays(1);
-            $query->where('event_date', '=', $afterOneDay);
-        })->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
+        $upcomingEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
+        $ss = array();
+        foreach ($upcomingEvents as $key => $value) {
+            if ($value->event_date >= date('Y-m-d') || $value->event_date = Carbon::parse($value->event_date)->addDays(1)) {
+                $ss[] = $value;
+            }
+        }
+        $upcomingEvents=$ss;
 
 
 
