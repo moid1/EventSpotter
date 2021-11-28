@@ -139,6 +139,7 @@ class EventController extends Controller
 
     public function getUserFollowingStatus(Request $request)
     {
+      
         $status = null;
         if (!$request->has('following_id')) {
             return response()->json([
@@ -147,7 +148,8 @@ class EventController extends Controller
                 'message' => 'Following Id is required',
             ]);
         } else {
-            $following = Following::where('user_id', Auth::id())->where('following_id', $request->following_id)->first();
+            $following = Following::where([['user_id', Auth::id()],['following_id', $request->following_id]])->first();
+          
             if ($following) {
                 if ($following->is_accepted == 1)
                     $status = 'Following';
@@ -162,9 +164,11 @@ class EventController extends Controller
                     'status' => $status,
                 ]);
             } else {
+                $user = User::with(['address', 'profilePicture', 'followers', 'following', 'events'])->find($request->following_id);
                 return response()->json([
                     'success' => true,
-                    'data' => [],
+                    'data' => $user,
+                    'status'=>'nothing',
                     'message' => 'You are not following',
                 ]);
             }
