@@ -64,7 +64,7 @@ class UserController extends Controller
         $upcomingEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
         $ss = array();
         foreach ($upcomingEvents as $key => $value) {
-            if ($value->event_date >= date('Y-m-d') || $value->event_date = Carbon::parse($value->event_date)->addDays(1)) {
+            if ($value->event_date >= date('Y-m-d') || $value->event_date >= Carbon::parse($value->event_date)->addDays(1)) {
                 $ss[] = $value;
             }
         }
