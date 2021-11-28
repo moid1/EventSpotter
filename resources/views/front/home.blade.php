@@ -324,7 +324,7 @@
 @section('script')
     <script type="text/javascript">
         var eventConditionsArray = [];
-        let is_public = 0;
+        let is_public = 1;
         var lat, lng;
         var geocoder;
 
