@@ -67,6 +67,7 @@ class FollowingController extends Controller
             $followingResponse =   Following::create([
                 'user_id' => $userId,
                 'following_id' => $followingId,
+                'is_accepted'=>2,
             ]);
             Notifications::create([
                 'title' => 'Follow Request',
