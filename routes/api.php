@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/unfavrouit', [FavrouiteController::class, 'remove']);
 
     Route::post('/following', [FollowingController::class, 'store']);
-    Route::post('unfollow', [FollowerController::class, 'unfollow']);
+    Route::post('/unfollow', [FollowerController::class, 'unfollow']);
     Route::post('/acceptFollowingRequest', [FollowingController::class, 'acceptFollowingRequest']);
     Route::post('/cancelPendingRequest', [FollowerController::class, 'cancelPendingRequest']);
 
