@@ -142,7 +142,7 @@ class FavrouiteController extends Controller
     public function getFavouritePastEvents()
     {
         $user = Auth::user();
-        $today = Carbon::now();
+        $today = Carbon::today();
         // dd($today);
         $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
             $query->where('event_date', '<', Carbon::today())->get();

@@ -5,12 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventFeeds;
+use App\Models\EventsPictures;
 use App\Models\EventTypes;
 use App\Models\Favrouite;
 use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Likes;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -139,7 +141,7 @@ class EventController extends Controller
 
     public function getUserFollowingStatus(Request $request)
     {
-      
+
         $status = null;
         if (!$request->has('following_id')) {
             return response()->json([
@@ -148,8 +150,8 @@ class EventController extends Controller
                 'message' => 'Following Id is required',
             ]);
         } else {
-            $following = Following::where([['user_id', Auth::id()],['following_id', $request->following_id]])->first();
-          
+            $following = Following::where([['user_id', Auth::id()], ['following_id', $request->following_id]])->first();
+
             if ($following) {
                 if ($following->is_accepted == 1)
                     $status = 'Following';
@@ -168,10 +170,129 @@ class EventController extends Controller
                 return response()->json([
                     'success' => true,
                     'data' => $user,
-                    'status'=>'nothing',
+                    'status' => 'nothing',
                     'message' => 'You are not following',
                 ]);
             }
         }
+    }
+
+    public function userFavrouitePastEvents()
+    {
+        $user = Auth::user();
+        $today = Carbon::today();
+        // dd($today);
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '<', Carbon::today())->get();
+        })->get();
+        $favUpcomingEvent = array();
+        $favrouiteEvent = array();
+        foreach ($favEvents as $key => $value) {
+            if ($value->event != null) {
+                $favUpcomingEvent[] = $value->event;
+            }
+        }
+        foreach ($favUpcomingEvent as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $favrouiteEvent,
+            'message' => 'User Favrouite Past Events',
+        ]);
+    }
+
+    public function userFavrouiteUpcomingEvents()
+    {
+        $user = Auth::user();
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '>=', Carbon::today())->get();
+        })->get();
+        $favUpcomingEvent = array();
+        $favrouiteEvent = array();
+        foreach ($favEvents as $key => $value) {
+            if ($value->event != null) {
+                $favUpcomingEvent[] = $value->event;
+            }
+        }
+        foreach ($favUpcomingEvent as $key => $value) {
+            $latLng = explode(',', $user->lat_lng); // user lat lng
+            if (is_array($latLng)) {
+                $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $favrouiteEvent,
+            'message' => 'User Favrouit Upcoming Events',
+        ]);
+    }
+
+    public function createEvent(Request $request)
+    {
+        $validate = request()->validate([
+            'event_name' => 'required|min:2|max:50',
+            'event_description' => 'required',
+            'event_type' => 'required',
+            'event_date' => 'required|date|after_or_equal:today',
+            'location' => 'required',
+            'is_public' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
+        ]);
+        if (!$validate) {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Data is not valid',
+            ]);
+        }
+
+        $event =    Event::create([
+            'event_name' => $request->event_name,
+            'event_description' => $request->event_description,
+            'event_type' => $request->event_type,
+            'event_date' => $request->event_date,
+            'conditions' => serialize($request->conditions),
+            'location' => $request->location,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'is_public' => intVal($request->is_public),
+            'user_id' => Auth::user()->id,
+            'ticket_link' => $request->ticket_link,
+        ]);
+
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(('images/eventImage'), $imageName);
+        $profileImage =  EventsPictures::create([
+            'event_id' => $event->id,
+            'image_path' => ('images/eventImage') . '/' . $imageName,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+            'message' => 'Event Created Successfully',
+        ]);
+    }
+
+    public function getEventTypes()
+    {
+        $eventTypes = EventTypes::all();
+        return response()->json([
+            'success' => true,
+            'data' => $eventTypes,
+            'message' => 'All Event Types',
+        ]);
     }
 }

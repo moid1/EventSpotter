@@ -5,9 +5,12 @@ use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\EventFeedsController;
 use App\Http\Controllers\FavrouiteController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
+use App\Http\Controllers\LikesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
@@ -27,6 +30,8 @@ use Illuminate\Support\Facades\Password;
 // });
 Route::post('/create-account', [AuthController::class, 'createAccount']);
 Route::post('/login', [AuthController::class, 'functionLogin']);
+Route::get('/getEventTypes', [EventController::class, 'getEventTypes']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logged-in', function (Request $request) {
         return response()->json([
@@ -60,4 +65,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('storeComment', [CommentsController::class, 'store']);
 
     Route::post('getUserFollowingStatus', [EventController::class, 'getUserFollowingStatus']);
+
+    Route::post('like', [LikesController::class, 'store']);
+    Route::get('getFavouriteUserPastEvents', [EventController::class, 'userFavrouitePastEvents']);
+    Route::get('getFavouriteUserUpcomingEvents', [EventController::class, 'userFavrouiteUpcomingEvents']);
+    Route::post('/update-profile-picture', [UserController::class, 'uploadProfilePicture']);
+
+    Route::post('/uploadEventSnap', [EventFeedsController::class, 'store']);
+
+    Route::post('/createEvent', [EventController::class, 'createEvent']);
+
+    Route::post('/deleteSnap', [EventFeedsController::class, 'deleteEventSnap']);
+
+
 });

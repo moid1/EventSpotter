@@ -18,9 +18,6 @@
 <body>
 @include('front.header')
    
-        
-
-           
      
 <div class="layout-wrapper d-lg-flex">
 

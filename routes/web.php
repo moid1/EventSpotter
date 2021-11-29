@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\IssuesController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Route;
 
@@ -130,6 +131,13 @@ Route::post('storeIssue', [IssuesController::class, 'store']);
 Route::post('useLocation', [UserController::class, 'useYourLocation']);
 Route::post('allowDirectMessage', [UserController::class, 'allowDirectMessage']);
 Route::post('makeProfilePrivate', [UserController::class, 'makeProfilePrivate']);
+
+
+//caht
+Route::get('/load-latest-messages', [MessagesController::class, 'getLoadLatestMessages']);
+Route::get('/chat-home', [MessagesController::class, 'indexHome']);
+Route::post('/send', [MessagesController::class, 'postSendMessage']);
+Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessages']);
 
 
 

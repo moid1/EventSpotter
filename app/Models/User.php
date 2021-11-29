@@ -6,13 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable,HasApiTokens;
-    
+    use HasFactory, Notifiable, HasApiTokens;
+
 
     /**
      * The attributes that are mass assignable.
@@ -67,7 +68,21 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
-    public function address(){
+    public function address()
+    {
         return $this->hasOne(Address::class);
+    }
+
+    public function getLastMessage()
+    {
+      return  Message::where('from_user',Auth::id())
+        ->orderBy('updated_at', 'desc')
+        ->get()
+        ->unique('to_user');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class,'from_user');
     }
 }
