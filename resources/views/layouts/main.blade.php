@@ -36,24 +36,22 @@
             ->get();
     @endphp
     <div class="header">
-        <div class="row ">
-            <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-2 ">
                 <div class="headerlogo">
                     <a href="{{ url('/') }}"><img class="img-fluid"
                             src="{{ url('assets/images/headerLogo.png') }}" alt=""></a>
                 </div>
             </div>
-            <div class="col-md-1"></div>
-            <div class=" col-md-7 ">
 
-                <div class="d-flex    headerSearchBColor ">
+            <div class=" col-md-7 ">
+                <div class="d-flex headerSearchBColor ">
                     <img class="img-fluid ml-2 mr-2 " src="{{ url('assets/images/icons/searechIcon.png') }}"
                         alt="search">
                     <input class="" id="search" name="search" type="text" placeholder="Search">
 
                 </div>
                 <div class="searchResults"></div>
-
 
             </div>
 
@@ -66,15 +64,14 @@
                             @if (count($notifications) > 0)
                                 <div class="notificationDot"></div>
                             @endif
-
                         </div>
 
-                    </div>                
+                    </div>
                     <div class="col-md-4 col-sm-4 col-4">
                         <div class="iconsBackgroundBox ">
                             <a href="{{ url('chat-home') }}"><img class="img-fluid "
                                     src="{{ asset('assets/images/emailDark.png') }}" /></a>
-                                <div class="notificationDot"></div>
+                            {{-- <div class="notificationDot"></div> --}}
                         </div>
 
                     </div>

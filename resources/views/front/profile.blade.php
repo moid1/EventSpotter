@@ -8,14 +8,16 @@
                 <div class="profileSection">
                     <h6 class="mb-3 medium-text ml-4">Profile</h6>
                     <div class="profileInfo  align-items-center mt-2 ml-3">
-                        <img class="circularImage" id="profileImage"
-                            src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
-                        <input type="file" name="image" id="ownProfilePic" class="d-none" />
-                        <div class="personInfo ml-3 ">
-                            <span>{{ $user->name }}</span>
-                            <br>
-                            <span
-                                class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
+                        <div class="w-100 row justify-content-center">
+                            <img class="circularImage" id="profileImage"
+                                src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
+                            <input type="file" name="image" id="ownProfilePic" class="d-none" />
+                            <div class="personInfo ml-3 ">
+                                <span>{{ $user->name }}</span>
+                                <br>
+                                <span
+                                    class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
+                            </div>
                         </div>
                         <div class="personFollowersInfo  mx-auto justify-content-center align-items-center">
                             <a href="{{ url('/follower') }}">
@@ -38,10 +40,12 @@
                                 <span class="notifications-primary-text">Events</span>
                             </div>
                             @if (Auth::User()->id == $user->id)
-                                <button class="logout" onclick="window.location='{{ url('/logout') }}'">
-                                    <img src="{{ asset('assets/images/logout.png') }}" alt="logout" srcset="">
-                                    <span class="ml-2">Logout</span>
-                                </button>
+                                <div class="w-100 text-center">
+                                    <button class="logout" onclick="window.location='{{ url('/logout') }}'">
+                                        <img src="{{ asset('assets/images/logout.png') }}" alt="logout" srcset="">
+                                        <span class="ml-2">Logout</span>
+                                    </button>
+                                </div>
                             @else
                                 <button class="logout" id="followBtn">
                                     <span id="isFollowing" class="followClass ml-2"> Follow</span>
@@ -94,7 +98,8 @@
                                 <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
                                 <div class="inputFieldGreenBG  ">
                                     <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
-                                        value={{ $user->phone_number }} id="phoneNumber" disabled style="margin-top: 10px;">
+                                        value={{ $user->phone_number }} id="phoneNumber" disabled
+                                        style="margin-top: 10px;">
                                 </div>
                             @endif
 
@@ -102,7 +107,8 @@
                                 <div class=" w-50 align-items-center mt-2">
                                     Make Private
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="makePhonePrivate" style="margin-top: 10px;">
+                                        <input class="form-check-input" type="checkbox" id="makePhonePrivate"
+                                            style="margin-top: 10px;">
                                         <label class="labelSwitch" for="makePhonePrivate"></label>
                                     </div>
                                 </div>
@@ -529,12 +535,12 @@
                                 var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
-                                    "<div class ='mx-auto  align-items-center justify-content-center'> " +
+                                    "<div class ='mx-auto d-flex  align-items-center justify-content-center'> " +
                                     "<img class='profileEvents' style='border-radius:10px' src=" +
                                     img + " >" +
                                     "<div class ='ml-3'>" +
-                                    "<h6 class='eventsTitleProfile'>" + event
-                                    .events.event_name +
+                                    "<h6 class='eventsTitleProfile'>" + event.events
+                                    .event_name +
                                     "</h6>" +
                                     "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
                                     "<span class='smallTextGrey'> " + event.events.event_date +
@@ -584,22 +590,23 @@
                         if (response.data.length > 0) {
                             response.data.forEach(function(event) {
                                 var img = event.events?.event_pictures[0]
-                                    .image_path.split('.').pop() == 'mp4' || event.events?.event_pictures[0]
+                                    .image_path.split('.').pop() == 'mp4' || event.events
+                                    ?.event_pictures[0]
                                     .image_path.split('.').pop() == 'mov' ?
                                     '{{ asset('download.png') }}' :
                                     window.location.origin + '/' + event.events?.event_pictures[0]
                                     .image_path;
-                                
+
                                 var url = "{{ url('eventDetails') }}" + "/" + event.events?.id;
 
                                 $('#events').append("<a href=" + url +
                                     "> <div class='eventsCard'>" +
-                                    "<div class ='mx-auto  align-items-center justify-content-center'> " +
+                                    "<div class ='mx-auto d-flex  align-items-center justify-content-center'> " +
                                     "<img class='profileEvents' style='border-radius:10px' src=" +
                                     img + " >" +
                                     "<div class ='ml-3'>" +
-                                    "<h6 class='eventsTitleProfile'>" + event
-                                    .events.event_name +
+                                    "<h6 class='eventsTitleProfile'>" + event.events
+                                    .event_name +
                                     "</h6>" +
                                     "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
                                     "<span class='smallTextGrey'> " + event.events.event_date +
@@ -612,7 +619,7 @@
                                     "</div>" +
                                     "</div></a>"
                                 );
-                               
+
 
                             });
                         } else {

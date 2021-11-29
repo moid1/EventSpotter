@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                                                            ">
+                                                                                                                                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -251,7 +251,8 @@
                         </select>
                     </div>
                     <div class=" col-md-5 text-center greyBorder borderRadius10 mt-3">
-                        <img id="eventPictureSrc" src="{{ url('assets/images/Frame.png') }}" alt="" srcset="">
+                        <img id="eventPictureSrc" class="img-fluid mt-1" src="{{ url('assets/images/Frame.png') }}"
+                            alt="" srcset="">
                         <h6 class="lightGreenTeal uploadCatchyText mt-4">Upload a catchy event picture or video</h6>
                         <input type="file" name="image" id="uploadEventPicture" class="d-none" />
                         <video autoplay playsinline id="eventVideoSrc" src="" class="eventBgImage"
@@ -290,11 +291,11 @@
                             placeholder="Ticket Link">
                         {{-- <button class="link_select"> Paste Link</button> --}}
                     </div>
-
-                    <div class="w-100 eventsCondition">
-                        <p class="event_cont eventCond">Event Conditions</p>
-                        <button onclick="eventConditions(this)" class="event_con mt-2 ml-3">Add Conditions</button>
-                    </div>
+                   
+                        <div class=" eventsCondition">
+                            <p class="event_cont eventCond">Event Conditions</p>
+                            <button onclick="eventConditions(this)" class="event_con mt-2 ml-3">Add Conditions</button>
+                        </div>
                     <div class="w-100">
                         <p class="event_cont"><img src="{{ url('assets/images/icons/eyeDark.png') }}"
                                 class="mr-2 ">Event privacy</p>
@@ -302,7 +303,8 @@
                             <button id="publicBtn" onclick="makeEventPublic(1)" class="event_tag">Public</button>
                             <button id="privateBtn" onclick="makeEventPublic(0)" class="event_t ml-2">Private</button>
 
-                            <span class="ml-2" id="eventMsg" style="display: block"> This event will be public.
+                            <span class="ml-2 mt-2" id="eventMsg" style="display: block"> This event will be
+                                public.
                                 Everyone on Event Spotter will be able to see this event details. </span>
                         </div>
                     </div>
