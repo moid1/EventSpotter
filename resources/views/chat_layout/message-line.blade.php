@@ -9,13 +9,15 @@
             </div>
         </div>
         <div class="col-md-2 col-xs-2 avatar">
-            <img src="{{ url('images/user-avatar.png') }}" width="50" height="50" class="img-responsive">
+            <img src="{{ url($message->toUser->profilePicture != null ? $message->toUser->profilePicture->image : 'image/user-avatar.png') }}"
+                width="50" height="50" class="img-responsive">
         </div>
     </div>
 @else
     <div class="row msg_container base_receive" data-message-id="{{ $message->id }}">
         <div class="col-md-2 col-xs-2 avatar">
-            <img src="{{ url('images/user-avatar.png') }}" width="50" height="50" class=" img-responsive ">
+            <img src="{{ url($message->fromUser->profilePicture != null ? $message->fromUser->profilePicture->image : 'image/user-avatar.png') }}"
+                width="50" height="50" class=" img-responsive ">
         </div>
         <div class="col-md-10 col-xs-10">
             <div class="messages msg_receive text-left">
@@ -26,4 +28,4 @@
             </div>
         </div>
     </div>
-@endifƒ
+@endif

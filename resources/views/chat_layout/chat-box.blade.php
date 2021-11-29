@@ -5,7 +5,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Chat with <i
                             class="chat-user"></i> </h3>
-                    <span class="glyphicon glyphicon-remove pull-right close-chat"></span>
+                    <span class="glyphicon glyphicon-remove pull-right close-chat" style="color: white"></span>
                 </div>
                 <div class="panel-body chat-area">
                 </div>
@@ -16,7 +16,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-primary btn-sm btn-chat" type="button" data-to-user="" disabled>
                                 <i class="glyphicon glyphicon-send"></i>
-                                Send</button>
+                                </button>
                         </span>
                     </div>
                 </div>

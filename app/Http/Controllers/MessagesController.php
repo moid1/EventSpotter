@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lib\PusherFactory;
+use App\Models\Following;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,13 +42,16 @@ class MessagesController extends Controller
     public function indexHome()
     {
         $messages = Message::where('from_user', Auth::id())
-            ->select('*')->with('toUser')
+            ->select('*')->with(['toUser', 'fromUser'])
             ->selectRaw('MAX(created_at) AS last_date')
             ->groupBy(['from_user', 'to_user'])
             ->orderBy('last_date', 'DESC')
             ->get();
+        // $messages = User::with('messages')->get();
         // dd($messages);
-        return view('chat_layout.home', compact('messages'));
+
+        $followingUser= Following::where('user_id',Auth::id())->with('user')->get();
+        return view('chat_layout.home', compact('messages','followingUser'));
     }
 
     /**

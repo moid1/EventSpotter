@@ -5,11 +5,11 @@ p {
 }
 
 .base_receive p {
-    background: #4bdbe6;
+    background: rgba(41, 114, 121, 0.09);
 }
 
 .base_sent p {
-    background: #e674a8;
+    background: lightgrey;
 }
 
 time {
@@ -35,7 +35,7 @@ time {
 
 .chat_box {
     margin-right: 25px;
-    width: 310px;
+    width: 350px;
 }
 
 .chat-area {

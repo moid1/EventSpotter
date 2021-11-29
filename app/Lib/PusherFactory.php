@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Lib;
-
 use Pusher\Pusher;
-
 class PusherFactory
 {
     public static function make()

@@ -28,6 +28,26 @@
     <script>
         var base_url = '{{ url('/') }}';
     </script>
+
+    <style>
+        .panel-default{
+            width: 500px;
+        }
+        .panel-default>.panel-heading {
+            color: #333;
+            background-color: #3badb7;
+            border-color: #ddd;
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 16px;
+            color: inherit;
+            color: white;
+        }
+
+    </style>
 </head>
 
 <body>

@@ -8,8 +8,10 @@ $(function () {
 
 
     // on click on any chat btn render the chat box
-    $(".chat-toggle").on("click", function (e) {
+    $(document).on("click",'.chat-toggle', function (e) {
+        
         e.preventDefault();
+        $("#exampleModalCenter .close").click()
 
         let ele = $(this);
 
@@ -67,7 +69,7 @@ $(function () {
              </div>
          </div>
          <div class="col-md-2 col-xs-2 avatar">
-             <img src="` + base_url + '/images/user-avatar.png' + `" width="50" height="50" class="img-responsive">
+             <img src="` + base_url + '/image/user-avatar.png' + `" width="50" height="50" class="img-responsive">
          </div>
      </div>
      `;
@@ -85,7 +87,7 @@ $(function () {
         return `
             <div class="row msg_container base_receive" data-message-id="${message.id}">
             <div class="col-md-2 col-xs-2 avatar">
-              <img src="` + base_url + '/images/user-avatar.png' + `" width="50" height="50" class="img-responsive">
+              <img src="` + base_url + '/image/user-avatar.png' + `" width="50" height="50" class="img-responsive">
             </div>
          <div class="col-md-10 col-xs-10">
              <div class="messages msg_receive text-left">
@@ -172,6 +174,7 @@ $(function () {
         });
 
         $(".btn-chat").on("click", function (e) {
+            e.preventDefault();
             send($(this).attr('data-to-user'), $("#chat_box_" + $(this).attr('data-to-user')).find(".chat_input").val());
         });
 
