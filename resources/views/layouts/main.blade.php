@@ -72,7 +72,7 @@
                     </div>                
                     <div class="col-md-4 col-sm-4 col-4">
                         <div class="iconsBackgroundBox ">
-                            <a href="{{ url('community') }}"><img class="img-fluid "
+                            <a href="{{ url('chat-home') }}"><img class="img-fluid "
                                     src="{{ asset('assets/images/emailDark.png') }}" /></a>
                                 <div class="notificationDot"></div>
                         </div>
