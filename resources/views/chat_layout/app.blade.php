@@ -30,9 +30,9 @@
     </script>
 
     <style>
-        .panel-default{
+        /* .panel-default{
             width: 500px;
-        }
+        } */
         .panel-default>.panel-heading {
             color: #333;
             background-color: #3badb7;
