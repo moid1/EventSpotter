@@ -21,7 +21,20 @@ class EventController extends Controller
     public function getEvents()
     {
         $eventTypes = EventTypes::all();
-        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
+        $allEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
+        $temp = array();
+
+        // dd(Carbon::today()->toDateString());
+        foreach ($allEvents as $key => $value) {
+            $eventDate = Carbon::parse($value->event_date);
+            if ($eventDate >= Carbon::today() || $eventDate == Carbon::yesterday()) {
+                $temp[] = $value;
+            }
+        }
+
+        // $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
+        $upcomingEvents = $temp;
+
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
