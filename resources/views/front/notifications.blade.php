@@ -1,5 +1,4 @@
 @include('layouts.head')
-
 <body>
 
     @include('front.header')
@@ -15,6 +14,7 @@
                             @endphp
 
                             <div class="row notifiy align-items-center ">
+                              
                                 <a href="{{ url('profile/'.$item->user->id) }}">
                                     <div class="col-2">
                                         @if ($item->user->profilePicture != null)

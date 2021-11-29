@@ -63,6 +63,14 @@
 
                     </div>
                     <div class="col-md-4 col-sm-4 col-4">
+                        <div class="iconsBackgroundBox ">
+                            <a href="{{ url('chat-home') }}"><img class="img-fluid "
+                                    src="{{ asset('assets/images/emailDark.png') }}" /></a>
+                            {{-- <div class="notificationDot"></div> --}}
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-4">
                         @if ($userWithImage->profilePicture != null)
                             <a href="{{ url('/profile') }}"> <img class="circularImage"
                                     src="{{ asset($userWithImage->profilePicture->image) }}" /></a>
@@ -77,7 +85,8 @@
             </div>
 
         </div>
-        <div style="text-align:center;"><img id="loading" style="display: none" src="{{ asset('loader.gif') }}" alt="" /></div>
+        <div style="text-align:center;"><img id="loading" style="display: none" src="{{ asset('loader.gif') }}"
+                alt="" /></div>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"

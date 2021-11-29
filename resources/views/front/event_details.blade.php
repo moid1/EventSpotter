@@ -8,6 +8,7 @@
                 <div class="eventsNearYouSection ">
                     <div class="eventsNearYouBG">
                         <div class="eventsNearYou">
+
                             @if (count($eventDetails['event']->eventPictures) > 0)
                                 @if (Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mov')
                                     <video class="eventBgImage mr-3"
@@ -17,7 +18,7 @@
                                     </video>
                                 @else
                                     <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                        class="eventBgImage " alt="" srcset="">
+                                        class="eventBgImage " height="100" width="100" alt="" srcset="">
                                 @endif
                             @else
                                 <img src="{{ asset('placeholder.jpg') }}" class="eventBgImage " alt="" srcset="">
@@ -121,20 +122,24 @@
                 </div>
 
                 <div class="event_comment">
-                    <div class="event_tit">Details
+                    <div class="padding16">Details
                         <p class="event_desc"> {{ $eventDetails['event']->event_description }}</p>
-                        @if ($eventDetails['event']->ticket_link != null)
+
+                    </div>
+                    @if ($eventDetails['event']->ticket_link != null)
+                        <div class="padding16">
                             Ticket Link
+                            <br>
                             <a class="event_desc" href="{{ $eventDetails['event']->ticket_link }}">
                                 {{ $eventDetails['event']->ticket_link }}
                             </a>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                     @php
                         $conditionsArr = $eventDetails['event']->conditions;
                     @endphp
-                    @if (count($conditionsArr) > 0)
-                        <div class="event_tit">Conditions </div>
+                    @if (count($conditionsArr) > 0 || !empty($conditionsArr))
+                        <div class="padding16">Conditions </div>
                         <div class="con_tag">
                             @foreach ($conditionsArr as $condition)
                                 <button class="condition_tag"
