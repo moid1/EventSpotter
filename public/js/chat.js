@@ -8,8 +8,8 @@ $(function () {
 
 
     // on click on any chat btn render the chat box
-    $(document).on("click", '.chat-toggle', function (e) {
-
+    $(document).on("click",'.chat-toggle', function (e) {
+        
         e.preventDefault();
         $("#exampleModalCenter .close").click()
 
@@ -18,7 +18,6 @@ $(function () {
         let user_id = ele.attr("data-id");
 
         let username = ele.attr("data-user");
-        $('#toUserName').html(username);
 
         cloneChatBox(user_id, username, function () {
 
@@ -61,38 +60,19 @@ $(function () {
      * @returns {string}
      */
     function getMessageSenderHtml(message) {
-        //     return `
-        //         <div class="row msg_container base_sent" data-message-id="${message.id}">
-        //      <div class="col-md-10 col-xs-10">
-        //          <div class="messages msg_sent text-right">
-        //              <p>${message.content}</p>
-        //              <time datetime="${message.dateTimeStr}"> ${message.fromUserName} • ${message.dateHumanReadable} </time>
-        //          </div>
-        //      </div>
-        //      <div class="col-md-2 col-xs-2 avatar">
-        //          <img src="` + base_url + '/image/user-avatar.png' + `" width="50" height="50" class="img-responsive">
-        //      </div>
-        //  </div>
-        //  `;
-
-        return `  <div class="conversation-list">
-        <div class="chat-avatar">
-            <img src="{{ url('chat/assets/images/users/avatar-4.jpg') }}" alt="">
-        </div>
-     <div class="user-chat-content base_sent" data-message-id="${message.id}">
-    <div class="ctext-wrap">
-        <div class="ctext-wrap-content">
-            <p class="mb-0">
-            ${message.content}
-            </p>
-            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i>
-                <span class="align-middle">${message.dateTimeStr}</span>
-            </p>
-        </div>
-
-    </div>
-    <div class="conversation-name">"${message.fromUserName}"</div>
-</div>`
+        return `
+            <div class="row msg_container base_sent" data-message-id="${message.id}">
+         <div class="col-md-10 col-xs-10">
+             <div class="messages msg_sent text-right">
+                 <p>${message.content}</p>
+                 <time datetime="${message.dateTimeStr}"> ${message.fromUserName} • ${message.dateHumanReadable} </time>
+             </div>
+         </div>
+         <div class="col-md-2 col-xs-2 avatar">
+             <img src="` + base_url + '/image/user-avatar.png' + `" width="50" height="50" class="img-responsive">
+         </div>
+     </div>
+     `;
     }
 
     /**
@@ -104,36 +84,19 @@ $(function () {
      * @returns {string}
      */
     function getMessageReceiverHtml(message) {
-    //     return `
-    //         <div class="row msg_container base_receive" data-message-id="${message.id}">
-    //         <div class="col-md-2 col-xs-2 avatar">
-    //           <img src="` + base_url + '/image/user-avatar.png' + `" width="50" height="50" class="img-responsive">
-    //         </div>
-    //      <div class="col-md-10 col-xs-10">
-    //          <div class="messages msg_receive text-left">
-    //              <p>${message.content}</p>
-    //              <time datetime="${message.dateTimeStr}"> ${message.fromUserName}  • ${message.dateHumanReadable} </time>
-    //          </div>
-    //      </div>
-    //  </div>
-    //  `;
-
-    return `    <div class="user-chat-content base_receive">
-    <div class="ctext-wrap">
-        <div class="ctext-wrap-content">
-            <p class="mb-0">
-                Good morning, How are you? What about our next meeting?
-            </p>
-            <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i>
-                <span class="align-middle">10:02</span>
-            </p>
-        </div>
-
-
-    </div>
-
-    <div class="conversation-name">Patricia Smith</div>
-</div>`
+        return `
+            <div class="row msg_container base_receive" data-message-id="${message.id}">
+            <div class="col-md-2 col-xs-2 avatar">
+              <img src="` + base_url + '/image/user-avatar.png' + `" width="50" height="50" class="img-responsive">
+            </div>
+         <div class="col-md-10 col-xs-10">
+             <div class="messages msg_receive text-left">
+                 <p>${message.content}</p>
+                 <time datetime="${message.dateTimeStr}"> ${message.fromUserName}  • ${message.dateHumanReadable} </time>
+             </div>
+         </div>
+     </div>
+     `;
     }
 
 
