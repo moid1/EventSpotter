@@ -25,12 +25,12 @@ class Event extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->with(['profilePicture','followers']);
+        return $this->belongsTo(User::class)->with('profilePicture')->with('followers');
     }
 
     public function comment()
     {
-        return $this->hasMany(Comments::class)->with('user');
+        return $this->hasMany(Comments::class);
     }
     public function like()
     {

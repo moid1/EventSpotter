@@ -12,6 +12,6 @@ class Comments extends Model
 
     public  function user()
     {
-        return $this->belongsTo(User::class)->with(['profilePicture','address']);
+        return $this->belongsTo(User::class)->with(['profilePicture','followers']);
     }
 }
