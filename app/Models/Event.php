@@ -37,6 +37,8 @@ class Event extends Model
         return $this->hasMany(Likes::class);
     }
 
+   
+
     public function livefeed()
     {
         return $this->hasMany(EventFeeds::class);
@@ -45,6 +47,4 @@ class Event extends Model
     {
         return unserialize($data);
     }
-
-  
 }
