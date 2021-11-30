@@ -55,7 +55,7 @@
         @include('front.header')
         @yield('content')
     </div>
-    <div id="chat-overlay" class="row"></div>
+    <div id="chat-overlay" class="d-flex justify-content-between"></div>
     <audio id="chat-alert-sound" style="display: none">
         <source src="{{ asset('sound/facebook_chat.mp3') }}" />
     </audio>

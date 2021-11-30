@@ -131,7 +131,7 @@
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-white">Coming Soon</h4>
+                        {{-- <h4 class="text-white">Coming Soon</h4> --}}
                         <a href=""><img class="mb-3" src="{{ url('assets/images/df.jpeg') }}"
                                 alt=""></a><br>
                         <a href="" class=""><img src="{{ url('assets/images/apple2.jpeg') }}"

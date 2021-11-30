@@ -209,7 +209,7 @@ $(function () {
                     chat_area.find(".loader").remove();
                     chat_box.find(".btn-chat").prop("disabled", true);
                     chat_box.find(".chat_input").val("");
-                    chat_area.animate({ scrollTop: chat_area.offset().top + chat_area.outerHeight(true) }, 800, 'swing');
+                  //  chat_area.animate({ scrollTop: chat_area.offset().top + chat_area.outerHeight(true) }, 800, 'swing');
                 }
             });
         }
