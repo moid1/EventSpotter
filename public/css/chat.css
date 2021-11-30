@@ -35,7 +35,7 @@ time {
 
 .chat_box {
     margin-right: 25px;
-    width: 350px;
+    width: 450px;
 }
 
 .chat-area {
@@ -50,7 +50,7 @@ time {
 #chat-overlay {
     position: fixed;
     right: 2%;
-    width: 50%;
+    /* width: 35%; */
     bottom: 0%;
     
 }

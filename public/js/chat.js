@@ -8,8 +8,8 @@ $(function () {
 
 
     // on click on any chat btn render the chat box
-    $(document).on("click",'.chat-toggle', function (e) {
-        
+    $(document).on("click", '.chat-toggle', function (e) {
+
         e.preventDefault();
         $("#exampleModalCenter .close").click()
 
@@ -18,8 +18,10 @@ $(function () {
         let user_id = ele.attr("data-id");
 
         let username = ele.attr("data-user");
+        let dataLastSeen = ele.attr("data-last-seen");
+        let dataIsOnline = ele.attr("data-is-active");
 
-        cloneChatBox(user_id, username, function () {
+        cloneChatBox(user_id, username, dataLastSeen, dataIsOnline, function () {
 
             let chatBox = $("#chat_box_" + user_id);
 
@@ -108,15 +110,21 @@ $(function () {
      *
      * @param user_id
      * @param username
+     * @param toUserData
      * @param callback
      */
-    function cloneChatBox(user_id, username, callback) {
+    function cloneChatBox(user_id, username, dataLastSeen, dataIsActive, callback) {
         if ($("#chat_box_" + user_id).length == 0) {
 
             let cloned = $("#chat_box").clone(true);
 
             // change cloned box id
             cloned.attr("id", "chat_box_" + user_id);
+            if (dataIsActive=='1')
+                cloned.find('.last-seen').text('Online');
+            else
+                cloned.find('.last-seen').text('Last Seen ' + dataLastSeen);
+
 
             cloned.find(".chat-user").text(username);
 
@@ -209,7 +217,7 @@ $(function () {
                     chat_area.find(".loader").remove();
                     chat_box.find(".btn-chat").prop("disabled", true);
                     chat_box.find(".chat_input").val("");
-                  //  chat_area.animate({ scrollTop: chat_area.offset().top + chat_area.outerHeight(true) }, 800, 'swing');
+                    //  chat_area.animate({ scrollTop: chat_area.offset().top + chat_area.outerHeight(true) }, 800, 'swing');
                 }
             });
         }
@@ -222,7 +230,7 @@ $(function () {
             } else if ($("#current_user").val() == message.to_user_id) {
                 alert_sound.play();
                 // for the receiver user check if the chat box is already opened otherwise open it
-                cloneChatBox(message.from_user_id, message.fromUserName, function () {
+                cloneChatBox(message.from_user_id, message.fromUserName, message.last_seen, message.is_online, function () {
                     let chatBox = $("#chat_box_" + message.from_user_id);
                     if (!chatBox.hasClass("chat-opened")) {
                         chatBox.addClass("chat-opened").slideDown("fast");

@@ -35,7 +35,7 @@
         } */
         .panel-default>.panel-heading {
             color: #333;
-            background-color: #3badb7;
+            background-color: #26C696;
             border-color: #ddd;
         }
 
@@ -45,6 +45,30 @@
             font-size: 16px;
             color: inherit;
             color: white;
+        }
+
+        .greenDot {
+            height: 10px;
+            width: 10px;
+            background-color: #26C696;
+            border-radius: 50%;
+            /* display: inline-block; */
+        }
+
+        .redDot {
+            height: 10px;
+            width: 10px;
+            background-color: red;
+            border-radius: 50%;
+            /* display: inline-block; */
+        }
+
+        .panel-footer {
+            padding: 10px 25px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
         }
 
     </style>

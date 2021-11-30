@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +30,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
+            $user = User::find(Auth::user()->id);
+            $user->is_online = true;
+            $user->update();
 
             return redirect()->intended('/');
         }
@@ -41,6 +45,7 @@ class AuthController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $user->is_online = false;
+        $user->last_seen = Carbon::now();
         $user->update();
         Auth::logout();
         return redirect()->intended('/login');
@@ -58,7 +63,7 @@ class AuthController extends Controller
         if (!Auth::attempt($attr)) {
             return $this->error('Credentials not match', 401);
         }
-        $user = User::where('id',Auth::id())->with('profilePicture')->first();
+        $user = User::where('id', Auth::id())->with('profilePicture')->first();
         return response()->json([
             'user' => $user,
             'token' => auth()->user()->createToken('API Token')->plainTextToken,

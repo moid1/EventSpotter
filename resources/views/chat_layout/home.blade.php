@@ -2,7 +2,6 @@
 
 @section('content')
     <style>
-      
         .modal-dialog {
             position: absolute !important;
             left: 0 !important;
@@ -11,14 +10,14 @@
         }
 
         /* .chat-leftsidebar{
-            height: 100vh;
-            background-color: white;
-            border: 1px solid grey;
-                    } */
+                                                                                    height: 100vh;
+                                                                                    background-color: white;
+                                                                                    border: 1px solid grey;
+                                                                                            } */
 
     </style>
 
-    <div class="layout-wrapper d-lg-flex" >
+    <div class="layout-wrapper d-lg-flex">
 
         <div class="chat-leftsidebar mt-5" style="background-color: white; border: 1px solid rgb(223, 223, 223)">
 
@@ -43,45 +42,64 @@
                             <ul class="list-unstyled chat-list chat-user-list">
                                 <li class="active">
                                     <a href="javascript:void(0);" class="chat-toggle"
-                                        data-id="{{ $message->user->id }}" data-user="{{ $message->toUser->name }}">
+                                        data-id="{{ $message->user->id }}"
+                                        data-is-active="{{ $message->toUser->is_online }}"
+                                        data-last-seen="{{ \Carbon\Carbon::parse($message->toUser->last_seen)->diffForHumans() }}"
+                                        data-user="{{ $message->toUser->name }}">
                                         <div class="d-flex">
                                             <div class="chat-user-img online align-self-center me-3 ms-0">
+
                                                 <img src="{{ url($message->toUser->profilePicture->image ?? 'image/user-avatar.png') }}"
-                                                    class="rounded-circle avatar-xs" alt="">
+                                                    class="rounded-circle avatar-xs " alt="">
+
                                                 {{-- <img src="{{ url('chat/assets/images/users/avatar-4.jpg') }}"
                                                         class="rounded-circle avatar-xs" alt=""> --}}
 
                                             </div>
                                             <div class="flex-1 overflow-hidden">
-                                                <h5 class="text-truncate font-size-15 mb-1">
+                                                <h5 class="text-truncate font-size-15 mb-1 ">
                                                     {{ $message->toUser->id == Auth::id() ? $message->fromUser->name : $message->toUser->name }}
+
                                                 </h5>
+
                                                 <p class="chat-user-message text-truncate mb-0">
                                                     {{ $message->content }}</p>
+
+
+
                                             </div>
                                             <div class="font-size-11">{{ $message->created_at->diffForHumans() }}
+
+                                                <p
+                                                    class="  {{ $message->toUser->is_online == 1 ? 'greenDot' : 'redDot' }} ">
+                                                </p>
                                             </div>
+
+
+
                                         </div>
-                                    </a>
-                                </li>
-                            </ul>
+
                         </div>
+                        </a>
+                        </li>
+                        </ul>
                     </div>
-                @endforeach
-                <!-- End chat-message-list -->
             </div>
-            <!-- Start chats content -->
-
-
-
+            @endforeach
+            <!-- End chat-message-list -->
         </div>
+        <!-- Start chats content -->
 
-        <div class=" w-100 d-flex  align-items-center justify-content-center">
-            <div class="text-center">
-                <img src="{{asset('assets/images/headerLogo.png')}}" alt="">
-                <h2 class="ml-5">Start a new conversation</h2>
-            </div>
+
+
+   
+
+    <div class=" w-100 d-flex  align-items-center justify-content-center">
+        <div class="text-center">
+            <img src="{{ asset('assets/images/headerLogo.png') }}" alt="">
+            <h2 class="ml-5">Start a new conversation</h2>
         </div>
+    </div>
 
     </div>
 
