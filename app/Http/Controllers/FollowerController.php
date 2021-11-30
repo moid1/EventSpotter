@@ -28,7 +28,7 @@ class FollowerController extends Controller
     {
         $currentUser = Auth::user();
         $followers = Follower::where('user_id', $currentUser->id)->with('user')->get();
-        $pendingRequest = Following::where('following_id', $currentUser->id)->with('user')->where('is_accepted', 0)->get();
+        $pendingRequest = Following::where('following_id', $currentUser->id)->with('user')->where('is_accepted', 0)->orWhere('is_accepted',2)->get();
         return view('front.follower')->with(compact('followers', 'currentUser', 'pendingRequest'));
     }
 

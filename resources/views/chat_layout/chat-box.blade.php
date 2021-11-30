@@ -11,7 +11,7 @@
                 </div>
                 <div class="panel-footer">
                     <div class="input-group form-controls">
-                        <textarea class="form-control input-sm chat_input"
+                        <textarea class="form-control w-50 input-sm chat_input"
                             placeholder="Write your message here..."></textarea>
                         <span class="input-group-btn" style="margin: auto">
                             <button style="margin: auto" class="btn btn-primary btn-sm btn-chat" type="button" data-to-user="" disabled>
