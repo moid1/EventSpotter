@@ -87,52 +87,51 @@
             <!-- Start chats content -->
 
 
+        </div>
 
 
-
-            <div class=" w-100 d-flex  align-items-center justify-content-center">
-                <div class="text-center">
-                    <img src="{{ asset('assets/images/headerLogo.png') }}" alt="">
-                    <h2 class="ml-5">Start a new conversation</h2>
-                </div>
+        <div class=" w-100 d-flex  align-items-center justify-content-center">
+            <div class="text-center">
+                <img src="{{ asset('assets/images/headerLogo.png') }}" alt="">
+                <h2 class="ml-5">Start a new conversation</h2>
             </div>
+        </div>
 
 
-            <!-- Button trigger modal -->
+        <!-- Button trigger modal -->
 
 
 
 
 
-            @include('chat_layout.chat-box')
+        @include('chat_layout.chat-box')
 
-            <input type="hidden" id="current_user" value="{{ \Auth::user()->id }}" />
-            <input type="hidden" id="pusher_app_key" value="{{ env('PUSHER_APP_KEY') }}" />
-            <input type="hidden" id="pusher_cluster" value="{{ env('PUSHER_APP_CLUSTER') }}" />
+        <input type="hidden" id="current_user" value="{{ \Auth::user()->id }}" />
+        <input type="hidden" id="pusher_app_key" value="{{ env('PUSHER_APP_KEY') }}" />
+        <input type="hidden" id="pusher_cluster" value="{{ env('PUSHER_APP_CLUSTER') }}" />
 
-            <!-- Modal -->
-            <div class="modal " id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Start a conversation</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mt-3">
-                                <div class="d-flex    headerSearchBColor ">
-                                    <img class="img-fluid ml-2 mr-2 "
-                                        src="{{ url('assets/images/icons/searechIcon.png') }}" alt="search">
-                                    <input class="" id="searchss" name="search" type="text"
-                                        placeholder="Search">
+        <!-- Modal -->
+        <div class="modal " id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Start a conversation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-3">
+                            <div class="d-flex    headerSearchBColor ">
+                                <img class="img-fluid ml-2 mr-2 " src="{{ url('assets/images/icons/searechIcon.png') }}"
+                                    alt="search">
+                                <input class="" id="searchss" name="search" type="text" placeholder="Search">
 
-                                </div>
                             </div>
-                            <div class="searchUserChatResult"></div>
-                            {{-- <ul>
+                        </div>
+                        <div class="searchUserChatResult"></div>
+                        {{-- <ul>
                         @foreach ($followingUser as $following)
                             <a href="javascript:void(0);" class="chat-toggle" data-id="{{$following->followingUser->id }}"
                                 data-user="{{ $following->followingUser->name }}">
@@ -141,64 +140,64 @@
                         @endforeach
 
                     </ul> --}}
-                        </div>
-                        {{-- <div class="modal-footer">
+                    </div>
+                    {{-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div> --}}
-                    </div>
                 </div>
             </div>
         </div>
-    @stop
+    </div>
+@stop
 
-    @section('script')
+@section('script')
 
-        <script>
-            $('#searchss').on('keyup', function() {
-                var text = $('#searchss').val();
-                if (text == '')
-                    $('.searchUserChatResult').addClass('d-none');
-                else
-                    $('.searchUserChatResult').removeClass('d-none');
-                if (text.length >= 3) {
-                    $.ajax({
-                        type: "GET",
-                        url: '/search',
-                        data: {
-                            text: text,
-                        },
-                        success: function(data) {
-                            $('.searchUserChatResult').html("");
-                            if (data[0].profile_picture !== null)
-                                var img =
-                                    "<img class='circularImage pic mr-3' src=" + data[0]
-                                    .profile_picture.image + " />"
-                            else
-                                var img =
-                                    "<img class='circularImage pic mr-3 mb-3' src='{{ asset('assets/images/usersImages/userPlaceHolder.png') }}' />"
-                            if (data.length == 0)
-                                $('.searchUserChatResult').append(
-                                    '<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>'
-                                );
-                            $.each(data, function(key, value) {
-                                var url = "{{ url('profile') }}" + "/" + value.id;
+    <script>
+        $('#searchss').on('keyup', function() {
+            var text = $('#searchss').val();
+            if (text == '')
+                $('.searchUserChatResult').addClass('d-none');
+            else
+                $('.searchUserChatResult').removeClass('d-none');
+            if (text.length >= 3) {
+                $.ajax({
+                    type: "GET",
+                    url: '/search',
+                    data: {
+                        text: text,
+                    },
+                    success: function(data) {
+                        $('.searchUserChatResult').html("");
+                        if (data[0].profile_picture !== null)
+                            var img =
+                                "<img class='circularImage pic mr-3' src=" + data[0]
+                                .profile_picture.image + " />"
+                        else
+                            var img =
+                                "<img class='circularImage pic mr-3 mb-3' src='{{ asset('assets/images/usersImages/userPlaceHolder.png') }}' />"
+                        if (data.length == 0)
+                            $('.searchUserChatResult').append(
+                                '<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>'
+                            );
+                        $.each(data, function(key, value) {
+                            var url = "{{ url('profile') }}" + "/" + value.id;
 
-                                $('.searchUserChatResult').append(
-                                    '<a href="javascript:void(0);" class="chat-toggle"  data-id="' +
-                                    value.id + '" data-user="' + value.name +
-                                    '" > <div class="w-100  justify-content-center " style="background:white">' +
-                                    img + value
-                                    .name + '<hr></div> </a>');
-                            })
-                        }
-                    }).done(function() {})
-                }
-            });
-        </script>
-        <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-        <script src="{{ asset('js/chat.js') }}"></script>
+                            $('.searchUserChatResult').append(
+                                '<a href="javascript:void(0);" class="chat-toggle"  data-id="' +
+                                value.id + '" data-user="' + value.name +
+                                '" > <div class="w-100  justify-content-center " style="background:white">' +
+                                img + value
+                                .name + '<hr></div> </a>');
+                        })
+                    }
+                }).done(function() {})
+            }
+        });
+    </script>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script src="{{ asset('js/chat.js') }}"></script>
 
 
 
-    @stop
+@stop
