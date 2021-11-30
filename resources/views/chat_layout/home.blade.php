@@ -31,7 +31,7 @@
             <div class="mt-5">
 
                 @foreach ($messages as $message)
-                    <div class="px-2" style="height: 100%">
+                    <div class="px-2" style="height: 100px">
                         <div class="chat-message-list" data-simplebar>
                             <ul class="list-unstyled chat-list chat-user-list">
 
