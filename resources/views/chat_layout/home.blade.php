@@ -30,11 +30,11 @@
 
             <div class="mt-5">
 
+                @foreach ($messages as $message)
+                    <div class="px-2" style="height: 100%">
+                        <div class="chat-message-list" data-simplebar>
+                            <ul class="list-unstyled chat-list chat-user-list">
 
-                <div class="px-2" style="height: 100%">
-                    <div class="chat-message-list" data-simplebar>
-                        <ul class="list-unstyled chat-list chat-user-list">
-                            @foreach ($messages as $message)
                                 <li class="active">
                                     <a href="javascript:void(0);" class="chat-toggle"
                                         data-id="{{ $message->user->id }}"
@@ -76,10 +76,11 @@
 
                                     </a>
                                 </li>
-                            @endforeach
-                        </ul>
+
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                @endforeach
 
                 <!-- End chat-message-list -->
             </div>
