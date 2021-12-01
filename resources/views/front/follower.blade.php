@@ -56,7 +56,7 @@
                                         onclick="acceptFollowingRequest({{ $request->id }})"
                                         class="logout">Accept</button>
                                     <button id="cancelFollowingRequest"
-                                        onclick="cancelFollowerRequest({{ $request->id }})"
+                                        onclick="cancelFollowerRequest({{ $request->id }}, {{$request->following_id}})"
                                         class="logout cancelBG">Cancel</button>
                                 </div>
                             </div>
@@ -119,15 +119,15 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
-                        location.reload();
                     }
                 })
                 .done(function() {
+                    location.reload();
 
                 })
         }
 
-        function cancelFollowerRequest(id) {
+        function cancelFollowerRequest(id,followingId) {
             $.ajax({
                     type: 'POST',
                     url: '/cancelPendingRequest',
@@ -136,14 +136,15 @@
                     },
                     data: {
                         "id": id,
+                        
                     },
                     success: function(response) {
                         // showToaster(response.message, 'success');
-                      
+
                     }
                 })
                 .done(function() {
-  location.reload();
+                    location.reload();
                 })
         }
 
@@ -159,10 +160,10 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
-                        location.reload();
                     }
                 })
                 .done(function() {
+                    location.reload();
 
                 })
         }

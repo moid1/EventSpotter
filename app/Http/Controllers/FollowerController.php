@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Follower;
 use App\Models\Following;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -91,6 +92,7 @@ class FollowerController extends Controller
     public function cancelPendingRequest(Request $request)
     {
         Following::find($request->id)->delete();
+        Notifications::where('following_id', $request->id)->delete();
 
         return response()->json([
             'success' => true,
