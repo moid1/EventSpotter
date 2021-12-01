@@ -63,6 +63,9 @@ class AuthController extends Controller
         if (!Auth::attempt($attr)) {
             return $this->error('Credentials not match', 401);
         }
+        $user = User::find(Auth::user()->id);
+        $user->is_online = true;
+        $user->update();
         $user = User::where('id', Auth::id())->with('profilePicture')->first();
         return response()->json([
             'user' => $user,
