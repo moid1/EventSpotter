@@ -20,8 +20,7 @@ $(function () {
         let username = ele.attr("data-user");
         let dataLastSeen = ele.attr("data-last-seen");
         let dataIsOnline = ele.attr("data-is-active");
-
-        alert(dataLastSeen);
+        
 
         cloneChatBox(user_id, username, dataLastSeen, dataIsOnline, function () {
 
