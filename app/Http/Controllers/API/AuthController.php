@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function getUserProfile()
     {
-        $user = User::where('id', Auth::id())->with(['profilePicture', 'followers', 'following', 'address'])->first();
+        $user = User::where('id', Auth::id())->with(['profilePicture', 'followers', 'following', 'address', 'events'])->first();
         return response()->json([
             'success' => true,
             'data' => $user,
