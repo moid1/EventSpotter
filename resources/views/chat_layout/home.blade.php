@@ -9,6 +9,13 @@
             top: 20px !important;
         }
 
+        @media only screen and (max-width: 600px) {
+            .panel {
+                margin-left: 15%;
+                width: 80%;
+            }
+        }
+
     </style>
 
     <div class="layout-wrapper d-lg-flex">
