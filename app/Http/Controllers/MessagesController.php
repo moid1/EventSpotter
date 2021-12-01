@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lib\PusherFactory;
 use App\Models\Following;
 use App\Models\Message;
+use App\Models\Notifications;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -90,6 +91,7 @@ class MessagesController extends Controller
         $message->to_user_id = $request->to_user;
 
         PusherFactory::make()->trigger('chat', 'send', ['data' => $message]);
+       
 
         return response()->json(['state' => 1, 'data' => $message]);
     }

@@ -30,7 +30,7 @@ class Event extends Model
 
     public function comment()
     {
-        return $this->hasMany(Comments::class);
+        return $this->hasMany(Comments::class)->with('user');
     }
     public function like()
     {
