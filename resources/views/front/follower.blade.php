@@ -52,12 +52,12 @@
                                     <span class="ml-2"> {{ $request->user->name }}</span>
                                 </div>
                                 <div class="d-flex m-2">
-                                    <Button id="acceptFollowingRequest"
+                                    <button id="acceptFollowingRequest"
                                         onclick="acceptFollowingRequest({{ $request->id }})"
-                                        class="logout">Accept</Button>
-                                    <Button id="cancelFollowingRequest"
+                                        class="logout">Accept</button>
+                                    <button id="cancelFollowingRequest"
                                         onclick="cancelFollowerRequest({{ $request->id }})"
-                                        class="logout cancelBG">Cancel</Button>
+                                        class="logout cancelBG">Cancel</button>
                                 </div>
                             </div>
                         @endforeach
@@ -139,11 +139,11 @@
                     },
                     success: function(response) {
                         // showToaster(response.message, 'success');
-                        location.reload();
+                      
                     }
                 })
                 .done(function() {
-
+  location.reload();
                 })
         }
 

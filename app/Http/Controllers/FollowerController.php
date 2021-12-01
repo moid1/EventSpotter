@@ -28,7 +28,7 @@ class FollowerController extends Controller
     {
         $currentUser = Auth::user();
         $followers = Follower::where('user_id', $currentUser->id)->with('user')->get();
-        $pendingRequest = Following::where('following_id', $currentUser->id)->with('user')->where('is_accepted', 0)->orWhere('is_accepted',2)->groupBy(['user_id', 'following_id'])->get();
+        $pendingRequest = Following::where('following_id', $currentUser->id)->with('user')->where('is_accepted', 0)->groupBy(['user_id', 'following_id'])->get();
         return view('front.follower')->with(compact('followers', 'currentUser', 'pendingRequest'));
     }
 
@@ -90,12 +90,11 @@ class FollowerController extends Controller
 
     public function cancelPendingRequest(Request $request)
     {
-        $followingRequest = Following::find($request->id);
-        $followingRequest->is_accepted = 2;
-        $followingRequest->update();
+        Following::find($request->id)->delete();
+
         return response()->json([
             'success' => true,
-            'data' => $followingRequest,
+            'data' => [],
             'message' => 'Following Request has been canceled',
         ]);
     }
@@ -103,8 +102,8 @@ class FollowerController extends Controller
     public function unfollow(Request $request)
     {
         $follower = Follower::with('user')->find($request->id);
-       
-        if ($follower!= null && $follower->user!=null) {
+
+        if ($follower != null && $follower->user != null) {
             $user = $follower->user;
             $follower->delete();
             $following = Following::find($follower->following_id);

@@ -67,7 +67,7 @@ class FollowingController extends Controller
             $followingResponse =   Following::create([
                 'user_id' => $userId,
                 'following_id' => $followingId,
-                'is_accepted' => 2,
+                'is_accepted' => 0,
             ]);
 
             Notifications::where([['user_id', $followingId], ['sent_by', $userId], ['route_name', 'follower']])->delete();
