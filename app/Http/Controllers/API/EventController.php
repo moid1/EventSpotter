@@ -309,4 +309,14 @@ class EventController extends Controller
             'message' => 'All Event Types',
         ]);
     }
+
+    public function getUserFollowerList()
+    {
+        $user = Follower::where('user_id',Auth::id())->with('user')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Current user followers list',
+        ]);
+    }
 }
