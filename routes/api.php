@@ -78,4 +78,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/deleteSnap', [EventFeedsController::class, 'deleteEventSnap']);
 
     Route::get('/getUserFollowerList', [EventController::class, 'getUserFollowerList']);
+    Route::get('/getUserFollowingList', [EventController::class, 'getUserFollowingList']);
+
 });
