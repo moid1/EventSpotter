@@ -159,3 +159,7 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::post('addBugType', [Admin::class, 'addBugType']);
     Route::get('deleteBugType/{id}', [Admin::class, 'deleteBugType']);
 });
+
+Route::get('/emit', function () {
+    \App\Events\MessageSent::broadcast(\App\Models\User::find(1));
+});

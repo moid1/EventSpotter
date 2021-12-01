@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Lib\PusherFactory;
 use App\Models\Following;
 use App\Models\Message;
@@ -89,6 +90,8 @@ class MessagesController extends Controller
         $message->toUserName = $message->toUser->name;
 
         $message->to_user_id = $request->to_user;
+
+        \event(new MessageSent($message));
 
         PusherFactory::make()->trigger('chat', 'send', ['data' => $message]);
        
