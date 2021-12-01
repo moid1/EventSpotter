@@ -3,16 +3,11 @@ $(function () {
         cluster: $("#pusher_cluster").val(),
         encrypted: true
     });
-
     let channel = pusher.subscribe('chat');
-
-
     // on click on any chat btn render the chat box
     $(document).on("click", '.chat-toggle', function (e) {
-
         e.preventDefault();
         $("#exampleModalCenter .close").click()
-
         let ele = $(this);
 
         let user_id = ele.attr("data-id");
@@ -20,7 +15,7 @@ $(function () {
         let username = ele.attr("data-user");
         let dataLastSeen = ele.attr("data-last-seen");
         let dataIsOnline = ele.attr("data-is-active");
-        
+
 
         cloneChatBox(user_id, username, dataLastSeen, dataIsOnline, function () {
 
@@ -39,7 +34,6 @@ $(function () {
 
     // on close chat close the chat box but don't remove it from the dom
     $(".close-chat").on("click", function (e) {
-
         $(this).parents("div.chat-opened").removeClass("chat-opened").slideUp("fast");
     });
 
@@ -121,7 +115,7 @@ $(function () {
 
             // change cloned box id
             cloned.attr("id", "chat_box_" + user_id);
-            if (dataIsActive=='1')
+            if (dataIsActive == '1')
                 cloned.find('.last-seen').text('Online');
             else
                 cloned.find('.last-seen').text('Last Seen ' + dataLastSeen);
@@ -174,132 +168,134 @@ $(function () {
             }
         });
 
-        $(".chat_input").on("change keyup", function (e) {
-            if ($(this).val() != "") {
-                $(this).parents(".form-controls").find(".btn-chat").prop("disabled", false);
-            } else {
-                $(this).parents(".form-controls").find(".btn-chat").prop("disabled", true);
+    }
+    
+    $(".chat_input").on("change keyup", function (e) {
+        if ($(this).val() != "") {
+            $(this).parents(".form-controls").find(".btn-chat").prop("disabled", false);
+        } else {
+            $(this).parents(".form-controls").find(".btn-chat").prop("disabled", true);
+        }
+    });
+
+    $(".btn-chat").on("click", function (e) {
+        e.preventDefault();
+        send($(this).attr('data-to-user'), $("#chat_box_" + $(this).attr('data-to-user')).find(".chat_input").val());
+    });
+
+    channel.bind('send', function (data) {
+        displayMessage(data.data);
+    });
+
+    /**
+ * send
+ *
+ * this function is the main function of chat as it send the message
+ *
+ * @param to_user
+ * @param message
+ */
+    function send(to_user, message) {
+        let chat_box = $("#chat_box_" + to_user);
+        let chat_area = chat_box.find(".chat-area");
+        $.ajax({
+            url: base_url + "/send",
+            data: { to_user: to_user, message: message, _token: $("meta[name='csrf-token']").attr("content") },
+            method: "POST",
+            dataType: "json",
+            beforeSend: function () {
+                if (chat_area.find(".loader").length == 0) {
+                    chat_area.append(loaderHtml());
+                }
+            },
+            success: function (response) {
+            },
+            complete: function () {
+                chat_area.find(".loader").remove();
+                chat_box.find(".btn-chat").prop("disabled", true);
+                chat_box.find(".chat_input").val("");
+                //  chat_area.animate({ scrollTop: chat_area.offset().top + chat_area.outerHeight(true) }, 800, 'swing');
             }
         });
+    }
 
-        $(".btn-chat").on("click", function (e) {
-            e.preventDefault();
-            send($(this).attr('data-to-user'), $("#chat_box_" + $(this).attr('data-to-user')).find(".chat_input").val());
-        });
+    function displayMessage(message) {
+        let alert_sound = document.getElementById("chat-alert-sound");
+        if ($("#current_user").val() == message.from_user_id) {
+            let messageLine = getMessageSenderHtml(message);
+            $("#chat_box_" + message.to_user_id).find(".chat-area").append(messageLine);
+        } else if ($("#current_user").val() == message.to_user_id) {
+            alert_sound.play();
+            // for the receiver user check if the chat box is already opened otherwise open it
+            cloneChatBox(message.from_user_id, message.fromUserName, message.last_seen, message.is_online, function () {
+                let chatBox = $("#chat_box_" + message.from_user_id);
+                if (!chatBox.hasClass("chat-opened")) {
+                    chatBox.addClass("chat-opened").slideDown("fast");
+                    loadLatestMessages(chatBox, message.from_user_id);
+                    chatBox.find(".chat-area").animate({ scrollTop: chatBox.find(".chat-area").offset().top + chatBox.find(".chat-area").outerHeight(true) }, 800, 'swing');
+                } else {
+                    let messageLine = getMessageReceiverHtml(message);
+                    // append the message for the receiver user
+                    $("#chat_box_" + message.from_user_id).find(".chat-area").append(messageLine);
+                }
+            });
+        }
+    }
 
-        channel.bind('send', function (data) {
-            displayMessage(data.data);
-        });
 
-        /**
-     * send
+    let lastScrollTop = 0;
+    $(".chat-area").on("scroll", function (e) {
+        let st = $(this).scrollTop();
+        if (st < lastScrollTop) {
+            fetchOldMessages($(this).parents(".chat-opened").find("#to_user_id").val(), $(this).find(".msg_container:first-child").attr("data-message-id"));
+        }
+        lastScrollTop = st;
+    });
+    // listen for the oldMsgs event, this event will be triggered on scroll top
+    channel.bind('oldMsgs', function (data) {
+        displayOldMessages(data);
+
+    });
+
+    /**
+     * fetchOldMessages
      *
-     * this function is the main function of chat as it send the message
+     * this function load the old messages if scroll up triggerd
      *
      * @param to_user
-     * @param message
+     * @param old_message_id
      */
-        function send(to_user, message) {
-            let chat_box = $("#chat_box_" + to_user);
-            let chat_area = chat_box.find(".chat-area");
-            $.ajax({
-                url: base_url + "/send",
-                data: { to_user: to_user, message: message, _token: $("meta[name='csrf-token']").attr("content") },
-                method: "POST",
-                dataType: "json",
-                beforeSend: function () {
-                    if (chat_area.find(".loader").length == 0) {
-                        chat_area.append(loaderHtml());
-                    }
-                },
-                success: function (response) {
-                },
-                complete: function () {
-                    chat_area.find(".loader").remove();
-                    chat_box.find(".btn-chat").prop("disabled", true);
-                    chat_box.find(".chat_input").val("");
-                    //  chat_area.animate({ scrollTop: chat_area.offset().top + chat_area.outerHeight(true) }, 800, 'swing');
+    function fetchOldMessages(to_user, old_message_id) {
+        let chat_box = $("#chat_box_" + to_user);
+        let chat_area = chat_box.find(".chat-area");
+        $.ajax({
+            url: base_url + "/fetch-old-messages",
+            data: { to_user: to_user, old_message_id: old_message_id, _token: $("meta[name='csrf-token']").attr("content") },
+            method: "GET",
+            dataType: "json",
+            beforeSend: function () {
+                if (chat_area.find(".loader").length == 0) {
+                    chat_area.prepend(loaderHtml());
                 }
-            });
-        }
-
-        function displayMessage(message) {
-            let alert_sound = document.getElementById("chat-alert-sound");
-            if ($("#current_user").val() == message.from_user_id) {
-                let messageLine = getMessageSenderHtml(message);
-                $("#chat_box_" + message.to_user_id).find(".chat-area").append(messageLine);
-            } else if ($("#current_user").val() == message.to_user_id) {
-                alert_sound.play();
-                // for the receiver user check if the chat box is already opened otherwise open it
-                cloneChatBox(message.from_user_id, message.fromUserName, message.last_seen, message.is_online, function () {
-                    let chatBox = $("#chat_box_" + message.from_user_id);
-                    if (!chatBox.hasClass("chat-opened")) {
-                        chatBox.addClass("chat-opened").slideDown("fast");
-                        loadLatestMessages(chatBox, message.from_user_id);
-                        chatBox.find(".chat-area").animate({ scrollTop: chatBox.find(".chat-area").offset().top + chatBox.find(".chat-area").outerHeight(true) }, 800, 'swing');
-                    } else {
-                        let messageLine = getMessageReceiverHtml(message);
-                        // append the message for the receiver user
-                        $("#chat_box_" + message.from_user_id).find(".chat-area").append(messageLine);
-                    }
-                });
+            },
+            success: function (response) {
+            },
+            complete: function () {
+                chat_area.find(".loader").remove();
             }
-        }
-
-
-        let lastScrollTop = 0;
-        $(".chat-area").on("scroll", function (e) {
-            let st = $(this).scrollTop();
-            if (st < lastScrollTop) {
-                fetchOldMessages($(this).parents(".chat-opened").find("#to_user_id").val(), $(this).find(".msg_container:first-child").attr("data-message-id"));
-            }
-            lastScrollTop = st;
         });
-        // listen for the oldMsgs event, this event will be triggered on scroll top
-        channel.bind('oldMsgs', function (data) {
-            displayOldMessages(data);
-
-        });
-
-        /**
-         * fetchOldMessages
-         *
-         * this function load the old messages if scroll up triggerd
-         *
-         * @param to_user
-         * @param old_message_id
-         */
-        function fetchOldMessages(to_user, old_message_id) {
-            let chat_box = $("#chat_box_" + to_user);
-            let chat_area = chat_box.find(".chat-area");
-            $.ajax({
-                url: base_url + "/fetch-old-messages",
-                data: { to_user: to_user, old_message_id: old_message_id, _token: $("meta[name='csrf-token']").attr("content") },
-                method: "GET",
-                dataType: "json",
-                beforeSend: function () {
-                    if (chat_area.find(".loader").length == 0) {
-                        chat_area.prepend(loaderHtml());
-                    }
-                },
-                success: function (response) {
-                },
-                complete: function () {
-                    chat_area.find(".loader").remove();
-                }
-            });
-        }
-        function displayOldMessages(data) {
-            if (data.data.length > 0) {
-                data.data.map(function (val, index) {
-                    $("#chat_box_" + data.to_user).find(".chat-area").prepend(val);
-                });
-            }
-        }
-
-
-
-
-
     }
+    function displayOldMessages(data) {
+        if (data.data.length > 0) {
+            data.data.map(function (val, index) {
+                $("#chat_box_" + data.to_user).find(".chat-area").prepend(val);
+            });
+        }
+    }
+
+
+
+
+
+
 });

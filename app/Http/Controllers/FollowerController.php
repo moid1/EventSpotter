@@ -103,22 +103,14 @@ class FollowerController extends Controller
 
     public function unfollow(Request $request)
     {
-        $follower = Follower::with('user')->find($request->id);
-
-        if ($follower != null && $follower->user != null) {
-            $user = $follower->user;
-            $follower->delete();
-            $following = Following::find($follower->following_id);
-            $following->delete();
-            return response()->json([
-                'success' => true,
-                'message' => 'You unfollow' . $user->name,
-            ]);
-        } else {
-            return response()->json([
-                'success' => true,
-                'message' => 'user does not exists',
-            ]);
-        }
+        $following = Following::with('user')->find($request->id);
+        $user = $following->user;
+        $following->delete();
+        $follower = Follower::where('following_id', $following->id)->first();
+        $follower->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'You unfollow' . $user->name,
+        ]);
     }
 }
