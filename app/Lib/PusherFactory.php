@@ -10,7 +10,7 @@ class PusherFactory
             env("PUSHER_APP_SECRET"), // Secret
             env("PUSHER_APP_ID"), // App_id
             array(
-                'cluster' => env("PUSHER_APP_CLUSTER"), // Cluster
+                'cluster' => 'ap2', // Cluster
                 'encrypted' => true,
             )
         );

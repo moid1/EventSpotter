@@ -160,6 +160,6 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::get('deleteBugType/{id}', [Admin::class, 'deleteBugType']);
 });
 
-Route::get('/emit', function () {
-    \App\Events\MessageSent::broadcast(\App\Models\User::find(1));
-});
+// Route::get('/emit', function () {
+//     \App\Events\MessageSent::broadcast(\App\Models\User::find(1));
+// });
