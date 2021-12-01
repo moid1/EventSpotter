@@ -312,10 +312,10 @@ class EventController extends Controller
 
     public function getUserFollowerList()
     {
-        $user = Follower::where('user_id', Auth::id())->with('follower_data')->get();
+        $followers = Follower::where('user_id', Auth::id())->with('user')->get();
         return response()->json([
             'success' => true,
-            'data' => $user,
+            'data' => $followers,
             'message' => 'Current user followers list',
         ]);
     }
