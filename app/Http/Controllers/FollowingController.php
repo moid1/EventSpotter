@@ -28,8 +28,8 @@ class FollowingController extends Controller
     public function create()
     {
         $currentUser = Auth::user();
-        $following = Following::where('user_id', $currentUser->id)->where('is_accepted', 1)->with('followingUser')->get();
-        $pendingRequest = Following::where('user_id', $currentUser->id)->with('user')->where('is_accepted', 0)->get();
+        $following = Following::where('user_id', $currentUser->id)->where('is_accepted', 1)->with('followingUser')->groupBy(['user_id', 'following_id'])->get();
+        $pendingRequest = Following::where('user_id', $currentUser->id)->with('user')->where('is_accepted', 0)->groupBy(['user_id', 'following_id'])->get();
         return view('front.following')->with(compact('following', 'currentUser', 'pendingRequest'));
     }
 
@@ -67,15 +67,17 @@ class FollowingController extends Controller
             $followingResponse =   Following::create([
                 'user_id' => $userId,
                 'following_id' => $followingId,
-                'is_accepted'=>2,
+                'is_accepted' => 2,
             ]);
+
+            Notifications::where([['user_id', $followingId], ['sent_by', $userId], ['route_name', 'follower']])->delete();
             Notifications::create([
                 'title' => 'Follow Request',
                 'message' => 'You have a follow request from ' . Auth::user()->name,
                 'user_id' => $followingId,
                 'sent_by' => $userId,
-                'notification_type'=>1,
-                'route_name'=>'follower'
+                'notification_type' => 1,
+                'route_name' => 'follower'
             ]);
 
 
@@ -151,8 +153,8 @@ class FollowingController extends Controller
             'message' =>  $currentUser->name . ' accepted your following request',
             'user_id' => $following->user_id,
             'sent_by' => $currentUser->id,
-            'notification_type'=>2,
-            'route_name'=>'following'
+            'notification_type' => 2,
+            'route_name' => 'following'
         ]);
         return response()->json([
             'success' => true,
@@ -160,13 +162,13 @@ class FollowingController extends Controller
             'message' => 'Following Request has been accepted',
         ]);
     }
-//this will unfollow from followingTable
+    //this will unfollow from followingTable
     public function unfollow(Request $request)
     {
         $following = Following::with('user')->find($request->id);
         $user = $following->user;
         $following->delete();
-        $follower = Follower::where('following_id',$following->id)->first();
+        $follower = Follower::where('following_id', $following->id)->first();
         $follower->delete();
         return response()->json([
             'success' => true,
