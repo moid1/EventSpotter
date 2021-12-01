@@ -132,6 +132,8 @@ class AuthController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $user->is_online = false;
+        $user->last_seen = Carbon::now();
+        $user->update();
         $user->tokens()->delete();
         return response()->json([
             'success' => true,
