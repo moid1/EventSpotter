@@ -71,6 +71,7 @@ class EventController extends Controller
                     $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0, 'totalLikes' => $totalLikes);
                 }
             }
+            array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
 
             return response()->json([
                 'success' => true,
