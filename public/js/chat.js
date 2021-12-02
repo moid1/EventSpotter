@@ -256,7 +256,11 @@ $(function () {
         lastScrollTop = st;
     });
     // listen for the oldMsgs event, this event will be triggered on scroll top
+    mobileChannel
     channel.bind('oldMsgs', function (data) {
+        displayOldMessages(data);
+
+    }); mobileChannel.bind('oldMsgs', function (data) {
         displayOldMessages(data);
 
     });
