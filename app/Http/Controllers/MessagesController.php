@@ -52,8 +52,8 @@ class MessagesController extends Controller
         // $messages = User::with('messages')->get();
         // dd($messages);
 
-        $followingUser= Following::where('user_id',Auth::id())->with('user')->get();
-        return view('chat_layout.home', compact('messages','followingUser'));
+        $followingUser = Following::where('user_id', Auth::id())->with('user')->get();
+        return view('chat_layout.home', compact('messages', 'followingUser'));
     }
 
     /**
@@ -94,8 +94,8 @@ class MessagesController extends Controller
         event(new MessageSent($message));
         PusherFactory::make()->trigger('chat', 'send', ['data' => $message]);
 
-        PusherFactory::make()->trigger('chat-message.'.$request->to_user, 'send', ['data' => $message]);
-       
+        PusherFactory::make()->trigger('chat-message.' . $request->to_user . $request->from_user_id, 'send', ['data' => $message]);
+
 
         return response()->json(['state' => 1, 'data' => $message]);
     }
