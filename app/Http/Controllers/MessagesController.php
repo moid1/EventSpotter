@@ -63,6 +63,7 @@ class MessagesController extends Controller
      */
     public function postSendMessage(Request $request)
     {
+        return 'huhu';
         if (!$request->to_user || !$request->message) {
             return;
         }
