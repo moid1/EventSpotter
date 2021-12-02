@@ -10,6 +10,7 @@ use App\Http\Controllers\FavrouiteController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -82,4 +83,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getUserId',function(){
         return auth()->id();
     });
+
+    Route::post('/send', [MessagesController::class, 'postSendMessage']);
+
 });
