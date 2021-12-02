@@ -76,7 +76,7 @@ class MessagesController extends Controller
 
         $message->content = $request->message;
 
-        $message->save();
+        // $message->save();
         return response()->json(['state' => 1, 'data' => $message]);
 
         // prepare some data to send with the response
