@@ -147,6 +147,30 @@
                                 "</div>" +
                                 "</div>"
                             )
+
+                            // $('.favEvent').append("<a href=" + url +
+                            //     "> <div class='eventsCard'>" +
+                            //     "<div class ='mx-auto d-flex  align-items-center '> " +
+                            //     "<img class='profileEvents' style='border-radius:10px' src=" +
+                            //     img + " >" +
+                            //     "<div class ='ml-3'>" +
+                            //     "<h6 class='eventsTitleProfile'>" + data['events'].event_name +
+                            //     "</h6>" +
+                            //     "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
+                            //     "<span class='smallTextGrey'> " + data['events'].event_date +
+                            //     "</span>" +
+                            //     "<br>" +
+                            //     "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
+                            //     "<span class='smallTextGrey'> " + data['km'] +
+                            //     " Miles away</span> " +
+                            //     "<br>" +
+                            //     "<img class='fav_title' src='assets/images/following.png'>" +
+                            //     "<span class='smallTextGrey'> " + data['events'].user.followers.length +
+                            //     " </span> " +
+                            //     "</div>" +
+                            //     "</div>" +
+                            //     "</div></a>"
+                            // );
                         })
                     } else {
                         $('.favEvent').append("<h5 class='text-center mt-5'>No Events Available</h5>");

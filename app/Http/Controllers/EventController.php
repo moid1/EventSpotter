@@ -273,7 +273,7 @@ class EventController extends Controller
     public function yourPastEvents()
     {
         $user = Auth::user();
-        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<',Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<', Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
         // foreach ($yourUpcomingEvents as $key => $value) {
@@ -302,15 +302,10 @@ class EventController extends Controller
     {
         $user = Auth::user();
         $yourUpcomingEvents = Event::where('user_id', $user->id)->where('is_drafted', 1)->with(['eventPictures', 'user'])->get();
-        $userUpcomingEvents = array();
+        // return $yourUpcomingEvents;
         $ourEvents = array();
+
         foreach ($yourUpcomingEvents as $key => $value) {
-            $today = Carbon::now();
-            if ($value->event_date >= $today) {
-                $userUpcomingEvents[] = $value;
-            }
-        }
-        foreach ($userUpcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);

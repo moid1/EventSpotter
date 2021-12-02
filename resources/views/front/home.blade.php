@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                                                                    ">
+                                                                                                                                                                                            ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -291,11 +291,11 @@
                             placeholder="Ticket Link">
                         {{-- <button class="link_select"> Paste Link</button> --}}
                     </div>
-                   
-                        <div class=" eventsCondition">
-                            <p class="event_cont eventCond">Event Conditions</p>
-                            <button onclick="eventConditions(this)" class="event_con mt-2 ml-3">Add Conditions</button>
-                        </div>
+
+                    <div class=" eventsCondition">
+                        <p class="event_cont eventCond">Event Conditions</p>
+                        <button onclick="eventConditions(this)" class="event_con mt-2 ml-3">Add Conditions</button>
+                    </div>
                     <div class="w-100">
                         <p class="event_cont"><img src="{{ url('assets/images/icons/eyeDark.png') }}"
                                 class="mr-2 ">Event privacy</p>
@@ -521,6 +521,7 @@
             form_data.append('event_type', $('#eventType :selected').text());
             form_data.append('location', $('#venue').val());
             form_data.append('ticket_link', $('#ticket_link').val());
+            form_data.append('event_date', $('#event_date').val());
             form_data.append('conditions', eventConditionsArray);
             form_data.append('is_public', is_public);
 
@@ -537,6 +538,8 @@
                 data: form_data
             }).done(function(msg) {
                 showToaster('Your event has been drafted', 'success');
+                $('#createEventModal').modal('toggle');
+
 
             })
         });
