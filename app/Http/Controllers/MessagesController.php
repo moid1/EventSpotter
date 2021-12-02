@@ -92,9 +92,9 @@ class MessagesController extends Controller
         $message->to_user_id = $request->to_user;
 
         event(new MessageSent($message));
-        PusherFactory::make()->trigger('chat', 'order-filled', ['data' => 'MOI']);
+        // PusherFactory::make()->trigger('chat', 'order-filled', ['data' => 'MOI']);
 
-        // PusherFactory::make()->trigger('chat', 'send', ['data' => $message]);
+        PusherFactory::make()->trigger('chat', 'send', ['data' => $message]);
        
 
         return response()->json(['state' => 1, 'data' => $message]);
