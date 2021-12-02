@@ -76,7 +76,7 @@ class MessagesController extends Controller
         $message->content = $request->message;
 
         $message->save();
-
+return $message;
 
         // prepare some data to send with the response
         $message->dateTimeStr = date("Y-m-dTH:i", strtotime($message->created_at->toDateTimeString()));
