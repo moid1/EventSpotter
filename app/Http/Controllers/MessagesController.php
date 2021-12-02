@@ -63,7 +63,7 @@ class MessagesController extends Controller
      */
     public function postSendMessage(Request $request)
     {
-      return Auth::user();
+     
         if (!$request->to_user || !$request->message) {
             return;
         }
@@ -77,7 +77,7 @@ class MessagesController extends Controller
         $message->content = $request->message;
 
         $message->save();
-return $message;
+        return response()->json(['state' => 1, 'data' => $message]);
 
         // prepare some data to send with the response
         $message->dateTimeStr = date("Y-m-dTH:i", strtotime($message->created_at->toDateTimeString()));
