@@ -79,5 +79,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/getUserFollowerList', [EventController::class, 'getUserFollowerList']);
     Route::get('/getUserFollowingList', [EventController::class, 'getUserFollowingList']);
-
+    Route::get('/getUserId',function(){
+        return auth()->id();
+    });
 });
