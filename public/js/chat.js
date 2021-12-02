@@ -4,7 +4,6 @@ $(function () {
         encrypted: true
     });
     let channel = pusher.subscribe('chat');
-    let mobileChannel = pusher.subscribe('chat-message.32');
     // on click on any chat btn render the chat box
     $(document).on("click", '.chat-toggle', function (e) {
         e.preventDefault();
@@ -170,7 +169,7 @@ $(function () {
         });
 
     }
-
+    
     $(".chat_input").on("change keyup", function (e) {
         if ($(this).val() != "") {
             $(this).parents(".form-controls").find(".btn-chat").prop("disabled", false);
@@ -183,10 +182,7 @@ $(function () {
         e.preventDefault();
         send($(this).attr('data-to-user'), $("#chat_box_" + $(this).attr('data-to-user')).find(".chat_input").val());
     });
-    mobileChannel.bind('send', function (data) {
-        displayMessage(data.data);
 
-    });
     channel.bind('send', function (data) {
         displayMessage(data.data);
     });
@@ -256,11 +252,7 @@ $(function () {
         lastScrollTop = st;
     });
     // listen for the oldMsgs event, this event will be triggered on scroll top
-    mobileChannel
     channel.bind('oldMsgs', function (data) {
-        displayOldMessages(data);
-
-    }); mobileChannel.bind('oldMsgs', function (data) {
         displayOldMessages(data);
 
     });
