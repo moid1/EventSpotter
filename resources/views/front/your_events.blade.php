@@ -88,15 +88,15 @@
                             }
 
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
-                            $('.favEvent').append("<div class = 'favourit' >" +
+                            $('.favEvent').append("<div class = 'favourit ml-3' >" +
                                 "<div class='row'>" +
-                                "<div class='col-2'>" +
+                                "<div class=''>" +
                                 "<a href=" + url + ">" +
                                 "<img style='width:90px;height:90px' src=" + img + ">" +
                                 "</a>" +
                                 "</div>" +
-                                "<div class='col-9'>" +
-                                "<h4 class='title_favourit'>" + data['events'].event_name +
+                                "<div class=''>" +
+                                "<h4 class='title_favourit ml-3'>" + data['events'].event_name +
                                 "</h4>" +
                                 "<div class = 'row'>" +
                                 "<div class='col-4 date'>" +
@@ -137,7 +137,7 @@
                                 "</div>" +
                                 "</div>" +
                                 "</div>" +
-                                "<div class='col-1 text-center align-items-center'>" +
+                                "<div class=' text-center align-items-center'>" +
                                 "<i onclick='favroute(this)' data-id=" + data['events'].id +
                                 "class='fa fa-heart red '></i>" +
                                 "<a href=" + url + ">" +
@@ -191,29 +191,29 @@
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
-                                "<div class='col-2'>" +
+                                "<div class=''>" +
                                 "<a href=" + url + ">" +
                                 "<img style='width:90px;height:90px' src=" + img + ">" +
                                 "</a>" +
                                 "</div>" +
-                                "<div class='col-9'>" +
-                                "<h4 class='title_favourit'>" + data['events'].event_name +
+                                "<div class=''>" +
+                                "<h4 class='title_favourit ml-3'>" + data['events'].event_name +
                                 "</h4>" +
-                                "<div class = 'row'>" +
-                                "<div class='col-4 date'>" +
-                                "<img class='fav_title'" +
-                                "<img class='fav_title' src='assets/images/date.png' >" +
+                                "<div class = 'row ml-2'>" +
+                                "<div class='col-6 date '>" +
+                                "<img class='fav_title mr-4'" +
+                                "<img class='fav_title mr-4' src='assets/images/date.png' >" +
                                 data['events'].event_date +
                                 "</div>" +
-                                "<div class='center location'></div>" +
-                                "<div class='col-4'>" +
-                                "<img class='fav_title' src='assets/images/location.png' >" +
+                                "<div class='center location ml-3'></div>" +
+                                "<div class='col-6 mr-4'>" +
+                                "<img class='fav_title mr-4' src='assets/images/location.png' >" +
                                 data['km'] + " miles" +
                                 "</div>" +
                                 "</div><br>" +
                                 "<div class='row'>" +
                                 "<div class='col-4'>" +
-                                "<img class='fav_title' src='assets/images/following.png'>" +
+                                "<img class='fav_title ' src='assets/images/following.png'>" +
                                 data['events'].user.followers.length + " Followers" +
                                 "</div>" +
                                 "<div class='center'></div>" +
@@ -238,7 +238,7 @@
                                 "</div>" +
                                 "</div>" +
                                 "</div>" +
-                                "<div class='col-1 text-center align-items-center'>" +
+                                "<div class=' text-center align-items-center'>" +
                                 "<i onclick='favroute(this)' data-id=" + data['events'].id +
                                 "class='fa fa-heart red '></i>" +
                                 "<a href=" + url + ">" +
@@ -294,12 +294,12 @@
                             var url = "{{ url('eventDetails') }}" + "/" + data['events'].id;
                             $('.favEvent').append("<div class = 'favourit' >" +
                                 "<div class='row'>" +
-                                "<div class='col-2'>" +
+                                "<div class=''>" +
                                 "<a href=" + url + ">" +
                                 "<img style='width:90px;height:90px' src=" + img + ">" +
                                 "</a>" +
                                 "</div>" +
-                                "<div class='col-9'>" +
+                                "<div class=''>" +
                                 "<h4 class='title_favourit'>" + data['events'].event_name +
                                 "</h4>" +
                                 "<div class = 'row'>" +
@@ -341,7 +341,7 @@
                                 "</div>" +
                                 "</div>" +
                                 "</div>" +
-                                "<div class='col-1 text-center align-items-center'>" +
+                                "<div class=' text-center align-items-center'>" +
                                 "<i onclick='favroute(this)' data-id=" + data['events'].id +
                                 "class='fa fa-heart red '></i>" +
                                 "<a href=" + url + ">" +
