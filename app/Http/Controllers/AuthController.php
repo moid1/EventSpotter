@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -147,8 +148,17 @@ class AuthController extends Controller
 
     public function editProfile(Request $request)
     {
-        $user = User::where('id',Auth::id())->first();
-        $user->update($request->all());
+
+        $user = User::where('id', Auth::id())->first();
+        Address::where('user_id', $user->id)->first()->update([
+            'address' => $request->address ?? null,
+            'city' => $request->city ?? null,
+            'country' => $request->country ?? null,
+        ]);
+        if ($request->has('phoneNumber')) {
+            $user->phone_numer($request->phoneNumber);
+            $user->update();
+        }
         return response()->json([
             'success' => true,
             'data' => $user,
