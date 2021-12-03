@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController as APIAuthController;
 use App\Http\Controllers\API\EventController;
+use App\Http\Controllers\APi\FollowingController as APiFollowingController;
 use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentsController;
@@ -80,10 +81,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/getUserFollowerList', [EventController::class, 'getUserFollowerList']);
     Route::get('/getUserFollowingList', [EventController::class, 'getUserFollowingList']);
-    Route::get('/getUserId',function(){
+    Route::get('/getUserId', function () {
         return auth()->id();
     });
 
     Route::post('/send', [MessagesController::class, 'postSendMessage']);
-
+    Route::post('/draftEvent', [EventController::class, 'draftEvent']);
+    Route::get('/getUserDraft', [EventController::class, 'getDraftEvents']);
+    Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
+    Route::get('delete-event/{id}', [EventController::class, 'deleteEvent']);
+    Route::post('edit-profile', [AuthController::class, 'editProfile']);
+    //getPendingRequest
+    Route::get('pendingRequest', [APiFollowingController::class, 'getPendingRequest']);
 });

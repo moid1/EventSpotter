@@ -330,4 +330,98 @@ class EventController extends Controller
             'message' => 'Current user Following list',
         ]);
     }
+
+    public function draftEvent(Request $request)
+    {
+        $event =    Event::create([
+            'event_name' => $request->event_name ?? '',
+            'event_description' => $request->event_description ?? '',
+            'event_type' => $request->event_type ?? '',
+            'event_date' => $request->event_date ?? null,
+            'conditions' => serialize($request->conditions) ?? '',
+            'location' => $request->location ?? '',
+            'lat' => $request->lat ?? null,
+            'lng' => $request->lng ?? null,
+            'is_public' => intVal($request->is_public) ?? 1,
+            'user_id' => Auth::user()->id,
+            'is_drafted' => 1,
+        ]);
+
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(('images/eventImage'), $imageName);
+            $profileImage =  EventsPictures::create([
+                'event_id' => $event->id,
+                'image_path' => ('images/eventImage') . '/' . $imageName,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+            'message' => 'Event saved as draft',
+        ]);
+    }
+
+    public function getDraftEvents()
+    {
+        $draftEvents = Event::where([['user_id', Auth::id()], ['is_drafted', 1]])->get();
+        return response()->json([
+            'success' => true,
+            'data' => $draftEvents,
+            'message' => 'User draft events list',
+        ]);
+    }
+
+    public function editEvent($id, Request $request)
+    {
+        $event =   Event::findorFail($id);
+        if ($event && $event->user_id != Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'You dont have permission to edit this event',
+            ]);
+        }
+        if ($event) {
+            $event->update($request->all());
+            return response()->json([
+                'success' => true,
+                'data' => $event,
+                'message' => 'event updated successfully',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Event not found',
+            ]);
+        }
+    }
+
+    public function deleteEvent($id)
+    {
+        $event = Event::find($id);
+        if ($event && $event->id != Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'You don\'t have permission to delete this event',
+            ]);
+        }
+        if ($event) {
+            $event->delete();
+            return response()->json([
+                'success' => true,
+                'data' => [],
+                'message' => 'Event deleted successfully'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Event Not Found'
+            ]);
+        }
+    }
 }

@@ -124,34 +124,35 @@ class EventController extends Controller
     public function draftEvent(Request $request)
     {
 
-        request()->validate([
-            'event_name' => 'required|min:2|max:50',
-            'event_description' => 'required',
-            'event_type' => 'required',
-            'event_date' => 'date',
-            'location' => 'required',
-            'is_public' => 'required',
-        ]);
+
 
         $event =    Event::create([
-            'event_name' => $request->event_name,
-            'event_description' => $request->event_description,
-            'event_type' => $request->event_type,
-            'event_date' => $request->event_date,
-            'conditions' => serialize($request->conditions),
-            'location' => $request->location,
-            'lat' => $request->lat,
-            'lng' => $request->lng,
-            'is_public' => intVal($request->is_public),
+            'event_name' => $request->event_name ?? '',
+            'event_description' => $request->event_description ?? '',
+            'event_type' => $request->event_type ?? '',
+            'event_date' => $request->event_date ?? null,
+            'conditions' => serialize($request->conditions) ?? '',
+            'location' => $request->location ?? '',
+            'lat' => $request->lat ?? null,
+            'lng' => $request->lng ?? null,
+            'is_public' => intVal($request->is_public) ?? 1,
             'user_id' => Auth::user()->id,
             'is_drafted' => 1,
         ]);
 
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(('images/eventImage'), $imageName);
-        $profileImage =  EventsPictures::create([
-            'event_id' => $event->id,
-            'image_path' => ('images/eventImage') . '/' . $imageName,
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(('images/eventImage'), $imageName);
+            $profileImage =  EventsPictures::create([
+                'event_id' => $event->id,
+                'image_path' => ('images/eventImage') . '/' . $imageName,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+            'message' => 'Event saved as draft',
         ]);
     }
 

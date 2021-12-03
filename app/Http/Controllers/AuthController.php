@@ -144,4 +144,15 @@ class AuthController extends Controller
             'message' => 'Logout Successfully',
         ]);
     }
+
+    public function editProfile(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->update($request->all());
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Profile updated successfully',
+        ]);
+    }
 }
