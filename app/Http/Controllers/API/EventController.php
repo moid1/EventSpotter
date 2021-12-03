@@ -365,7 +365,7 @@ class EventController extends Controller
 
     public function getDraftEvents()
     {
-        $draftEvents = Event::where([['user_id', Auth::id()], ['is_drafted', 1]])->get();
+        $draftEvents = Event::where([['user_id', Auth::id()], ['is_drafted', 1]])->with('eventPictures')->get();
         return response()->json([
             'success' => true,
             'data' => $draftEvents,

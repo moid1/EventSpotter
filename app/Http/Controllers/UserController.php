@@ -72,12 +72,7 @@ class UserController extends Controller
             }
         }
 
-        // dd($temp);
-        // $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->orWhere('event_date', '=',)->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
-
         $upcomingEvents = $temp;
-
-        // $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
@@ -112,9 +107,6 @@ class UserController extends Controller
             }
             array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
         }
-
-
-        // dd($nearEvents);
         return view('front.home')->with(compact('user', 'nearEvents', 'eventTypes'));
     }
 
