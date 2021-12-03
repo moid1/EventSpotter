@@ -151,9 +151,9 @@ class AuthController extends Controller
 
         $user =User::find(Auth::id());
         Address::where('user_id', $user->id)->first()->update([
-            'address' => $request->address ?? null,
-            'city' => $request->city ?? null,
-            'country' => $request->country ?? null,
+            'address' => $request->address,
+            'city' => $request->city ,
+            'country' => $request->country ,
         ]);
         if ($request->has('phoneNumber')) {
             $user->phone_number=($request->phoneNumber);
