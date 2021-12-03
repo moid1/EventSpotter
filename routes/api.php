@@ -93,4 +93,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('edit-profile', [AuthController::class, 'editProfile']);
     //getPendingRequest
     Route::get('pendingRequest', [APiFollowingController::class, 'getPendingRequest']);
+
+    //MAKE MOBILE NO PRIVATE
+    Route::post('/makeNoPrivate', [UserController::class, 'makeNoPrivate']);
+    //MAKE PROFILE PRIVATE
+    Route::post('makeProfilePrivate', [UserController::class, 'makeProfilePrivate']);
 });

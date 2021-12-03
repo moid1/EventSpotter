@@ -67,7 +67,7 @@ class UserController extends Controller
         // dd(Carbon::today()->toDateString());
         foreach ($allEvents as $key => $value) {
             $eventDate = Carbon::parse($value->event_date);
-            if ($eventDate >= Carbon::today() || $eventDate==Carbon::yesterday()) {
+            if ($eventDate >= Carbon::today() || $eventDate == Carbon::yesterday()) {
                 $temp[] = $value;
             }
         }
@@ -272,6 +272,14 @@ class UserController extends Controller
 
     public function makeProfilePrivate(Request $request)
     {
+        // $isValid =  $request->validate([
+        //     'is_private' => 'required'
+        // ]);
+        // if (!$isValid) {
+        //     return response()->json([
+        //         'success' => false,
+        //     ]);
+        // }
         $user = User::find(Auth::id());
         $user->profile_private = $request->profile_private;
         $user->update();
