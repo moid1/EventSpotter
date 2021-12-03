@@ -9,6 +9,7 @@ use App\Models\Favrouite;
 use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Likes;
+use App\Models\Notifications;
 use App\Models\ProfileImage;
 use App\Models\User;
 use Carbon\Carbon;
@@ -302,4 +303,6 @@ class UserController extends Controller
         //     return $miles;
         // }
     }
+
+    
 }

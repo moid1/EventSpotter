@@ -147,7 +147,7 @@ class AuthController extends Controller
 
     public function editProfile(Request $request)
     {
-        $user = User::find(Auth::id());
+        $user = User::where('id',Auth::id())->first();
         $user->update($request->all());
         return response()->json([
             'success' => true,

@@ -28,7 +28,7 @@
                             @if (count($event['events']->eventPictures) > 0)
                                 <div class="eventsNearYouBG"
                                     style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                                                                                                                                                ">
+                                                                                                                                                                                                                                    ">
                                     <div class="eventsNearYou">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
@@ -632,6 +632,13 @@
 
         function like(event) {
             var id = $(event).attr('data-id');
+            if ($(event).hasClass('nothing')) {
+                $(event).removeClass('nothing');
+                $(event).addClass('blue');
+            } else {
+                $(event).removeClass('blue');
+                $(event).addClass('nothing');
+            }
             $.ajax({
                 type: 'POST',
                 url: '/like',
@@ -642,7 +649,7 @@
                     'event_id': id,
                 }
             }).done(function(msg) {
-                showToaster(msg.message, 'success');
+                // showToaster(msg.message, 'success');
                 $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
                 $(event).removeClass('blue');
                 $(event).addClass(msg.className);

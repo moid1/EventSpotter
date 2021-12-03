@@ -26,6 +26,7 @@ class NotificationsController extends Controller
     public function create()
     {
         $user = Auth::user();
+        // Notifications::where('user_id', $user->id)->update(['is_read', 1]);
         $notifications = Notifications::where('user_id', $user->id)->with('user')->latest()->get();
         return view('front.notifications')->with(compact('notifications'));
     }
@@ -86,11 +87,16 @@ class NotificationsController extends Controller
         //
     }
 
-    public function makeNotificationReadable($id,$routeName)
+    public function makeNotificationReadable($id, $routeName)
     {
-        $notification = Notifications::where('id',$id)->first();
+        $notification = Notifications::where('id', $id)->first();
         $notification->is_read = 1;
         $notification->update();
         return redirect($routeName);
+    }
+
+    public function makeAllNotificationReadable()
+    {
+        Notifications::where('user_id', Auth::id())->update(['is_read', 1]);
     }
 }

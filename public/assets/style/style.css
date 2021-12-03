@@ -179,6 +179,7 @@
             align-items: center;
         }
 
+
         .iconsBackgroundBoxWhite {
             height: 40px;
             width: 40px;
@@ -188,6 +189,16 @@
             display: inline-grid;
             justify-content: center;
             align-items: center;
+        }
+
+        .whiteIconsBackgroundBox:hover {
+            background-color: rgba(56.42, 135.87, 143.44, 0.2);
+            color: white;
+        }
+
+        .iconsBackgroundBox:hover {
+            background-color: rgba(56.42, 135.87, 143.44, 1);
+            color: white;
         }
 
         .circularImage {

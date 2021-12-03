@@ -145,6 +145,9 @@ Route::get('/chat-home', [MessagesController::class, 'indexHome']);
 Route::post('/send', [MessagesController::class, 'postSendMessage']);
 Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessages']);
 
+//MAKE NOTIFICATION READABLE
+Route::get('/makeAllNotificationReadable', [NotificationsController::class, 'makeAllNotificationReadable']);
+
 
 
 
