@@ -1,4 +1,5 @@
 @include('layouts.head')
+
 <body>
 
     @include('front.header')
@@ -13,10 +14,9 @@
                                 $url = $item->id . '/' . $item->route_name;
                             @endphp
 
-                            <div class="row notifiy align-items-center ">
-                              
+                            <div class="row notifiy align-items-center " style="display: flex; justify-content:space-evenly;">
                                 <a href="{{ url('profile/'.$item->user->id) }}">
-                                    <div class="col-2">
+                                    <div class="col-lg-2 col-sm-4 ">
                                         @if ($item->user->profilePicture != null)
                                             <img src="{{ $item->user->profilePicture->image }}"
                                                 class="notify_prfile circularImage">
@@ -28,11 +28,11 @@
                                 </a>
 
                                 {{-- <a href="{{ url('notificationReadable/' . $url) }}" class="nowrap aWithoutDec"> --}}
-                                <div class="col-8">
+                                <div class="col-6 col-sm-4">
 
                                     <p class="notify_description">{{ $item->message }}</p>
                                 </div>
-                                <div class="col-2 ">
+                                <div class="col-2 col-sm-4">
                                     <p class="notify_time">{{ $item->created_at->diffForHumans() }}</p>
                                 </div>
                                 {{-- </a> --}}
