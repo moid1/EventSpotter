@@ -149,7 +149,7 @@ class AuthController extends Controller
     public function editProfile(Request $request)
     {
 
-        $user = User::where('id', Auth::id())->first();
+        $user =User::find(Auth::id());
         Address::where('user_id', $user->id)->first()->update([
             'address' => $request->address ?? null,
             'city' => $request->city ?? null,
