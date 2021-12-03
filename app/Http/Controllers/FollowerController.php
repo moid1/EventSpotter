@@ -104,6 +104,7 @@ class FollowerController extends Controller
     public function unfollow(Request $request)
     {
         $following = Following::with('user')->find($request->id);
+   
         $user = $following->user;
         $following->delete();
         $follower = Follower::where('following_id', $following->id)->first();

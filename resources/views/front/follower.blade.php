@@ -90,7 +90,7 @@
                         </div> --}}
 
                         <div class="block">
-                            <i class="fa fa-ban" onclick="unfollow('{{ $follower->id }}')"></i> Unfollow`
+                            <i class="fa fa-ban" onclick="unfollow('{{ $follower->following_id }}')"></i> Unfollow`
                         </div>
                         <div class="last"></div>
 
