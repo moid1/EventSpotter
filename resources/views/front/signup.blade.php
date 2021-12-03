@@ -62,7 +62,7 @@
                                     <img src="{{ url('assets/images/pro.png') }}" class="ml-3" alt=""
                                         srcset="">
                                     <input type="text" class="headerSearchColor ml-3" name="name" required
-                                        value="{{ old('name') }}" placeholder="Fullname" id="Fullname">
+                                        value="{{ old('name') }}" placeholder="User name" id="Fullname">
                                 </div>
                             </div>
                             @if ($errors->has('name'))
@@ -91,7 +91,7 @@
                                 </div>
                                 {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="> --}}
                                 <span toggle="#password-field"
-                                    class="fa fa-eye  ml-4 float-right 
+                                    class="fa fa-eye  ml-2 float-right 
                                     toggle-password"></span>
 
                             </div>
@@ -111,7 +111,7 @@
                                     class="ml-4 float-right "> --}}
 
                                 <span toggle="#confirm-password-field"
-                                    class="fa fa-eye  ml-4 float-right 
+                                    class="fa fa-eye  ml-2 float-right 
                                     toggle-confirm-password"></span>
 
                             </div>
