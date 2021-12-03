@@ -156,7 +156,7 @@ class AuthController extends Controller
             'country' => $request->country ?? null,
         ]);
         if ($request->has('phoneNumber')) {
-            $user->phone_numer($request->phoneNumber);
+            $user->phone_number($request->phoneNumber);
             $user->update();
         }
         return response()->json([
