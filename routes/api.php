@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\API\AuthController as APIAuthController;
 use App\Http\Controllers\API\EventController;
-use App\Http\Controllers\APi\FollowingController as APiFollowingController;
+use App\Http\Controllers\API\FollowingController as APiFollowingController;
 use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentsController;

@@ -12,7 +12,7 @@ class FollowingController extends Controller
 
     public function getPendingRequest()
     {
-        $pendingRequest = Following::where('user_id', Auth::id())->with('user')->where('is_accepted', 0)->groupBy(['user_id', 'following_id'])->get();
+        $pendingRequest = Following::where('user_id', Auth::id())->where('is_accepted', 0)->with('user')->groupBy(['user_id', 'following_id'])->get();
         return response()->json([
             'success' => true,
             'data' => $pendingRequest,
