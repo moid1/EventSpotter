@@ -402,7 +402,7 @@ class EventController extends Controller
     public function deleteEvent($id)
     {
         $event = Event::find($id);
-        if ($event && $event->id != Auth::id()) {
+        if ($event && $event->user_id != Auth::id()) {
             return response()->json([
                 'success' => false,
                 'data' => [],
