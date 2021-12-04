@@ -5,7 +5,65 @@
     @include('front.header')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-12">
+            
+            <div class="col-md-9 col-sm-12 col-12">
+                <div class="notification">
+                    <div class="not_title">Notifications </div>
+                    <div class="row notifiy">
+                        <div class="col-2">
+                            <img class="notify_prfile" src="assets/images/follower.png" alt="">
+                        </div>
+                        <div class="col-8">
+                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                                you</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="notify_time">3s ago</p>
+                        </div>
+                    </div>
+                    <div class="last_notify"></div>
+                    <div class="row notifiy">
+                        <div class="col-2">
+                            <img class="notify_prfile" src="assets/images/Ellipse 5.png" alt="">
+                        </div>
+                        <div class="col-8">
+                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                                you</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="notify_time">3s ago</p>
+                        </div>
+                    </div>
+                    <div class="last_notify"></div>
+                    <div class="row notifiy">
+                        <div class="col-2">
+                            <img class="notify_prfile" src="assets/images/Ellipse 4.png" alt="">
+                        </div>
+                        <div class="col-8">
+                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                                you</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="notify_time">3s ago</p>
+                        </div>
+                    </div>
+                    <div class="last_notify"></div>
+                    <div class="row notifiy">
+                        <div class="col-2">
+                            <img class="notify_prfile" src="assets/images/follower.png" alt="">
+                        </div>
+                        <div class="col-8">
+                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                                you</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="notify_time">3s ago</p>
+                        </div>
+                    </div>
+                    <div class="last_notify"></div>
+                </div>
+            </div>
+            {{-- <div class="col-md-12 col-sm-12 col-12">
                 <div class="notification">
                     <div class="not_title">Notifications </div>
                     @if (count($notifications) > 0)
@@ -27,7 +85,7 @@
                                     </div>
                                 </a>
 
-                                {{-- <a href="{{ url('notificationReadable/' . $url) }}" class="nowrap aWithoutDec"> --}}
+                              
                                 <div class="col-6 col-sm-4">
 
                                     <p class="notify_description">{{ $item->message }}</p>
@@ -35,7 +93,7 @@
                                 <div class="col-2 col-sm-4">
                                     <p class="notify_time">{{ $item->created_at->diffForHumans() }}</p>
                                 </div>
-                                {{-- </a> --}}
+                                
                             </div>
 
                             <div class="last_notify"></div>
@@ -51,7 +109,7 @@
 
 
                 </div>
-            </div>
+            </div> --}}
             {{-- <div class="col-md-3">
                 <div class="notifications mx-auto">
                     <p class="margin-left-20">Live Notifications</p>
