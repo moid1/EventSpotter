@@ -98,4 +98,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/makeNoPrivate', [UserController::class, 'makeNoPrivate']);
     //MAKE PROFILE PRIVATE
     Route::post('makeProfilePrivate', [UserController::class, 'makeProfilePrivate']);
+
+    Route::get('/search', [UserController::class, 'search']);
+
 });

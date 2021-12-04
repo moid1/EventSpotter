@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Message;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -23,3 +24,7 @@ Broadcast::channel('chat-message.{userId}', function ($user, $userId) {
 Broadcast::channel('user.{userId}', function ($user, $userId) {
     return $user->id === $userId;
   });
+
+  Broadcast::channel('message.{message}', function ($user, Message $item) {
+    return $user->id === $item->to_user;
+});

@@ -9,9 +9,7 @@ $(function () {
         e.preventDefault();
         $("#exampleModalCenter .close").click()
         let ele = $(this);
-
         let user_id = ele.attr("data-id");
-
         let username = ele.attr("data-user");
         let dataLastSeen = ele.attr("data-last-seen");
         let dataIsOnline = ele.attr("data-is-active");
@@ -169,7 +167,7 @@ $(function () {
         });
 
     }
-    
+
     $(".chat_input").on("change keyup", function (e) {
         if ($(this).val() != "") {
             $(this).parents(".form-controls").find(".btn-chat").prop("disabled", false);
@@ -221,11 +219,15 @@ $(function () {
 
     function displayMessage(message) {
         let alert_sound = document.getElementById("chat-alert-sound");
+        let alert_sound_home = document.getElementById("chat-alert-sound-home");
         if ($("#current_user").val() == message.from_user_id) {
             let messageLine = getMessageSenderHtml(message);
             $("#chat_box_" + message.to_user_id).find(".chat-area").append(messageLine);
         } else if ($("#current_user").val() == message.to_user_id) {
+
             alert_sound.play();
+            alert_sound_home.play();
+            $('#chatNotificationDot').removeClass('d-none');
             // for the receiver user check if the chat box is already opened otherwise open it
             cloneChatBox(message.from_user_id, message.fromUserName, message.last_seen, message.is_online, function () {
                 let chatBox = $("#chat_box_" + message.from_user_id);

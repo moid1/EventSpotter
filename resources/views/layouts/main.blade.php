@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/libraries/css/bootstrap.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('css/chat.css') }}" /> --}}
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('assets/dist/jquery.toast.min.css') }}">
@@ -24,6 +26,7 @@
         async defer></script>
     <script>
         var user = {!! json_encode((array) auth()->user()) !!};
+        var base_url = '{{ url('/') }}';
     </script>
 
 </head>
@@ -71,7 +74,7 @@
                         <div class="iconsBackgroundBox ">
                             <a href="{{ url('chat-home') }}"><img class="img-fluid "
                                     src="{{ asset('assets/images/emailDark.png') }}" /></a>
-                            {{-- <div class="notificationDot"></div> --}}
+                            <div id="chatNotificationDot" class="notificationDot d-none"></div>
                         </div>
 
                     </div>
@@ -95,10 +98,18 @@
 
     </div>
     @yield('content')
+    <input type="hidden" id="current_user" value="{{ \Auth::user()->id }}" />
+    <input type="hidden" id="pusher_app_key" value="{{ env('PUSHER_APP_KEY') }}" />
+    <input type="hidden" id="pusher_cluster" value="{{ env('PUSHER_APP_CLUSTER') }}" />
 
-
+    <audio id="chat-alert-sound-home" style="display: none">
+        <source src="{{ asset('sound/facebook_chat.mp3') }}" />
+    </audio>
+    <
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script src="{{ asset('js/chat.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#search').on('keyup', function() {
