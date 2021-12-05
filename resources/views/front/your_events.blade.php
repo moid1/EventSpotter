@@ -1,8 +1,7 @@
 @extends('layouts.main')
-{{-- <link rel="stylesheet" href="{{ asset('assets/style/style.css') }}"> --}}
+<link rel="stylesheet" href="{{ asset('assets/style/style.css') }}">
 
 @section('title', 'Your Events')
-{{-- <link rel="stylesheet" href="{{asset('assets/style/style.css')}}"> --}}
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -37,17 +36,7 @@
                     <hr>
                 </div>
             </div>
-            {{-- <div class="col-md-6 ">
-                <div class="top_button">
-                    <button id="upcomingBtn" onclick="getUserUpcomingEvents()" class='upcoming'>Upcoming</button>
-                    <button id="pastEventsBtn" onclick="getUserPastEvents()" class='past'>Past
-                        Events</button>
-                    <button id="draftBtn" onclick="getUserDraftEvents()" class='past'>Draft
-                        Events</button>
-                </div>
-                <div class="favEvent">
 
-                </div> --}}
             <div class="col-md-6 col-sm-12 col-12 ">
                 <div class="top_button ">
 
@@ -61,7 +50,8 @@
 
                 @if (!empty($ourEvents))
                     @foreach ($ourEvents as $event)
-                        <a href="{{ url('eventDetails', $event['events']->id) }}" style="text-decoration: none;color:black">
+                        <a href="{{ url('eventDetails', $event['events']->id) }}"
+                            style="text-decoration: none;color:black">
                             <div class="favourit">
                                 <div class="row">
                                     <div class="col-2 col-md-2 col-sm-2 imgGap">
