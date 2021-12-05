@@ -58,21 +58,20 @@
                         </div>
 
                         <div class="eventsSubDetails row mx-auto">
-                            <div class="col-md-7 col-sm-7 col-5">
+                            <div class="col-md-5 col-sm-5 col-5">
                                 <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
                             </div>
                             <div class="col-md-5 col-sm-5 col-7">
-                                <div class="smallTextGrey row">
-                                    <div class="col-md-6 col-sm-6 col-6">
+                                <div class="smallTextGrey ">
+                                    <div class="d-flex">
                                         <i class="fa fa-calendar  ">
                                             <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-6">
                                         <i class="fa fa-map-marker ">
                                             <span>{{ $eventDetails['km'] }} Miles away</span>
                                         </i>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

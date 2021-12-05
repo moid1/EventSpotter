@@ -93,7 +93,7 @@
                                 {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="> --}}
                                 <span toggle="#password-field"
                                 class="fa fa-eye  mr-1 ml-2 float-right 
-                            toggle-password"></span>
+                            toggle-password" style="margin-right: 5px;"></span>
 
                             </div>
                             @if ($errors->has('password'))
@@ -115,7 +115,7 @@
 
                                     <span toggle="#confirm-password-field"
                                     class="fa fa-eye  mr-1 ml-2 float-right 
-                                toggle-password"></span>
+                                toggle-password" style="margin-right: 5px;"></span>
 
                             </div>
 
