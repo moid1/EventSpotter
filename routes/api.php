@@ -106,4 +106,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //chat
 
     Route::get('/getMessageHistory', [MessagesController::class, 'getMessageHistory']);
+    Route::get('/load-latest-messages',[MessagesController::class,'loadLatestMessages']);
 });

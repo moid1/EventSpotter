@@ -40,6 +40,20 @@ class MessagesController extends Controller
         return response()->json(['state' => 1, 'messages' => $return]);
     }
 
+    public function loadLatestMessages(Request $request)
+    {
+        $messages = Message::where(function ($query) use ($request) {
+            $query->where('from_user', Auth::user()->id)->where('to_user', $request->user_id);
+        })->orWhere(function ($query) use ($request) {
+            $query->where('from_user', $request->user_id)->where('to_user', Auth::user()->id);
+        })->orderBy('created_at', 'ASC')->limit(10)->get();
+        return response()->json([
+            'success' => true,
+            'data' => $messages,
+            'message' => 'Latest Messages',
+        ]);
+    }
+
 
     public function indexHome()
     {

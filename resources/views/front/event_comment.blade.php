@@ -1,6 +1,10 @@
 @extends('layouts.main')
 @section('title', 'Event Comments')
-
+<style>
+    .commentBtn{
+        margin-right: 15px;
+    }
+</style>
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -41,19 +45,19 @@
                             </div>
                         </div>
 
-                        <div class="eventsSubDetails row mx-auto ">
-                            <div class="col-md-7 col-sm-7 col-5">
+                        <div class="eventsSubDetails row ">
+                            <div class="col-md-5">
                                 <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-7">
+                            <div class="col-md-5 col-sm-5 col-5">
                                 <div class="smallTextGrey row">
                                     <div class="col-md-6 col-sm-6 col-6">
-                                        <i class="fa fa-calendar  ">
+                                        <i class="fa fa-calendar nowrap ">
                                             <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-6">
-                                        <i class="fa fa-map-marker ">
+                                        <i class="fa fa-map-marker nowrap ">
                                             <span>{{ $eventDetails['km'] }} Miles away</span>
                                         </i>
                                     </div>
@@ -77,7 +81,7 @@
                                     Likes
 
                                 </div>
-                                <div class="col-md-3 mb-2  mediumTextGrey ">
+                                <div class="col-md-3 mb-2  mediumTextGrey nowrap">
 
                                     <span class="ml-1 b_comment"><img class="comt_img"
                                             src="{{ asset('assets/images/chatwhite.png') }}" alt="">
