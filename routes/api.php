@@ -13,6 +13,7 @@ use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UserController;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
@@ -101,4 +102,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/search', [UserController::class, 'search']);
 
+
+    //chat
+
+    Route::get('/getMessageHistory', [MessagesController::class, 'getMessageHistory']);
 });

@@ -133,4 +133,24 @@ class MessagesController extends Controller
         }
         return response()->json(['state' => 1, 'data' => $return]);
     }
+
+
+
+
+    // forMobileApplication
+    public function getMessageHistory()
+    {
+        $messages = Message::where('from_user', Auth::id())
+            ->select('*')->with(['toUser', 'fromUser'])
+            ->selectRaw('MAX(created_at) AS last_date')
+            ->groupBy(['from_user', 'to_user'])
+            ->orderBy('last_date', 'DESC')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $messages,
+            'message' => 'Chats',
+        ]);
+    }
 }
