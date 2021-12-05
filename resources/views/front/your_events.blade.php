@@ -41,11 +41,11 @@
                 <div class="top_button ">
 
                     <button onclick="getUserUpcomingEvents('userEvents')"
-                        class="{{ $eventDuration == 'upcoming' ? 'upcoming' : 'past' }} ">Upcoming</button>
+                        class="{{ $eventDuration == 'upcoming' ? 'upcoming' : 'past' }}  ">Upcoming</button>
                     <button onclick="getUserUpcomingEvents('yourPastEvents')"
-                        class="{{ $eventDuration == 'past' ? 'upcoming' : 'past' }}">Past Events</button>
+                        class="{{ $eventDuration == 'past' ? 'upcoming' : 'past' }} mt-3">Past Events</button>
                     <button onclick="getUserUpcomingEvents('yourDraftEvents')"
-                        class="{{ $eventDuration == 'draft' ? 'upcoming' : 'past' }}  mt-2">Drafts</button>
+                        class="{{ $eventDuration == 'draft' ? 'upcoming' : 'past' }}  mt-3">Drafts</button>
                 </div>
 
                 @if (!empty($ourEvents))
