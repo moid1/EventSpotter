@@ -126,8 +126,10 @@
             </div> --}}
             <div class="col-md-6 col-sm-12 col-12 ">
                 <div class="top_button ">
-                    <button onclick="getFavouriteUpcomingEvents()" class="upcoming">Upcoming</button>
-                    <button onclick="getFavouriteUserPastEvents()" class="past">Past Events</button>
+                    <button onclick="getFavouriteUpcomingEvents()"
+                        class="{{ $metaData == false ? 'upcoming' : 'past' }}">Upcoming</button>
+                    <button onclick="getFavouriteUserPastEvents()" class="{{ $metaData == true ? 'upcoming' : 'past' }}">Past
+                        Events</button>
                 </div>
                 @if (count($favrouiteEvent) > 0)
 
