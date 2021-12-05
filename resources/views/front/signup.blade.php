@@ -94,7 +94,7 @@
                                 <span toggle="#password-field"
                                     class="fa fa-eye   
                             toggle-password"
-                                    style="margin-right: 5px;"></span>
+                                    style="margin-right: 15px;"></span>
 
                             </div>
                             @if ($errors->has('password'))
@@ -116,7 +116,7 @@
 
                                 <span toggle="#confirm-password-field"
                                     class="fa fa-eye  toggle-password"
-                                    style="margin-right: 5px;"></span>
+                                    style="margin-right: 15px;"></span>
 
                             </div>
 

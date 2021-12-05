@@ -65,8 +65,8 @@
                                     placeholder="Password" id="password">
                             </div>
                             <span toggle="#password-field"
-                                class="fa fa-eye  ml-2 float-right 
-                            toggle-password"></span>
+                                class="fa fa-eye 
+                            toggle-password" style="margin-right: 15px;"></span>
 
                             {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="ml-4 float-right "> --}}
                         </div>
