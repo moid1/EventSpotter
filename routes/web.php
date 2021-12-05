@@ -107,8 +107,8 @@ Route::get('getFavouriteUserPastEvents', [FavrouiteController::class, 'getFavour
 Route::get('getFavouriteUpcomingEvents', [FavrouiteController::class, 'getFavouriteUpcomingEvents']);
 
 //YOUR EVENTS
-Route::view('/userEvents', 'front.your_events');
-Route::get('/yourEvents', [EventController::class, 'yourEvents']);
+Route::get('/userEvents', [EventController::class,'yourEvents']);
+// Route::get('/yourEvents', [EventController::class, 'yourEvents']);
 Route::get('/yourPastEvents', [EventController::class, 'yourPastEvents']);
 Route::get('/yourDraftEvents', [EventController::class, 'yourDraftEvents']);
 

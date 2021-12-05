@@ -3471,11 +3471,6 @@
                 font-size: 12px;
             }
 
-            .fav_title {
-                width: 6px;
-                height: 6px;
-            }
-
             .eventImage {
                 height: 70px;
                 width: 70px;
@@ -3553,10 +3548,7 @@
                 font-size: 7px !important;
             }
 
-            .smallTextGrey {
-                font-size: 6px !important;
-            }
-
+         
             .whiteBanner {
                 background: white;
                 position: absolute;

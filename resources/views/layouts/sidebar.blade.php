@@ -6,7 +6,7 @@
     <hr>
     <div>
         <i class="fa fa-calendar mr-3 ml-3" aria-hidden="true"></i>
-        <a class="side_tag" href="your_event.html">Your events</a>
+        <a class="side_tag" href="{{ url('/yourEvents') }}">Your events</a>
     </div>
     <hr>
     <div>

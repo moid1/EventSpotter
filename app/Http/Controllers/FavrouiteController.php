@@ -51,6 +51,7 @@ class FavrouiteController extends Controller
 
 
         $metaData = false;
+        // dd($favrouiteEvent);
 
         return view('front.favourit')->with(compact('favrouiteEvent', 'metaData'));
     }

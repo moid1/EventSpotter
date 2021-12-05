@@ -11,8 +11,8 @@
 
         @media only screen and (max-width: 600px) {
             .panel {
-                margin-left: 15%;
-                width: 80%;
+                margin-left: 25%;
+                width: 70%;
             }
         }
 
@@ -73,7 +73,7 @@
                                             <div class="font-size-11">{{ $message->created_at->diffForHumans() }}
 
                                                 <p
-                                                    class="  {{ $message->toUser->is_online == 1 ? 'greenDot' : 'redDot' }} ">
+                                                    class="  {{ Cache::has('user-is-online-' . $message->toUser->id) ? 'greenDot' : 'redDot' }} ">
                                                 </p>
                                             </div>
 

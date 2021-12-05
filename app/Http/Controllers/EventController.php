@@ -249,12 +249,6 @@ class EventController extends Controller
         $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
-        // foreach ($yourUpcomingEvents as $key => $value) {
-        //     $today = Carbon::now();
-        //     if ($value->event_date >= $today) {
-        //         $userUpcomingEvents[] = $value;
-        //     }
-        // }
         foreach ($yourUpcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
@@ -264,11 +258,10 @@ class EventController extends Controller
                 $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
-        return response()->json([
-            'success' => true,
-            'data' => $ourEvents,
-            'message' => 'All Upcoming Events',
-        ]);
+        // dd($ourEvents);
+        $eventDuration = 'upcoming';
+        $eventMessage = 'No Upcoming Events Found';
+        return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
 
     public function yourPastEvents()
@@ -287,16 +280,16 @@ class EventController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-
                 $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
                 $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
-        return response()->json([
-            'success' => true,
-            'data' => $ourEvents,
-            'message' => 'All Past Events',
-        ]);
+        $eventDuration = 'past';
+        $eventMessage = 'No Past Events Found';
+
+        // dd($ourEvents);
+
+        return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
 
     public function yourDraftEvents()
@@ -316,12 +309,10 @@ class EventController extends Controller
         }
 
 
+        $eventDuration = 'draft';
+        $eventMessage = 'No Draft Events Found';
 
-        return response()->json([
-            'success' => true,
-            'data' => $ourEvents,
-            'message' => 'All Drafted Events',
-        ]);
+        return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
 
     /// EVENT SNAPS
