@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NotificationsController extends Controller
 {
@@ -25,6 +26,9 @@ class NotificationsController extends Controller
      */
     public function create()
     {
+        DB::table('notifications')
+            ->where('user_id', Auth::id())
+            ->update(['is_read' => 1]);
         $user = Auth::user();
         // Notifications::where('user_id', $user->id)->update(['is_read', 1]);
         $notifications = Notifications::where('user_id', $user->id)->with('user')->latest()->get();
@@ -97,6 +101,8 @@ class NotificationsController extends Controller
 
     public function makeAllNotificationReadable()
     {
-        Notifications::where('user_id', Auth::id())->update(['is_read', 1]);
+        DB::table('notifi-cations')
+            ->where('user', 1)
+            ->update(['votes' => 1]);
     }
 }
