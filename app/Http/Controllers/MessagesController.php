@@ -57,6 +57,11 @@ class MessagesController extends Controller
 
     public function indexHome()
     {
+
+        // dd($lastMessages);
+        //  $messages=   User::with('messages')->find(Auth::id())->messages;
+        //  dd($messages);
+
         $messages = Message::where('from_user', Auth::id())
             ->select('*')->with(['toUser', 'fromUser'])
             ->selectRaw('MAX(created_at) AS last_date')
@@ -64,7 +69,8 @@ class MessagesController extends Controller
             ->orderBy('last_date', 'DESC')
             ->get();
         // $messages = User::with('messages')->get();
-        // dd($messages);
+
+
 
         $followingUser = Following::where('user_id', Auth::id())->with('user')->get();
         return view('chat_layout.home', compact('messages', 'followingUser'));
@@ -79,6 +85,19 @@ class MessagesController extends Controller
     {
         if (!$request->to_user || !$request->message) {
             return;
+        }
+
+        $hasData = Message::where('from_user', Auth::id())->orWhere('to_user', Auth::id())->get();
+        if (count($hasData) == 0) {
+            $mes = new Message();
+
+            $mes->to_user = Auth::user()->id;
+
+            $mes->from_user = $request->to_user;
+
+            $mes->content = '';
+
+            $mes->save();
         }
 
         $message = new Message();

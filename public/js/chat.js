@@ -179,7 +179,6 @@ $(function () {
     });
 
     $(".btn-chat").on("click", function (e) {
-        e.preventDefault();
         send($(this).attr('data-to-user'), $("#chat_box_" + $(this).attr('data-to-user')).find(".chat_input").val());
     });
 
@@ -226,6 +225,8 @@ $(function () {
             $("#chat_box_" + message.to_user_id).find(".chat-area").append(messageLine);
         } else if ($("#current_user").val() == message.to_user_id) {
             alert_sound.play();
+            // alert(message.content);
+
             // for the receiver user check if the chat box is already opened otherwise open it
             cloneChatBox(message.from_user_id, message.fromUserName, message.last_seen, message.is_online, function () {
                 let chatBox = $("#chat_box_" + message.from_user_id);

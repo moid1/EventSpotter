@@ -45,7 +45,7 @@
                                 <li class="active">
                                     <a href="javascript:void(0);" class="chat-toggle"
                                         data-id="{{ $message->user->id }}"
-                                        data-is-active="{{ $message->toUser->is_online }}"
+                                        data-is-active=" {{ Cache::has('user-is-online-' . $message->toUser->id) }}"
                                         data-last-seen="{{ \Carbon\Carbon::parse($message->toUser->last_seen)->diffForHumans() }}"
                                         data-user="{{ $message->toUser->name }}">
                                         <div class="d-flex">

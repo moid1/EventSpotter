@@ -39,7 +39,7 @@
                                 </div> --}}
                             </div>
                             <a href="{{ url('profile') . '/' . $eventDetails['event']->user_id }}">
-                                <div class="whiteBanner left-0  text-center align-items-center d-flex">
+                                {{-- <div class="whiteBanner left-0  text-center align-items-center d-flex">
                                     @if ($eventDetails['event']->user->profilePicture != null)
                                         <img class="smallCircularImage mr-2 "
                                             src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
@@ -48,30 +48,30 @@
                                             src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
                                     @endif
                                     <span>{{ $eventDetails['event']->user->name }}</span>
-                                </div>
+                                </div> --}}
                             </a>
-                            <div class="whiteBanner text-center align-items-center d-flex">
+                            {{-- <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
                                     <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
                                 </i>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="eventsSubDetails row mx-auto">
-                            <div class="col-md-5 col-sm-5 col-5">
+                            <div class="col-md-4 col-sm-4 col-4">
                                 <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-7">
+                            <div class="col-md-7 col-sm-5 col-7">
                                 <div class="smallTextGrey ">
-                                    <div class="d-flex">
+                                    <div class="d-flex ">
                                         <i class="fa fa-calendar  ">
                                             <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>
-                                        <i class="fa fa-map-marker ">
+                                   
+                                        <i class="ml-5 fa fa-map-marker ">
                                             <span>{{ $eventDetails['km'] }} Miles away</span>
                                         </i>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
