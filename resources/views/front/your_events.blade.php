@@ -194,7 +194,7 @@
                     </div>
                 </div>
 
-            </div>
+           
 
             @include('front.right_side')
         </div>
