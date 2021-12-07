@@ -5,6 +5,8 @@
     <div class="container-fluid ">
         <div class="row ">
             <div class="col-md-9 col-sm-12 col-12 mx-auto ">
+                <div id="loaderPic" style="text-align:center;"><img id="loading" class="d-none"
+                        src="{{ asset('loader.gif') }}" alt="" /></div>
                 <div class="profileSection">
                     <h6 class="mb-3 medium-text ml-4">Profile</h6>
                     <div class="profileInfo  align-items-center mt-2 ml-3">
@@ -276,7 +278,7 @@
                 if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
                         ext == "jpg")) {
                     var reader = new FileReader();
-
+                    $('#loading').removeClass('d-none');
                     var form_data = new FormData();
                     var property = document.getElementById('ownProfilePic').files[0];
                     var form_data = new FormData();
@@ -298,6 +300,8 @@
                             $('#profileImage').attr('src', e.target.result);
                         }
                         reader.readAsDataURL(input.files[0]);
+                        $('#loading').addClass('d-none');
+
                         showToaster('Uploaded Successfully', 'success');
                     })
                 } else {
