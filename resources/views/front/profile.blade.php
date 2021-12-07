@@ -278,7 +278,7 @@
                 if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
                         ext == "jpg")) {
                     var reader = new FileReader();
-                    $('#loading').removeClass('d-none');
+                    $("#loading").css("display", "block");
                     var form_data = new FormData();
                     var property = document.getElementById('ownProfilePic').files[0];
                     var form_data = new FormData();
@@ -300,7 +300,7 @@
                             $('#profileImage').attr('src', e.target.result);
                         }
                         reader.readAsDataURL(input.files[0]);
-                        $('#loading').addClass('d-none');
+                        $("#loading").css("display", "none");
 
                         showToaster('Uploaded Successfully', 'success');
                     })
