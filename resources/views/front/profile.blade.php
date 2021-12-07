@@ -276,10 +276,7 @@
                 if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
                         ext == "jpg")) {
                     var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#profileImage').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
+
                     var form_data = new FormData();
                     var property = document.getElementById('ownProfilePic').files[0];
                     var form_data = new FormData();
@@ -297,6 +294,10 @@
                         },
                         data: form_data
                     }).done(function() {
+                        reader.onload = function(e) {
+                            $('#profileImage').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
                         showToaster('Uploaded Successfully', 'success');
                     })
                 } else {
