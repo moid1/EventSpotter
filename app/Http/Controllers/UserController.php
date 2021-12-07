@@ -16,8 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
-use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -304,5 +304,13 @@ class UserController extends Controller
         // }
     }
 
-    
+    public function checkUserOnline(Request $request)
+    {
+        $isOnline =   Cache()->has('user-is-online-' . $request->user_id);
+        return response()->json([
+            'success' => true,
+            'data' => $isOnline,
+            'message' => 'sf'
+        ]);
+    }
 }
