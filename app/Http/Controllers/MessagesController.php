@@ -87,7 +87,7 @@ class MessagesController extends Controller
             return;
         }
 
-        $hasData = Message::where('from_user', Auth::id())->orWhere('to_user',$request->to_user)->get();
+        $hasData = Message::where('from_user', Auth::id())->where('to_user', $request->to_user)->orWhere('to_user', Auth::id())->where('from_user', $request->to_user)->get();
         if (count($hasData) == 0) {
             $mes = new Message();
 
