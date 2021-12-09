@@ -112,7 +112,10 @@ class AuthController extends Controller
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-        $message = '<p><strong>This is strong text</strong> while this is not.</p>';
+        $message = '<div style="text-align:center"> <img src="https://theeventspotter.com/assets/images/logo.png"/>'
+            + '<br><h4>The Event Spotter </h4>' +
+            '<br> <p>Thank you for registering at EventSpotters.</p>' +
+            '</div>';
 
 
         $mail = mail($to, $subject, $message, $headers);
