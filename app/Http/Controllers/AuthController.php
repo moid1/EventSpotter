@@ -103,6 +103,20 @@ class AuthController extends Controller
 
         $token = $user->createToken('tokens')->plainTextToken;
 
+        $to = $user->email;
+
+        $subject = 'Thank you for registering at EventSpotters';
+
+        $headers = "From: " . strip_tags('no-reply@theeventspotters.com') . "\r\n";
+        $headers .= "Reply-To: " . strip_tags($to->user). "\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+        $message = '<p><strong>This is strong text</strong> while this is not.</p>';
+
+
+        mail($to, $subject, $message, $headers);
+
         return response()->json([
             'success' => true,
             'data' => $user,
@@ -149,14 +163,14 @@ class AuthController extends Controller
     public function editProfile(Request $request)
     {
 
-        $user =User::find(Auth::id());
+        $user = User::find(Auth::id());
         Address::where('user_id', $user->id)->first()->update([
             'address' => $request->address,
-            'city' => $request->city ,
-            'country' => $request->country ,
+            'city' => $request->city,
+            'country' => $request->country,
         ]);
         if ($request->has('phoneNumber')) {
-            $user->phone_number=($request->phoneNumber);
+            $user->phone_number = ($request->phoneNumber);
             $user->update();
         }
         return response()->json([

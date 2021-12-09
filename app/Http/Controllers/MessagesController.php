@@ -196,7 +196,7 @@ class MessagesController extends Controller
                 'data' => $lastMessages,
                 'message' => 'oldMessages',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'success' => true,
                 'data' => [],
@@ -217,7 +217,6 @@ class MessagesController extends Controller
             ->groupBy(['from_user', 'to_user'])
             ->orderBy('last_date', 'DESC')
             ->get();
-
         return response()->json([
             'success' => true,
             'data' => $messages,
