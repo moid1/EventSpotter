@@ -108,7 +108,7 @@ class AuthController extends Controller
         $subject = 'Thank you for registering at EventSpotters';
 
         $headers = "From: " . strip_tags('no-reply@theeventspotters.com') . "\r\n";
-        $headers .= "Reply-To: " . strip_tags($to->user). "\r\n";
+        $headers .= "Reply-To: " . strip_tags($to). "\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
