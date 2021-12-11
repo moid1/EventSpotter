@@ -61,11 +61,8 @@ class UserController extends Controller
         }
 
         $eventTypes = EventTypes::all();
-        // where('user_id', '!=', Auth::id())->
         $allEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
         $temp = array();
-
-        // dd(Carbon::today()->toDateString());
         foreach ($allEvents as $key => $value) {
             $eventDate = Carbon::parse($value->event_date);
             if ($eventDate >= Carbon::today() || $eventDate == Carbon::yesterday()) {
