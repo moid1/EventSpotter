@@ -23,6 +23,8 @@ class EventController extends Controller
         $eventTypes = EventTypes::all();
         $allEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
         $temp = array();
+
+        // dd(Carbon::today()->toDateString());
         foreach ($allEvents as $key => $value) {
             $eventDate = Carbon::parse($value->event_date);
             if ($eventDate >= Carbon::today() || $eventDate == Carbon::yesterday()) {
@@ -30,15 +32,19 @@ class EventController extends Controller
             }
         }
 
+        // $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
         $upcomingEvents = $temp;
+
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
         foreach ($upcomingEvents as $key => $value) {
             $flag = false;
-            if ($value->user_id == Auth::id() ||  $value->is_public == 1) {
+            if ($value->user_id == Auth::id()) {
                 $new[] = $value;
                 $flag = true;
+            } else {
+                $new[] = $value;
             }
             if ($flag == false && $value->is_public == 0) {
                 foreach ($followingss as $key => $follow) {
@@ -54,13 +60,15 @@ class EventController extends Controller
         if (is_array($upcomingEvents) || is_object($upcomingEvents)) {
             foreach ($upcomingEvents as $key => $value) {
                 $latLng = explode(',', $user->lat_lng); // user lat lng
+
                 if (count($latLng) > 1) {
                     $mile = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
                     $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $value->id)->first();
                     $liveFeed = EventFeeds::where('event_id', $value->id)->latest()->first();
                     $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
                     $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $value->id)->first();
-                    $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
+                    $totalLikes = Likes::where('event_id', $value->id)->get()->count();
+                    $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0, 'totalLikes' => $totalLikes);
                 }
             }
             array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
