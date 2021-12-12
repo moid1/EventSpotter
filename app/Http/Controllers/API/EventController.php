@@ -423,7 +423,7 @@ class EventController extends Controller
         }
     }
 
-    public function getEventDetailsById($id)
+    public function getEventDetail($id)
     {
         $event = Event::with(['eventPictures', 'comment', 'like', 'livefeed'])->findOrFail($id);
         return response()->json([

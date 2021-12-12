@@ -34,7 +34,8 @@ use Illuminate\Support\Facades\Password;
 Route::post('/create-account', [AuthController::class, 'createAccount']);
 Route::post('/login', [AuthController::class, 'functionLogin']);
 Route::get('/getEventTypes', [EventController::class, 'getEventTypes']);
-Route::get('/eventsdetails/{id}', [EventController::class, 'getEventDetailsById']);
+
+Route::get('/eventsdetails/{id}', [EventController::class, 'getEventDetail']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logged-in', function (Request $request) {
@@ -100,15 +101,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/makeNoPrivate', [UserController::class, 'makeNoPrivate']);
     //MAKE PROFILE PRIVATE
     Route::post('makeProfilePrivate', [UserController::class, 'makeProfilePrivate']);
-
     Route::get('/search', [UserController::class, 'search']);
-
-
     //chat
-
     Route::get('/getMessageHistory', [MessagesController::class, 'getMessageHistory']);
     Route::get('/load-latest-messages', [MessagesController::class, 'loadLatestMessages']);
     Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessagesAPI']);
-
     Route::post('/checkUserOnline', [UserController::class, 'checkUserOnline']);
 });
