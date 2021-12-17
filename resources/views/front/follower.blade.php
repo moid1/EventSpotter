@@ -52,12 +52,12 @@
                                     <span class="ml-2"> {{ $request->user->name }}</span>
                                 </div>
                                 <div class="d-flex m-2">
-                                    <Button id="acceptFollowingRequest"
+                                    <button id="acceptFollowingRequest"
                                         onclick="acceptFollowingRequest({{ $request->id }})"
-                                        class="logout">Accept</Button>
-                                    <Button id="cancelFollowingRequest"
-                                        onclick="cancelFollowerRequest({{ $request->id }})"
-                                        class="logout cancelBG">Cancel</Button>
+                                        class="logout">Accept</button>
+                                    <button id="cancelFollowingRequest"
+                                        onclick="cancelFollowerRequest({{ $request->id }}, {{$request->following_id}})"
+                                        class="logout cancelBG">Cancel</button>
                                 </div>
                             </div>
                         @endforeach
@@ -90,7 +90,7 @@
                         </div> --}}
 
                         <div class="block">
-                            <i class="fa fa-ban" onclick="unfollow('{{ $follower->id }}')"></i> Unfollow`
+                            <i class="fa fa-ban" onclick="unfollow('{{ $follower->following_id }}')"></i> Unfollow`
                         </div>
                         <div class="last"></div>
 
@@ -119,15 +119,15 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
-                        location.reload();
                     }
                 })
                 .done(function() {
+                    location.reload();
 
                 })
         }
 
-        function cancelFollowerRequest(id) {
+        function cancelFollowerRequest(id,followingId) {
             $.ajax({
                     type: 'POST',
                     url: '/cancelPendingRequest',
@@ -136,14 +136,15 @@
                     },
                     data: {
                         "id": id,
+                        
                     },
                     success: function(response) {
                         // showToaster(response.message, 'success');
-                        location.reload();
+
                     }
                 })
                 .done(function() {
-
+                    location.reload();
                 })
         }
 
@@ -159,10 +160,10 @@
                     },
                     success: function(response) {
                         showToaster(response.message, 'success');
-                        location.reload();
                     }
                 })
                 .done(function() {
+                    location.reload();
 
                 })
         }

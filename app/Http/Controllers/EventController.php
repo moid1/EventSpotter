@@ -124,34 +124,35 @@ class EventController extends Controller
     public function draftEvent(Request $request)
     {
 
-        request()->validate([
-            'event_name' => 'required|min:2|max:50',
-            'event_description' => 'required',
-            'event_type' => 'required',
-            'event_date' => 'date',
-            'location' => 'required',
-            'is_public' => 'required',
-        ]);
+
 
         $event =    Event::create([
-            'event_name' => $request->event_name,
-            'event_description' => $request->event_description,
-            'event_type' => $request->event_type,
-            'event_date' => $request->event_date,
-            'conditions' => serialize($request->conditions),
-            'location' => $request->location,
-            'lat' => $request->lat,
-            'lng' => $request->lng,
-            'is_public' => intVal($request->is_public),
+            'event_name' => $request->event_name ?? '',
+            'event_description' => $request->event_description ?? '',
+            'event_type' => $request->event_type ?? '',
+            'event_date' => $request->event_date ?? null,
+            'conditions' => serialize($request->conditions) ?? '',
+            'location' => $request->location ?? '',
+            'lat' => $request->lat ?? null,
+            'lng' => $request->lng ?? null,
+            'is_public' => intVal($request->is_public) ?? 1,
             'user_id' => Auth::user()->id,
             'is_drafted' => 1,
         ]);
 
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(('images/eventImage'), $imageName);
-        $profileImage =  EventsPictures::create([
-            'event_id' => $event->id,
-            'image_path' => ('images/eventImage') . '/' . $imageName,
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(('images/eventImage'), $imageName);
+            $profileImage =  EventsPictures::create([
+                'event_id' => $event->id,
+                'image_path' => ('images/eventImage') . '/' . $imageName,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+            'message' => 'Event saved as draft',
         ]);
     }
 
@@ -245,15 +246,9 @@ class EventController extends Controller
     public function yourEvents()
     {
         $user = Auth::user();
-        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '>=', Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
-        // foreach ($yourUpcomingEvents as $key => $value) {
-        //     $today = Carbon::now();
-        //     if ($value->event_date >= $today) {
-        //         $userUpcomingEvents[] = $value;
-        //     }
-        // }
         foreach ($yourUpcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
@@ -263,17 +258,16 @@ class EventController extends Controller
                 $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
-        return response()->json([
-            'success' => true,
-            'data' => $ourEvents,
-            'message' => 'All Upcoming Events',
-        ]);
+        // dd($ourEvents);
+        $eventDuration = 'upcoming';
+        $eventMessage = 'No Upcoming Events Found';
+        return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
 
     public function yourPastEvents()
     {
         $user = Auth::user();
-        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
+        $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<', Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
         // foreach ($yourUpcomingEvents as $key => $value) {
@@ -286,31 +280,26 @@ class EventController extends Controller
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-
                 $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
                 $ourEvents[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
-        return response()->json([
-            'success' => true,
-            'data' => $ourEvents,
-            'message' => 'All Past Events',
-        ]);
+        $eventDuration = 'past';
+        $eventMessage = 'No Past Events Found';
+
+        // dd($ourEvents);
+
+        return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
 
     public function yourDraftEvents()
     {
         $user = Auth::user();
         $yourUpcomingEvents = Event::where('user_id', $user->id)->where('is_drafted', 1)->with(['eventPictures', 'user'])->get();
-        $userUpcomingEvents = array();
+        // return $yourUpcomingEvents;
         $ourEvents = array();
+
         foreach ($yourUpcomingEvents as $key => $value) {
-            $today = Carbon::now();
-            if ($value->event_date >= $today) {
-                $userUpcomingEvents[] = $value;
-            }
-        }
-        foreach ($userUpcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
@@ -320,12 +309,10 @@ class EventController extends Controller
         }
 
 
+        $eventDuration = 'draft';
+        $eventMessage = 'No Draft Events Found';
 
-        return response()->json([
-            'success' => true,
-            'data' => $ourEvents,
-            'message' => 'All Drafted Events',
-        ]);
+        return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
 
     /// EVENT SNAPS

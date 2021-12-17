@@ -9,6 +9,7 @@ use App\Models\Favrouite;
 use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Likes;
+use App\Models\Notifications;
 use App\Models\ProfileImage;
 use App\Models\User;
 use Carbon\Carbon;
@@ -58,30 +59,37 @@ class UserController extends Controller
 
             return view('admin.index', compact('user', 'totalEvents', 'totalUsers', 'lastMonthUsers', 'lastMonthEvents', 'latestUsers'));
         }
+
         $eventTypes = EventTypes::all();
         // where('user_id', '!=', Auth::id())->
-        $upcomingEvents = Event::where('event_date', '>=', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->orderBy('created_at', 'DESC')->get();
-        // $upcomingEvents = $upcomingEvents->except('user_id', Auth::id());
+        $allEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
+        $temp = array();
+
+        // dd(Carbon::today()->toDateString());
+        foreach ($allEvents as $key => $value) {
+            $eventDate = Carbon::parse($value->event_date);
+            if ($eventDate >= Carbon::today() || $eventDate == Carbon::yesterday()) {
+                $temp[] = $value;
+            }
+        }
+
+        $upcomingEvents = $temp;
         $new = null;
         $followerss = Follower::where('user_id', Auth::id())->get()->pluck('follower_id');
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
         foreach ($upcomingEvents as $key => $value) {
             $flag = false;
-            if ($value->user_id == Auth::id()) {
+            if ($value->user_id == Auth::id() ||  $value->is_public == 1) {
                 $new[] = $value;
                 $flag = true;
             }
-            else {
-                $new[] = $value;
-            }
-            if ($flag==false&&$value->is_public == 0) {
+            if ($flag == false && $value->is_public == 0) {
                 foreach ($followingss as $key => $follow) {
                     if ($value->user_id == $follow) {
                         $new[] = $value;
                     }
                 }
-               
-            } 
+            }
         }
         $upcomingEvents = $new;
         $user = User::where('id', Auth::id())->with(['followers', 'following'])->first();
@@ -89,7 +97,6 @@ class UserController extends Controller
         if (is_array($upcomingEvents) || is_object($upcomingEvents)) {
             foreach ($upcomingEvents as $key => $value) {
                 $latLng = explode(',', $user->lat_lng); // user lat lng
-
                 if (count($latLng) > 1) {
                     $mile = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
                     $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $value->id)->first();
@@ -99,8 +106,8 @@ class UserController extends Controller
                     $nearEvents[] = array('events' => $value, 'livefeed' => $liveFeed, 'km' => number_format($mile, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
                 }
             }
+            array_multisort(array_column($nearEvents, 'km'), SORT_ASC, $nearEvents);
         }
-        // dd($nearEvents);
         return view('front.home')->with(compact('user', 'nearEvents', 'eventTypes'));
     }
 
@@ -258,6 +265,14 @@ class UserController extends Controller
 
     public function makeProfilePrivate(Request $request)
     {
+        // $isValid =  $request->validate([
+        //     'is_private' => 'required'
+        // ]);
+        // if (!$isValid) {
+        //     return response()->json([
+        //         'success' => false,
+        //     ]);
+        // }
         $user = User::find(Auth::id());
         $user->profile_private = $request->profile_private;
         $user->update();
@@ -288,4 +303,6 @@ class UserController extends Controller
         //     return $miles;
         // }
     }
+
+    
 }

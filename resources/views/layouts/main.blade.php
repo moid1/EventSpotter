@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/libraries/css/bootstrap.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('css/chat.css') }}" /> --}}
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('assets/dist/jquery.toast.min.css') }}">
@@ -24,6 +26,7 @@
         async defer></script>
     <script>
         var user = {!! json_encode((array) auth()->user()) !!};
+        var base_url = '{{ url('/') }}';
     </script>
 
 </head>
@@ -36,24 +39,22 @@
             ->get();
     @endphp
     <div class="header">
-        <div class="row ">
-            <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-2 ">
                 <div class="headerlogo">
                     <a href="{{ url('/') }}"><img class="img-fluid"
                             src="{{ url('assets/images/headerLogo.png') }}" alt=""></a>
                 </div>
             </div>
-            <div class="col-md-1"></div>
-            <div class=" col-md-7 ">
 
-                <div class="d-flex    headerSearchBColor ">
+            <div class=" col-md-7 ">
+                <div class="d-flex headerSearchBColor ">
                     <img class="img-fluid ml-2 mr-2 " src="{{ url('assets/images/icons/searechIcon.png') }}"
                         alt="search">
                     <input class="" id="search" name="search" type="text" placeholder="Search">
 
                 </div>
                 <div class="searchResults"></div>
-
 
             </div>
 
@@ -66,15 +67,14 @@
                             @if (count($notifications) > 0)
                                 <div class="notificationDot"></div>
                             @endif
-
                         </div>
 
-                    </div>                
+                    </div>
                     <div class="col-md-4 col-sm-4 col-4">
                         <div class="iconsBackgroundBox ">
-                            <a href="{{ url('community') }}"><img class="img-fluid "
+                            <a href="{{ url('chat-home') }}"><img class="img-fluid "
                                     src="{{ asset('assets/images/emailDark.png') }}" /></a>
-                                <div class="notificationDot"></div>
+                            <div id="chatNotificationDot" class="notificationDot d-none"></div>
                         </div>
 
                     </div>
@@ -98,10 +98,10 @@
 
     </div>
     @yield('content')
-
-
+    
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
     <script>
         $(document).ready(function() {
             $('#search').on('keyup', function() {

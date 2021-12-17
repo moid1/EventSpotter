@@ -8,6 +8,7 @@
                 <div class="eventsNearYouSection ">
                     <div class="eventsNearYouBG">
                         <div class="eventsNearYou">
+
                             @if (count($eventDetails['event']->eventPictures) > 0)
                                 @if (Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mov')
                                     <video class="eventBgImage mr-3"
@@ -17,7 +18,7 @@
                                     </video>
                                 @else
                                     <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                        class="eventBgImage " alt="" srcset="">
+                                        class="eventBgImage " height="100" width="100" alt="" srcset="">
                                 @endif
                             @else
                                 <img src="{{ asset('placeholder.jpg') }}" class="eventBgImage " alt="" srcset="">
@@ -38,32 +39,36 @@
                                 </div> --}}
                             </div>
                             <a href="{{ url('profile') . '/' . $eventDetails['event']->user_id }}">
-                                <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                    <img class="smallCircularImage mr-2 "
-                                        src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                {{-- <div class="whiteBanner left-0  text-center align-items-center d-flex">
+                                    @if ($eventDetails['event']->user->profilePicture != null)
+                                        <img class="smallCircularImage mr-2 "
+                                            src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
+                                    @else
+                                        <img class="smallCircularImage mr-2 "
+                                            src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                    @endif
                                     <span>{{ $eventDetails['event']->user->name }}</span>
-                                </div>
+                                </div> --}}
                             </a>
-                            <div class="whiteBanner text-center align-items-center d-flex">
+                            {{-- <div class="whiteBanner text-center align-items-center d-flex">
                                 <i class="fa fa-user-plus">
                                     <span>{{ $eventDetails['event']->user->followers->count() }} Followers</span>
                                 </i>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="eventsSubDetails row mx-auto">
-                            <div class="col-md-7 col-sm-7 col-5">
+                            <div class="col-md-4 col-sm-4 col-4">
                                 <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-7">
-                                <div class="smallTextGrey row">
-                                    <div class="col-md-6 col-sm-6 col-6">
+                            <div class="col-md-7 col-sm-5 col-7">
+                                <div class="smallTextGrey ">
+                                    <div class="d-flex ">
                                         <i class="fa fa-calendar  ">
                                             <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-6">
-                                        <i class="fa fa-map-marker ">
+                                   
+                                        <i class="ml-5 fa fa-map-marker ">
                                             <span>{{ $eventDetails['km'] }} Miles away</span>
                                         </i>
                                     </div>
@@ -116,20 +121,24 @@
                 </div>
 
                 <div class="event_comment">
-                    <div class="event_tit">Details
+                    <div class="padding16">Details
                         <p class="event_desc"> {{ $eventDetails['event']->event_description }}</p>
-                        @if ($eventDetails['event']->ticket_link != null)
+
+                    </div>
+                    @if ($eventDetails['event']->ticket_link != null)
+                        <div class="padding16">
                             Ticket Link
+                            <br>
                             <a class="event_desc" href="{{ $eventDetails['event']->ticket_link }}">
                                 {{ $eventDetails['event']->ticket_link }}
                             </a>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                     @php
                         $conditionsArr = $eventDetails['event']->conditions;
                     @endphp
-                    @if (count($conditionsArr) > 0)
-                        <div class="event_tit">Conditions </div>
+                    @if (count($conditionsArr) > 0 || !empty($conditionsArr))
+                        <div class="padding16">Conditions </div>
                         <div class="con_tag">
                             @foreach ($conditionsArr as $condition)
                                 <button class="condition_tag"

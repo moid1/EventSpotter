@@ -14,4 +14,8 @@ class Follower extends Model
     {
         return $this->belongsTo(User::class,'follower_id')->with('profilePicture');
     }
+    public function follower_data(){
+        return $this->belongsTo(User::class,'user_id')->with('profilePicture');
+
+    }
 }

@@ -27,7 +27,9 @@ class FavrouiteController extends Controller
      */
     public function create()
     {
-        $favrouite = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $favrouite = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '>=', Carbon::today())->get();
+        })->get();
 
         $user = Auth::user();
         $favUpcomingEvent = array();
@@ -35,25 +37,21 @@ class FavrouiteController extends Controller
         foreach ($favrouite as $key => $value) {
 
             if ($value->event != null) {
-                $today = Carbon::now();
-                if ($value->event->event_date >= $today) {
-                    $favUpcomingEvent[] = $value->event;
-                }
+                $favUpcomingEvent[] = $value->event;
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-                if ($km <= 100) {
-                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                }
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
 
 
         $metaData = false;
+        // dd($favrouiteEvent);
 
         return view('front.favourit')->with(compact('favrouiteEvent', 'metaData'));
     }
@@ -68,15 +66,24 @@ class FavrouiteController extends Controller
     {
         $eventId = $request->event_id;
         $userId = Auth::id();
-        $favroute =  Favrouite::create([
-            'event_id' => $eventId,
-            'user_id' => $userId,
-        ]);
-        return response()->json([
-            'success' => true,
-            'data' => $favroute,
-            'message' => 'Event has been favorited',
-        ]);
+        $isAlreadyFav = Favrouite::where('user_id', Auth::id())->where('event_id', $eventId)->get()->first();
+        if (!$isAlreadyFav) {
+            $favroute =  Favrouite::create([
+                'event_id' => $eventId,
+                'user_id' => $userId,
+            ]);
+            return response()->json([
+                'success' => true,
+                'data' => $favroute,
+                'message' => 'Event has been favorited',
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+                'message' => 'Event is already favorited',
+            ]);
+        }
     }
 
     /**
@@ -136,25 +143,27 @@ class FavrouiteController extends Controller
     public function getFavouritePastEvents()
     {
         $user = Auth::user();
-        $favEvents = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $today = Carbon::today();
+        // dd($today);
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '<', Carbon::today())->get();
+        })->get();
         $favUpcomingEvent = array();
         $favrouiteEvent = array();
-        $today = Carbon::now();
         foreach ($favEvents as $key => $value) {
             if ($value->event != null) {
-                if ($value->event->event_date < $today) {
-                    $favUpcomingEvent[] = $value->event;
-                }
+                // if ($value->event->event_date < $today) {
+                $favUpcomingEvent[] = $value->event;
+                // }
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-         
-                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
 
@@ -165,25 +174,23 @@ class FavrouiteController extends Controller
     public function getFavouriteUpcomingEvents()
     {
         $user = Auth::user();
-        $favEvents = Favrouite::where('user_id', Auth::id())->with('event')->get();
+        $favEvents = Favrouite::where('user_id', Auth::id())->with('event', function ($query) {
+            $query->where('event_date', '>=', Carbon::today())->get();
+        })->get();
         $favUpcomingEvent = array();
         $favrouiteEvent = array();
         foreach ($favEvents as $key => $value) {
-            $today = Carbon::now();
             if ($value->event != null) {
-                if ($value->event->event_date >= $today) {
-                    $favUpcomingEvent[] = $value->event;
-                }
+                $favUpcomingEvent[] = $value->event;
             }
         }
         foreach ($favUpcomingEvent as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {
                 $km = $this->distance($latLng[0], $latLng[1], $value->lat, $value->lng);
-           
-                    $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
-                    $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
-                
+
+                $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $value->user_id)->where('is_accepted', 1)->first();
+                $favrouiteEvent[] = array('events' => $value, 'km' => number_format($km, 1), 'Following' => $isFollowing ? 1 : 0);
             }
         }
         $metaData = false;

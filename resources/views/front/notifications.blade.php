@@ -3,7 +3,7 @@
 <body>
 
     @include('front.header')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             
             <div class="col-md-9 col-sm-12 col-12">
@@ -13,8 +13,8 @@
                         <div class="col-2">
                             <img class="notify_prfile" src="assets/images/follower.png" alt="">
                         </div>
-                        <div class="col-8">
-                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                        <div class="col-8" >
+                            <p class="notify_description" style="margin-top:8px"><span class="notify_title " style="margin-left: -18px; margin-top:10px" ></span>Joana Karg started following
                                 you</p>
                         </div>
                         <div class="col-2">
@@ -27,7 +27,7 @@
                             <img class="notify_prfile" src="assets/images/Ellipse 5.png" alt="">
                         </div>
                         <div class="col-8">
-                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                            <p class="notify_description" style="margin-top:8px"><span class="notify_title " style="margin-left: -18px; margin-top:10px" ></span>Joana Karg started following
                                 you</p>
                         </div>
                         <div class="col-2">
@@ -40,7 +40,7 @@
                             <img class="notify_prfile" src="assets/images/Ellipse 4.png" alt="">
                         </div>
                         <div class="col-8">
-                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                            <p class="notify_description" style="margin-top:8px"><span class="notify_title " style="margin-left: -18px; margin-top:10px" ></span>Joana Karg started following
                                 you</p>
                         </div>
                         <div class="col-2">
@@ -53,7 +53,7 @@
                             <img class="notify_prfile" src="assets/images/follower.png" alt="">
                         </div>
                         <div class="col-8">
-                            <p class="notify_description"><span class="notify_title">Joana Karg</span> started following
+                            <p class="notify_description" style="margin-top:8px"><span class="notify_title " style="margin-left: -18px; margin-top:10px" ></span>Joana Karg started following
                                 you</p>
                         </div>
                         <div class="col-2">
@@ -69,6 +69,7 @@
                     @if (count($notifications) > 0)
                         @foreach ($notifications as $item)
                             @php
+                                $routeURL = $item->route_name ?? 'follower';
                                 $url = $item->id . '/' . $item->route_name;
                             @endphp
 

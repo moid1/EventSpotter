@@ -5,6 +5,10 @@
             text-decoration: none !important;
         }
 
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
 
         html,
         body {
@@ -175,6 +179,7 @@
             align-items: center;
         }
 
+
         .iconsBackgroundBoxWhite {
             height: 40px;
             width: 40px;
@@ -184,6 +189,16 @@
             display: inline-grid;
             justify-content: center;
             align-items: center;
+        }
+
+        .whiteIconsBackgroundBox:hover {
+            background-color: rgba(56.42, 135.87, 143.44, 0.2);
+            color: white;
+        }
+
+        .iconsBackgroundBox:hover {
+            background-color: rgba(56.42, 135.87, 143.44, 1);
+            color: white;
         }
 
         .circularImage {
@@ -686,12 +701,12 @@
         /* notification */
 
         .notification {
-            margin-left: 60px;
+            /* margin-left: 60px; */
             margin-top: 20px;
             background-color: white;
             box-shadow: 0px 4px 44px rgb(0 0 0 / 7%);
             border-radius: 9px;
-            min-height: 100%;
+            /* min-height: 100%; */
         }
 
         .notifiy {
@@ -840,7 +855,7 @@
         }
 
         .inputFieldGreenBG {
-            width: 350px;
+            width: 100%;
             height: 50px;
             align-items: center;
             background-color: rgba(41, 114, 121, 0.09);
@@ -881,12 +896,15 @@
             position: absolute;
             transform: translate(-50%, -50%);
         }
-        .personFollowersInfo{
-             display: flex;
-        }  
-        .profileInfo{
+
+        .personFollowersInfo {
             display: flex;
         }
+
+        .profileInfo {
+            display: flex;
+        }
+
         .loginBg {
             background: url('../images/loginBG1.png');
             background-position: center;
@@ -1087,14 +1105,18 @@
             width: 90%;
             font-style: normal;
             font-weight: normal;
-            font-size: 16px;
+            font-size: 14px;
             line-height: 24px;
             color: #6D6D6D;
-            margin-left: 32px;
+
+        }
+
+        .padding16 {
+            padding: 16px;
         }
 
         .event_tit {
-            margin-left: 18px;
+
             font-size: 20px;
             padding: 16px;
         }
@@ -1243,15 +1265,14 @@
         }
 
         .event_date {
-            width: 349.34px;
+            width: 100%;
             height: 57.34px;
-            left: 320.92px;
-            top: 574.29px;
+
             background: #38888F;
             border-radius: 6px;
             color: white;
             margin-top: 26px;
-            margin-left: 19px;
+
             padding: 10px;
         }
 
@@ -1324,8 +1345,7 @@
         .event_con {
             width: 200.85px;
             height: 57.34px;
-            left: 458.58px;
-            top: 927.02px;
+
             background: #314648;
             border-radius: 6px;
             color: white;
@@ -1449,7 +1469,7 @@
             }
 
             .upcoming {
-                width: 150.3px;
+                width: 100% !important;
             }
 
             .title_favourit {
@@ -1517,9 +1537,9 @@
                 font-size: 13px;
             }
 
-            .upcoming {
+            /* .upcoming {
                 width: 150.3px;
-            }
+            } */
 
             .past {
                 width: 120.3px;
@@ -1575,7 +1595,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
             }
 
             .title_favourit {
@@ -1671,7 +1691,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
             }
 
             .eventsCard {
@@ -1814,7 +1834,7 @@
             }
 
             .upcoming {
-                width: 120.0px !important;
+                width: 100% !important;
             }
 
             .past {
@@ -1903,12 +1923,14 @@
         }
 
         @media only screen and (max-width: 877px) and (min-width: 838px) {
-            .personFollowersInfo{
+            .personFollowersInfo {
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .condition_tag {
                 font-size: 11px;
             }
@@ -1962,7 +1984,7 @@
             }
 
             .upcoming {
-                width: 110.0px !important;
+                width: 100% !important;
             }
 
             .past {
@@ -2071,12 +2093,14 @@
         }
 
         @media only screen and (max-width: 837px) and (min-width: 800px) {
-            .personFollowersInfo{
+            .personFollowersInfo {
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .condition_tag {
                 font-size: 11px;
             }
@@ -2145,7 +2169,7 @@
             }
 
             .upcoming {
-                width: 110.0px !important;
+                width: 100%;
             }
 
             .eventImage {
@@ -2327,12 +2351,14 @@
         }
 
         @media only screen and (max-width: 799px) and (min-width: 768px) {
-            .personFollowersInfo{
+            .personFollowersInfo {
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .condition_tag {
                 width: 15%;
                 height: 35px;
@@ -2457,7 +2483,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
                 font-size: 15px !important;
             }
 
@@ -2612,12 +2638,14 @@
         }
 
         @media only screen and (max-width: 767px) and (min-width:576px) {
-            .personFollowersInfo{
+            .personFollowersInfo {
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .event_desc {
                 font-size: 11px;
             }
@@ -2828,10 +2856,12 @@
             }
             .personFollowersInfo{
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .event_desc {
                 font-size: 11px;
             }
@@ -2892,7 +2922,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
                 font-size: 15px !important;
             }
 
@@ -2977,10 +3007,12 @@
             }
             .personFollowersInfo{
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .event_desc {
                 font-size: 11px;
             }
@@ -3036,7 +3068,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
                 font-size: 15px !important;
             }
 
@@ -3127,13 +3159,16 @@
             .pro{
                 margin: 10px;
             }
-            .personFollowersInfo{
+
+            .personFollowersInfo {
                 display: block;
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .map_button {
                 width: 100%;
                 height: 50px;
@@ -3219,7 +3254,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
                 font-size: 15px !important;
             }
 
@@ -3339,16 +3374,21 @@
             }
             .pro{
                 margin: 10px;
-            } .proo{
+            }
+
+            .proo {
                 margin: 10px;
             }
-            .personFollowersInfo{
+
+            .personFollowersInfo {
                 display: block;
                 padding: 13px;
-           }  
-           .profileInfo{
-               display: block;
-           }
+            }
+
+            .profileInfo {
+                display: block;
+            }
+
             .map_button {
                 width: 100%;
                 height: 50px;
@@ -3456,11 +3496,6 @@
                 font-size: 12px;
             }
 
-            .fav_title {
-                width: 6px;
-                height: 6px;
-            }
-
             .eventImage {
                 height: 70px;
                 width: 70px;
@@ -3476,7 +3511,7 @@
             }
 
             .upcoming {
-                width: 150.0px !important;
+                width: 100% !important;
                 font-size: 15px !important;
             }
 
@@ -3538,10 +3573,7 @@
                 font-size: 7px !important;
             }
 
-            .smallTextGrey {
-                font-size: 6px !important;
-            }
-
+         
             .whiteBanner {
                 background: white;
                 position: absolute;

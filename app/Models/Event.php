@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,12 +30,14 @@ class Event extends Model
 
     public function comment()
     {
-        return $this->hasMany(Comments::class);
+        return $this->hasMany(Comments::class)->with('user');
     }
     public function like()
     {
         return $this->hasMany(Likes::class);
     }
+
+   
 
     public function livefeed()
     {

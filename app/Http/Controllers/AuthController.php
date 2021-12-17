@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +31,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
+            $user = User::find(Auth::user()->id);
+            $user->is_online = true;
+            $user->update();
 
             return redirect()->intended('/');
         }
@@ -41,6 +46,7 @@ class AuthController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $user->is_online = false;
+        $user->last_seen = Carbon::now();
         $user->update();
         Auth::logout();
         return redirect()->intended('/login');
@@ -58,8 +64,12 @@ class AuthController extends Controller
         if (!Auth::attempt($attr)) {
             return $this->error('Credentials not match', 401);
         }
+        $user = User::find(Auth::user()->id);
+        $user->is_online = true;
+        $user->update();
+        $user = User::where('id', Auth::id())->with('profilePicture')->first();
         return response()->json([
-            'user' => Auth::user(),
+            'user' => $user,
             'token' => auth()->user()->createToken('API Token')->plainTextToken,
             'message' => 'Login Successfully',
         ]);
@@ -126,11 +136,33 @@ class AuthController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $user->is_online = false;
+        $user->last_seen = Carbon::now();
+        $user->update();
         $user->tokens()->delete();
         return response()->json([
             'success' => true,
             'data' => [],
             'message' => 'Logout Successfully',
+        ]);
+    }
+
+    public function editProfile(Request $request)
+    {
+
+        $user =User::find(Auth::id());
+        Address::where('user_id', $user->id)->first()->update([
+            'address' => $request->address,
+            'city' => $request->city ,
+            'country' => $request->country ,
+        ]);
+        if ($request->has('phoneNumber')) {
+            $user->phone_number=($request->phoneNumber);
+            $user->update();
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+            'message' => 'Profile updated successfully',
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Follower;
 use App\Models\Following;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class FollowerController extends Controller
     {
         $currentUser = Auth::user();
         $followers = Follower::where('user_id', $currentUser->id)->with('user')->get();
-        $pendingRequest = Following::where('following_id', $currentUser->id)->with('user')->where('is_accepted', 0)->get();
+        $pendingRequest = Following::where('following_id', $currentUser->id)->with('user')->where('is_accepted', 0)->groupBy(['user_id', 'following_id'])->get();
         return view('front.follower')->with(compact('followers', 'currentUser', 'pendingRequest'));
     }
 
@@ -90,24 +91,24 @@ class FollowerController extends Controller
 
     public function cancelPendingRequest(Request $request)
     {
-        $followingRequest = Following::find($request->id);
-        $followingRequest->is_accepted = 2;
-        $followingRequest->update();
+        Following::find($request->id)->delete();
+        Notifications::where('following_id', $request->id)->delete();
+
         return response()->json([
             'success' => true,
-            'data' => $followingRequest,
+            'data' => [],
             'message' => 'Following Request has been canceled',
         ]);
     }
 
     public function unfollow(Request $request)
     {
-        $follower = Follower::with('user')->find($request->id);
-
-        $user = $follower->user;
-        $follower->delete();
-        $following = Following::find($follower->following_id);
+        $following = Following::with('user')->find($request->id);
+   
+        $user = $following->user;
         $following->delete();
+        $follower = Follower::where('following_id', $following->id)->first();
+        $follower->delete();
         return response()->json([
             'success' => true,
             'message' => 'You unfollow' . $user->name,

@@ -1,6 +1,10 @@
 @extends('layouts.main')
 @section('title', 'Event Comments')
-
+<style>
+    .commentBtn{
+        margin-right: 15px;
+    }
+</style>
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -25,8 +29,13 @@
                                 </div> --}}
                             </div>
                             <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                <img class="smallCircularImage mr-2 "
-                                    src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                @if ($eventDetails['event']->user->profilePicture != null)
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
+                                @else
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                @endif
                                 <span>{{ $eventDetails['event']->user->name }}</span>
                             </div>
                             <div class="whiteBanner text-center align-items-center d-flex">
@@ -36,19 +45,19 @@
                             </div>
                         </div>
 
-                        <div class="eventsSubDetails row mx-auto ">
-                            <div class="col-md-7 col-sm-7 col-5">
+                        <div class="eventsSubDetails row ">
+                            <div class="col-md-5">
                                 <span class="eventsTitle">{{ $eventDetails['event']->event_name }}</span>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-7">
+                            <div class="col-md-5 col-sm-5 col-5">
                                 <div class="smallTextGrey row">
                                     <div class="col-md-6 col-sm-6 col-6">
-                                        <i class="fa fa-calendar  ">
+                                        <i class="fa fa-calendar nowrap ">
                                             <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-6">
-                                        <i class="fa fa-map-marker ">
+                                        <i class="fa fa-map-marker nowrap ">
                                             <span>{{ $eventDetails['km'] }} Miles away</span>
                                         </i>
                                     </div>
@@ -72,7 +81,7 @@
                                     Likes
 
                                 </div>
-                                <div class="col-md-3 mb-2  mediumTextGrey ">
+                                <div class="col-md-3 mb-2  mediumTextGrey nowrap">
 
                                     <span class="ml-1 b_comment"><img class="comt_img"
                                             src="{{ asset('assets/images/chatwhite.png') }}" alt="">
@@ -104,8 +113,14 @@
                         <div
                             class="{{ Auth::id() == $comment->user_id ? 'yourComment ' : 'otherComment' }} comments mt-2">
                             <div class="row ">
-                                <img class="smallCircularImage "
-                                    src="{{ asset($comment->user->profilePicture->image) }}" />
+                                @if ($comment->user->profilePicture != null)
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url($comment->user->profilePicture->image) }}" />
+                                @else
+                                    <img class="smallCircularImage mr-2 "
+                                        src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                @endif
+
                                 <span
                                     class="commenterName">{{ Auth::id() == $comment->user_id ? 'You' : $comment->user->name }}
                                 </span>

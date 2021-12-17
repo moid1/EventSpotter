@@ -38,7 +38,8 @@
             <span class="right-top"></span>
             <span class="left-bottom"></span>
             <div class="text-center">
-                <img class="sign_log" src="{{ asset('assets/images/logo.png') }}" width="50%" height="auto" alt="" srcset="">
+                <img class="sign_log" src="{{ asset('assets/images/logo.png') }}" width="50%" height="auto"
+                    alt="" srcset="">
                 <h6 class="medium-heading-green mt-2">Sign UP</h6>
 
                 {{-- @if (count($errors) > 0)
@@ -110,9 +111,16 @@
                                 {{-- <img id="eyePass" src="{{ url('assets/images/icons/eyeDark.png') }}"
                                     class="ml-4 float-right "> --}}
 
+
+
                                 <span toggle="#confirm-password-field"
+<<<<<<< HEAD
                                     class="fa fa-eye  ml-2 float-right 
                                     toggle-confirm-password"></span>
+=======
+                                    class="fa fa-eye  toggle-password"
+                                    style="margin-right: 15px;"></span>
+>>>>>>> e00e09ad3ba45a110fe13a431568034a3ad17a65
 
                             </div>
 

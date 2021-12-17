@@ -43,8 +43,13 @@
                             </div>
                             <a href="{{ url('profile/' . $eventDetails['event']->user_id) }}">
                                 <div class="whiteBanner left-0  text-center align-items-center d-flex">
-                                    <img class="smallCircularImage mr-2 "
-                                        src="{{ asset($eventDetails['event']->user->profilePicture->image) }}" />
+                                    @if ($eventDetails['event']->user->profilePicture != null)
+                                        <img class="smallCircularImage mr-2 "
+                                            src="{{ url($eventDetails['event']->user->profilePicture->image) }}" />
+                                    @else
+                                        <img class="smallCircularImage mr-2 "
+                                            src="{{ url('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                    @endif
                                     <span>{{ $eventDetails['event']->user->name }}</span>
                                 </div>
                             </a>
@@ -144,7 +149,7 @@
 
                             <div class="mt-3 eventsNearYouBG" style="">
                                 <div class="main_snap " style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                            ">
+                                                                ">
 
                                     <div class="eventsNearYou">
                                         <div class="row snap_cb align-items-center justify-content-between">

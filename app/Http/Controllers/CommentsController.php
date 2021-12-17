@@ -58,6 +58,7 @@ class CommentsController extends Controller
             'event_id' => $request->event_id,
             'comment' => $request->comment,
         ]);
+        
 
         return response()->json([
             'success' => true,

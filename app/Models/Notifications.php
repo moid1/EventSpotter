@@ -13,4 +13,5 @@ class Notifications extends Model
     public function user(){
         return $this->belongsTo(User::class,'sent_by')->with('profilePicture');
     }
+   
 }

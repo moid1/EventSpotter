@@ -15,11 +15,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\IssuesController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
-use App\Models\Event;
-use App\Models\Favrouite;
-use App\Models\Following;
-use Egulias\EmailValidator\Warning\Comment;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
+| Here is where you can register web routes for youryouryour application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
@@ -36,6 +34,11 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/clear-cache', function () {
+    $exitCode = Artisan::call('cache:clear');
+    // return what you want
+});
+
 Route::view('cookie_policy', 'front.cookie_policy');
 Route::view('disclamier', 'front.disclamier');
 Route::view('privacy_policy', 'front.privacy_policy');
@@ -72,7 +75,7 @@ Route::post('/following', [FollowingController::class, 'store']);
 Route::get('following', [FollowingController::class, 'create']);
 Route::post('/unfollowing', [FollowingController::class, 'unfollow']); //from followingtable
 //Followers
-Route::post('/follower', [FollowerController::class, 'store']);
+// Route::post('/follower', [FollowerController::class, 'store']);
 Route::get('follower', [FollowerController::class, 'create']);
 Route::post('/acceptFollowingRequest', [FollowingController::class, 'acceptFollowingRequest']);
 Route::post('/cancelPendingRequest', [FollowerController::class, 'cancelPendingRequest']);
@@ -104,8 +107,8 @@ Route::get('getFavouriteUserPastEvents', [FavrouiteController::class, 'getFavour
 Route::get('getFavouriteUpcomingEvents', [FavrouiteController::class, 'getFavouriteUpcomingEvents']);
 
 //YOUR EVENTS
-Route::view('/userEvents', 'front.your_events');
-Route::get('/yourEvents', [EventController::class, 'yourEvents']);
+Route::get('/userEvents', [EventController::class,'yourEvents']);
+// Route::get('/yourEvents', [EventController::class, 'yourEvents']);
 Route::get('/yourPastEvents', [EventController::class, 'yourPastEvents']);
 Route::get('/yourDraftEvents', [EventController::class, 'yourDraftEvents']);
 
@@ -136,11 +139,21 @@ Route::post('allowDirectMessage', [UserController::class, 'allowDirectMessage'])
 Route::post('makeProfilePrivate', [UserController::class, 'makeProfilePrivate']);
 
 
+//caht
+Route::get('/load-latest-messages', [MessagesController::class, 'getLoadLatestMessages']);
+Route::get('/chat-home', [MessagesController::class, 'indexHome']);
+Route::post('/send', [MessagesController::class, 'postSendMessage']);
+Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessages']);
+
+//MAKE NOTIFICATION READABLE
+Route::get('/makeAllNotificationReadable', [NotificationsController::class, 'makeAllNotificationReadable']);
+
+
 
 
 // admin
 Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
-    Route::get('addEventTypes', [Admin::class, 'create']);
+    Route::get('addEventEventTypes', [Admin::class, 'create']);
     Route::post('addEventTypes', [Admin::class, 'addEventType']);
     Route::get('deleteEventType/{id}', [Admin::class, 'deleteEventType']);
     Route::get('allUsers', [Admin::class, 'getAllUsers']);
@@ -155,3 +168,7 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::post('addBugType', [Admin::class, 'addBugType']);
     Route::get('deleteBugType/{id}', [Admin::class, 'deleteBugType']);
 });
+
+// Route::get('/emit', function () {
+//     \App\Events\MessageSent::broadcast(\App\Models\User::find(1));
+// });
