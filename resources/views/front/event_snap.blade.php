@@ -164,11 +164,11 @@
 
 
                                             </div>
-                                            <div class="col-8 mt-1">
+                                            <div class="col-4 mt-1">
                                                 <p class="snap_nm">{{ $feed->user->name }}</p>
                                                 <p class="snap_text">{{ $feed->description }}</p>
                                             </div>
-                                            <div class="col-2  row">
+                                            <div class="col-6  row">
                                                 {{-- <img class="img-fluid" src="{{ asset('assets/images/forword.png') }}" alt=""> --}}
                                                 <span class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}
                                                 </span>
@@ -184,7 +184,7 @@
 
                                         </div>
                                         @if (Str::substr($feed->path, -3) == 'mp4' || Str::substr($feed->path, -3) == 'mov')
-                                            <video class="eventBgImage" src="{{ asset($feed->path) }}" controls>
+                                            <video class="eventBgImage img-fluid" src="{{ asset($feed->path) }}" controls>
                                                 <source src="{{ asset($feed->path) }}" type="video/mp4">
 
                                             </video>
