@@ -46,7 +46,7 @@ class MessagesController extends Controller
             $query->where('from_user', Auth::user()->id)->where('to_user', $request->user_id);
         })->orWhere(function ($query) use ($request) {
             $query->where('from_user', $request->user_id)->where('to_user', Auth::user()->id);
-        })->orderBy('created_at', 'ASC')->limit(10)->get();
+        })->orderBy('created_at', 'DESC')->limit(10)->get();
         return response()->json([
             'success' => true,
             'data' => $messages,
@@ -87,7 +87,7 @@ class MessagesController extends Controller
             return;
         }
 
-        $hasData = Message::where('from_user', Auth::id())->orWhere('to_user', Auth::id())->get();
+        $hasData = Message::where('from_user', Auth::id())->where('to_user', $request->to_user)->orWhere('to_user', Auth::id())->where('from_user', $request->to_user)->get();
         if (count($hasData) == 0) {
             $mes = new Message();
 
@@ -167,6 +167,44 @@ class MessagesController extends Controller
         return response()->json(['state' => 1, 'data' => $return]);
     }
 
+    public function getOldMessagesAPI(Request $request)
+    {
+        if (!$request->old_message_id || !$request->to_user)
+            return;
+        $message = Message::find($request->old_message_id);
+        if ($message) {
+            $lastMessages = Message::where(function ($query) use ($request, $message) {
+                $query->where('from_user', Auth::user()->id)
+                    ->where('to_user', $request->to_user)
+                    ->where('created_at', '<', $message->created_at);
+            })
+                ->orWhere(function ($query) use ($request, $message) {
+                    $query->where('from_user', $request->to_user)
+                        ->where('to_user', Auth::user()->id)
+                        ->where('created_at', '<', $message->created_at);
+                })
+                ->orderBy('created_at', 'ASC')->limit(10)->get();
+
+            // if ($lastMessages->count() > 0) {
+            // foreach ($lastMessages as $message) {
+            //     $return[] = view('chat_layout.message-line')->with('message', $message)->render();
+            // }
+            // PusherFactory::make()->trigger('chat', 'oldMsgs', ['to_user' => $request->to_user, 'data' => $return]);
+            // }
+            return response()->json([
+                'success' => true,
+                'data' => $lastMessages,
+                'message' => 'oldMessages',
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+                'message' => 'oldMessages',
+            ]);
+        }
+    }
+
 
 
 
@@ -179,7 +217,6 @@ class MessagesController extends Controller
             ->groupBy(['from_user', 'to_user'])
             ->orderBy('last_date', 'DESC')
             ->get();
-
         return response()->json([
             'success' => true,
             'data' => $messages,

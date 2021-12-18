@@ -36,13 +36,16 @@
                     <hr>
                 </div>
             </div>
-            {{-- <div class="col-md-6 ">
-                <div class="top_button">
-                    <button id="upcomingBtn" onclick="getUserUpcomingEvents()" class='upcoming'>Upcoming</button>
-                    <button id="pastEventsBtn" onclick="getUserPastEvents()" class='past'>Past
-                        Events</button>
-                    <button id="draftBtn" onclick="getUserDraftEvents()" class='past'>Draft
-                        Events</button>
+
+            <div class="col-md-6 col-sm-12 col-12 ">
+                <div class="top_button ">
+
+                    <button onclick="getUserUpcomingEvents('userEvents')"
+                        class="{{ $eventDuration == 'upcoming' ? 'upcoming' : 'past' }}  ">Upcoming</button>
+                    <button onclick="getUserUpcomingEvents('yourPastEvents')"
+                        class="{{ $eventDuration == 'past' ? 'upcoming' : 'past' }} mt-3">Past Events</button>
+                    <button onclick="getUserUpcomingEvents('yourDraftEvents')"
+                        class="{{ $eventDuration == 'draft' ? 'upcoming' : 'past' }}  mt-3">Drafts</button>
                 </div>
                 <div class="favEvent">
 

@@ -40,11 +40,9 @@ class EventController extends Controller
         $followingss = Following::where('user_id', Auth::id())->where('is_accepted', 1)->get()->pluck('following_id');
         foreach ($upcomingEvents as $key => $value) {
             $flag = false;
-            if ($value->user_id == Auth::id()) {
+            if ($value->user_id == Auth::id() ||  $value->is_public == 1) {
                 $new[] = $value;
                 $flag = true;
-            } else {
-                $new[] = $value;
             }
             if ($flag == false && $value->is_public == 0) {
                 foreach ($followingss as $key => $follow) {
@@ -423,5 +421,15 @@ class EventController extends Controller
                 'message' => 'Event Not Found'
             ]);
         }
+    }
+
+    public function getEventDetail($id)
+    {
+        $event = Event::with(['user','eventPictures', 'comment', 'like', 'livefeed'])->findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+            'message' => 'Event details'
+        ]);
     }
 }

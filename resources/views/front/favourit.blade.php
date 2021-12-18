@@ -128,61 +128,66 @@
                 <div class="top_button ">
                     <button onclick="getFavouriteUpcomingEvents()"
                         class="{{ $metaData == false ? 'upcoming' : 'past' }}">Upcoming</button>
-                    <button onclick="getFavouriteUserPastEvents()" class="{{ $metaData == true ? 'upcoming' : 'past' }}">Past
+                    <button onclick="getFavouriteUserPastEvents()"
+                        class="{{ $metaData == true ? 'upcoming' : 'past' }} mt-3">Past
                         Events</button>
                 </div>
                 @if (count($favrouiteEvent) > 0)
 
 
                     @foreach ($favrouiteEvent as $event)
-                        <div class="favourit">
-                            <div class="row">
-                                <div class="col-2 col-md-2 col-sm-2 imgGap">
-                                    <img class="eventImage"
-                                        src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt=""
-                                        style="max-width: 100%;height:auto;bordar-radius:10px">
-                                </div>
-                                <div class="col-9 eventsDetailSection">
-                                    <div class="d-flex clearfix">
-                                        <h4 class="title_favourit">{{ $event['events']->event_name }}</h4>
-                                        <img class="heartIcon " src="assets/images/heart.png" alt="">
-
+                        <a href="{{ url('eventDetails', $event['events']->id) }}"
+                            style="text-decoration: none;color:black">
+                            <div class="favourit">
+                                <div class="row">
+                                    <div class="col-2 col-md-2 col-sm-2 imgGap">
+                                        <img class="eventImage"
+                                            src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt=""
+                                            style="max-width: 100%;height:auto;bordar-radius:10px">
                                     </div>
-                                    <div class="row mb">
-                                        <div class="col-4 col-md-4 date">
-                                            <img class="fav_title" src="assets/images/date.png" alt="" />
-                                            <span class="smallTextGrey">{{ $event['events']->event_date }}</span>
-                                        </div>
-                                        <div class="col-4">
-                                            <img class="fav_title" src="assets/images/location.png" alt="" />
-                                            <span class="smallTextGrey"> {{ $event['km'] }} away</span>
-                                        </div>
-                                    </div>
+                                    <div class="col-9 eventsDetailSection">
+                                        <div class="d-flex clearfix">
+                                            <h4 class="title_favourit">{{ $event['events']->event_name }}</h4>
+                                            <img class="heartIcon " src="assets/images/heart.png" alt="">
 
-                                    <div class="row ">
-                                        <div class="col-md-4 col-sm-3 col-4">
-                                            <img class="fav_title" src="assets/images/following.png" alt="" />
-                                            <span class="smallTextGrey">{{ $event['Following'] }} Following</span>
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-4 align-items-center ">
-                                            <img class="fav_title" src="assets/images/like.png" alt="" />
-                                            <span class="smallTextGrey">{{ $event['events']->like->count() }}</span>
+                                        <div class="row mb">
+                                            <div class="col-4 col-md-4 date">
+                                                <img class="fav_title" src="assets/images/date.png" alt="" />
+                                                <span class="smallTextGrey">{{ $event['events']->event_date }}</span>
+                                            </div>
+                                            <div class="col-4">
+                                                <img class="fav_title" src="assets/images/location.png" alt="" />
+                                                <span class="smallTextGrey"> {{ $event['km'] }} away</span>
+                                            </div>
                                         </div>
 
-                                        <div class="col-md-2 col-sm-3 col-4 align-items-center ">
-                                            <img class="fav_title" src="assets/images/text.png" alt="">
-                                            <span class="smallTextGrey">{{ $event['events']->comment->count() }}</span>
-                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-4 col-sm-3 col-4">
+                                                <img class="fav_title" src="assets/images/following.png" alt="" />
+                                                <span class="smallTextGrey">{{ $event['Following'] }} Following</span>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-4 align-items-center ">
+                                                <img class="fav_title" src="assets/images/like.png" alt="" />
+                                                <span class="smallTextGrey">{{ $event['events']->like->count() }}</span>
+                                            </div>
 
-                                        {{-- <div class="col-md-3 col-sm-3 col-4 align-items-center">
+                                            <div class="col-md-2 col-sm-3 col-4 align-items-center ">
+                                                <img class="fav_title" src="assets/images/text.png" alt="">
+                                                <span
+                                                    class="smallTextGrey">{{ $event['events']->comment->count() }}</span>
+                                            </div>
+
+                                            {{-- <div class="col-md-3 col-sm-3 col-4 align-items-center">
                                         <img class="fav_title" src="assets/images/forword.png" alt="">
                                         <span class="smallTextGrey">20</span>
                                     </div> --}}
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
 
                 @else

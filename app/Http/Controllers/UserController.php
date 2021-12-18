@@ -16,8 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
-use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -61,11 +61,8 @@ class UserController extends Controller
         }
 
         $eventTypes = EventTypes::all();
-        // where('user_id', '!=', Auth::id())->
         $allEvents = Event::where('is_drafted', 0)->with(['eventPictures', 'user', 'comment', 'liveFeed'])->get();
         $temp = array();
-
-        // dd(Carbon::today()->toDateString());
         foreach ($allEvents as $key => $value) {
             $eventDate = Carbon::parse($value->event_date);
             if ($eventDate >= Carbon::today() || $eventDate == Carbon::yesterday()) {
@@ -304,5 +301,13 @@ class UserController extends Controller
         // }
     }
 
-    
+    public function checkUserOnline(Request $request)
+    {
+        $isOnline =   Cache()->has('user-is-online-' . $request->user_id);
+        return response()->json([
+            'success' => true,
+            'data' => $isOnline,
+            'message' => 'sf'
+        ]);
+    }
 }

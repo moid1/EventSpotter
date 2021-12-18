@@ -5,17 +5,21 @@
     <div class="container-fluid ">
         <div class="row ">
             <div class="col-md-9 col-sm-12 col-12 mx-auto ">
+                <div id="loaderPic" style="text-align:center;"><img id="loading" class="d-none"
+                        src="{{ asset('loader.gif') }}" alt="" /></div>
                 <div class="profileSection">
                     <h6 class="mb-3 medium-text ml-4">Profile</h6>
                     <div class="profileInfo  align-items-center mt-2 ml-3">
-                        <img class="circularImage" id="profileImage"
-                            src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
-                        <input type="file" name="image" id="ownProfilePic" class="d-none" />
-                        <div class="personInfo ml-2 ">
-                            <span>{{ $user->name }}</span>
-                            <br>
-                            <span
-                                class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
+                        <div class="w-100 row justify-content-center">
+                            <img class="circularImage" id="profileImage"
+                                src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
+                            <input type="file" name="image" id="ownProfilePic" class="d-none" />
+                            <div class="personInfo ml-3 ">
+                                <span>{{ $user->name }}</span>
+                                <br>
+                                <span
+                                    class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
+                            </div>
                         </div>
                         <div class="personFollowersInfo  mx-auto justify-content-center align-items-center">
                             <a href="{{ url('/follower') }}">
@@ -274,10 +278,7 @@
                 if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
                         ext == "jpg")) {
                     var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#profileImage').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
+                    $("#loading").css("display", "block");
                     var form_data = new FormData();
                     var property = document.getElementById('ownProfilePic').files[0];
                     var form_data = new FormData();
@@ -295,6 +296,12 @@
                         },
                         data: form_data
                     }).done(function() {
+                        reader.onload = function(e) {
+                            $('#profileImage').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                        $("#loading").css("display", "none");
+
                         showToaster('Uploaded Successfully', 'success');
                     })
                 } else {
