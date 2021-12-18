@@ -143,22 +143,22 @@
 
 
                     </div>
-                    <div class="eventsNearYouSection ">
+                    <div class="eventsNearYouSection img-fluid">
                         <p class="mt-3 ml-1 normal-text m">Snap</p>
                         @foreach ($eventFeeds as $feed)
 
-                            <div class="mt-3 eventsNearYouBG" style="">
-                                <div class="main_snap " style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                            <div class="mt-3 eventsNearYouBG img-fluid" style="">
+                                <div class="main_snap img-fluid" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                                                                 ">
 
-                                    <div class="eventsNearYou">
-                                        <div class="row snap_cb align-items-center justify-content-between">
-                                            <div class="col-2 mt-2">
+                                    <div class="eventsNearYou img-fluid">
+                                        <div class="row snap_cb align-items-center justify-content-between img-fluid">
+                                            <div class="col-2 mt-2 img-fluid">
                                                 @if ($feed->user->profilePicture != null)
-                                                    <img class="smallCircularImage"
+                                                    <img class="smallCircularImage img-fluid"
                                                         src="{{ asset($feed->user->profilePicture->image) }}" />
                                                 @else
-                                                    <img class="smallCircularImage"
+                                                    <img class="smallCircularImage img-fluid" 
                                                         src="  {{ asset('assets/images/usersImages/userPlaceHolder.png') }}" />
                                                 @endif
 
