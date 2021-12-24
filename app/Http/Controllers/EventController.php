@@ -287,7 +287,6 @@ class EventController extends Controller
         $eventDuration = 'past';
         $eventMessage = 'No Past Events Found';
 
-        // dd($ourEvents);
 
         return view('front.your_events')->with(compact('ourEvents', 'eventDuration', 'eventMessage'));
     }
