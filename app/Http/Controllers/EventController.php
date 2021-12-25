@@ -270,12 +270,6 @@ class EventController extends Controller
         $yourUpcomingEvents = Event::where('user_id', $user->id)->where('event_date', '<', Carbon::today())->where('is_drafted', 0)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->get();
         $userUpcomingEvents = array();
         $ourEvents = array();
-        // foreach ($yourUpcomingEvents as $key => $value) {
-        //     $today = Carbon::now();
-        //     if ($value->event_date >= $today) {
-        //         $userUpcomingEvents[] = $value;
-        //     }
-        // }
         foreach ($yourUpcomingEvents as $key => $value) {
             $latLng = explode(',', $user->lat_lng); // user lat lng
             if (is_array($latLng)) {

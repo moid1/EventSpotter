@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-md-5 col-sm-5 col-lg-4">
                                 <div class="smallTextGrey ">
-                                    <div class="d-flex ">
+                                    <div class="d-flex " style="justify-content: end">
                                         <i class="fa fa-calendar  ">
                                             <span>{{ $eventDetails['event']->created_at->diffForHumans() }}</span>
                                         </i>

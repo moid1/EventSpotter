@@ -24,7 +24,7 @@
                                 </video>
                             @else
                                 <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                    class="eventBgImage " alt="" srcset="">
+                                    class="eventBgImage img-fluid" alt="" srcset="">
                             @endif
 
                             <div class="options">
@@ -34,12 +34,7 @@
                                         <span class="text-white">Followed</span>
                                     </i>
                                 </div>
-                                {{-- <div class="whiteIconsBackgroundBox ">
-                                    <i class="fa fa-heart red "></i>
-                                </div> --}}
-                                {{-- <div class="whiteIconsBackgroundBox mt-5 ">
-                                    <i class="fa fa-flag light-grey "></i>
-                                </div> --}}
+
                             </div>
                             <a href="{{ url('profile/' . $eventDetails['event']->user_id) }}">
                                 <div class="whiteBanner left-0  text-center align-items-center d-flex">
@@ -149,42 +144,34 @@
 
                             <div class="mt-3 eventsNearYouBG img-fluid" style="">
                                 <div class="main_snap img-fluid" style="  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                                                                ">
+                                                                            ">
 
-                                    <div class="eventsNearYou img-fluid">
-                                        <div class="row snap_cb align-items-center justify-content-between img-fluid">
-                                            <div class="col-2 mt-2 img-fluid">
-                                                @if ($feed->user->profilePicture != null)
-                                                    <img class="smallCircularImage img-fluid"
-                                                        src="{{ asset($feed->user->profilePicture->image) }}" />
-                                                @else
-                                                    <img class="smallCircularImage img-fluid" 
-                                                        src="  {{ asset('assets/images/usersImages/userPlaceHolder.png') }}" />
-                                                @endif
+                                    <div class="eventsNearYou ">
+                                        <div class="d-flex" style="justify-content: space-around">
+                                            @if ($feed->user->profilePicture != null)
+                                                <img class="smallCircularImage img-fluid"
+                                                    src="{{ asset($feed->user->profilePicture->image) }}" />
+                                            @else
+                                                <img class="smallCircularImage img-fluid"
+                                                    src="  {{ asset('assets/images/usersImages/userPlaceHolder.png') }}" />
+                                            @endif
 
+                                            <p class="">{{ $feed->user->name }}</p><br>
+                                         
+                                            <small class="pull-right mr-1">{{ $feed->created_at->diffForHumans() }}
+                                            </small>
 
-                                            </div>
-                                            <div class="col-4 mt-1">
-                                                <p class="snap_nm">{{ $feed->user->name }}</p>
-                                                <p class="snap_text">{{ $feed->description }}</p>
-                                            </div>
-                                            <div class="col-6  row">
-                                                {{-- <img class="img-fluid" src="{{ asset('assets/images/forword.png') }}" alt=""> --}}
-                                                <span class="com_time nowrap">{{ $feed->created_at->diffForHumans() }}
-                                                </span>
-
-                                                {{-- <img class="com_flag" src="{{ asset('assets/images/flag.png') }}"
-                                                alt=""> --}}
-                                            </div>
                                             @if (Auth::id() == $feed->user_id)
                                                 <i onclick="deleteSnap(this)" data-id="{{ $feed->id }}"
-                                                    style="position: absolute;right:20px" class="fa fa-trash"></i>
+                                                    style="position: absolute;right:10px" class="fa fa-trash"></i>
                                             @endif
 
 
                                         </div>
+                                        <p class="text-muted ml-3">{{ $feed->description }}</p>
                                         @if (Str::substr($feed->path, -3) == 'mp4' || Str::substr($feed->path, -3) == 'mov')
-                                            <video class="eventBgImage img-fluid" src="{{ asset($feed->path) }}" controls>
+                                            <video class="eventBgImage img-fluid" src="{{ asset($feed->path) }}"
+                                                controls>
                                                 <source src="{{ asset($feed->path) }}" type="video/mp4">
 
                                             </video>

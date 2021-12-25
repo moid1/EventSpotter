@@ -26,12 +26,17 @@
                     @if (count($nearEvents) > 0)
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
-                                <div class="eventsNearYouBG img-fluid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);                                                                                                                                                                                          ">
+                                <div class="eventsNearYouBG img-fluid"
+                                    style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);                                                                                                                                                                                          ">
                                     <div class="eventsNearYou img-fluid">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
-                                                <video class="eventBgImage img-fluid mr-3" src="{{ asset($event['events']->eventPictures[0]->image_path) }}" controls>
-                                                    <source src="{{ asset($event['events']->eventPictures[0]->image_path) }}" type="video/mp4">
+                                                <video class="eventBgImage img-fluid mr-3"
+                                                    src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                                    controls>
+                                                    <source
+                                                        src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
+                                                        type="video/mp4">
                                                 </video>
                                             @else
                                                 <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
@@ -89,7 +94,8 @@
                                         <div class="col-md-5 col-sm-5 col-7">
                                             <div class="smallTextGrey d-flex justify-content-around ">
                                                 <i class="fa fa-calendar nowrap ">
-                                                    <span class="text-center">{{ $event['events']->event_date }}</span>
+                                                    <span
+                                                        class="text-center">{{ Carbon\Carbon::parse($event['events']->event_date)->format('m/d/Y') }}</span>
                                                 </i>
                                                 &nbsp;&nbsp;
                                                 <i class="fa fa-map-marker nowrap">

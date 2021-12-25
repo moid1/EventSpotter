@@ -39,9 +39,12 @@
 
             <div class="col-md-6 col-sm-12 col-12 ">
                 <div class="top_button ">
-                    <button onclick="getUserUpcomingEvents('userEvents')" class="upcoming">Upcoming</button>
-                    <button onclick="getUserUpcomingEvents('yourPastEvents')" class="past">Past Events</button>
-                    <button onclick="getUserUpcomingEvents('yourDraftEvents')" class="past mt-2">Drafts</button>
+                    <button onclick="getUserUpcomingEvents('userEvents')"
+                        class=" {{ $eventDuration == 'upcoming' ? 'upcoming' : 'past' }} mb-3 ">Upcoming</button>
+                    <button onclick="getUserUpcomingEvents('yourPastEvents')"
+                        class="{{ $eventDuration == 'past' ? 'upcoming' : 'past' }} mb-3">Past Events</button>
+                    <button onclick="getUserUpcomingEvents('yourDraftEvents')"
+                        class="{{ $eventDuration == 'draft' ? 'upcoming' : 'past' }} mt-2 mb-3">Drafts</button>
                 </div>
                 @foreach ($ourEvents as $key => $event)
 
@@ -61,7 +64,8 @@
                             <div class="row mb">
                                 <div class="col-4 col-md-4 date">
                                     <img class="fav_title" src="assets/images/date.png" alt="" />
-                                    <span class="smallTextGrey">{{ $event['events']->event_date }}</span>
+                                    <span
+                                        class="smallTextGrey">{{ Carbon\Carbon::parse($event['events']->event_date)->format('m/d/y') }}</span>
                                 </div>
                                 <div class="col-4">
                                     <img class="fav_title" src="assets/images/location.png" alt="" />
