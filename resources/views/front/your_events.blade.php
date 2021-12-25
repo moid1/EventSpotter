@@ -48,55 +48,57 @@
                 </div>
                 @foreach ($ourEvents as $key => $event)
 
-                @endforeach
-                <div class="favourit">
-                    <div class="row">
-                        <div class="col-2 col-md-2 col-sm-2 imgGap">
-                            <img class="eventImage img-fluid"
-                                src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt="">
-                        </div>
-                        <div class="col-9 eventsDetailSection">
-                            <div class="d-flex clearfix">
-                                <h4 class="title_favourit">{{ $event['events']->event_name }}</h4>
-                                {{-- <img class="heartIcon " src="assets/images/heart.png" alt=""> --}}
+                    <a href="{{url('eventDetails',$event['events']->id)}}" style="text-decoration: none;color:black">
+                        <div class="favourit">
+                            <div class="row">
+                                <div class="col-2 col-md-2 col-sm-2 imgGap">
+                                    <img class="eventImage img-fluid"
+                                        src="{{ asset($event['events']->eventPictures[0]->image_path) }}" alt="">
+                                </div>
+                                <div class="col-9 eventsDetailSection">
+                                    <div class="d-flex clearfix">
+                                        <h4 class="title_favourit">{{ $event['events']->event_name }}</h4>
+                                        {{-- <img class="heartIcon " src="assets/images/heart.png" alt=""> --}}
 
-                            </div>
-                            <div class="row mb">
-                                <div class="col-4 col-md-4 date">
-                                    <img class="fav_title" src="assets/images/date.png" alt="" />
-                                    <span
-                                        class="smallTextGrey">{{ Carbon\Carbon::parse($event['events']->event_date)->format('m/d/y') }}</span>
-                                </div>
-                                <div class="col-4">
-                                    <img class="fav_title" src="assets/images/location.png" alt="" />
-                                    <span class="smallTextGrey"> {{ $event['km'] }} Miles away</span>
-                                </div>
-                            </div>
+                                    </div>
+                                    <div class="row mb">
+                                        <div class="col-4 col-md-4 date">
+                                            <img class="fav_title" src="assets/images/date.png" alt="" />
+                                            <span
+                                                class="smallTextGrey">{{ Carbon\Carbon::parse($event['events']->event_date)->format('m/d/y') }}</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <img class="fav_title" src="assets/images/location.png" alt="" />
+                                            <span class="smallTextGrey"> {{ $event['km'] }} Miles away</span>
+                                        </div>
+                                    </div>
 
-                            <div class="row ">
-                                <div class="col-md-4 col-sm-3 col-4">
-                                    <img class="fav_title" src="assets/images/following.png" alt="" />
-                                    <span class="smallTextGrey">10 Following</span>
-                                </div>
-                                <div class="col-md-3 col-sm-3 col-4 align-items-center ">
-                                    <i class="fa fa-thumbs-up"></i>
-                                    <span class="smallTextGrey">{{ $event['events']->like->count() }}</span>
-                                </div>
+                                    <div class="row ">
+                                        <div class="col-md-4 col-sm-3 col-4">
+                                            <img class="fav_title" src="assets/images/following.png" alt="" />
+                                            <span class="smallTextGrey">10 Following</span>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-4 align-items-center ">
+                                            <i class="fa fa-thumbs-up"></i>
+                                            <span class="smallTextGrey">{{ $event['events']->like->count() }}</span>
+                                        </div>
 
-                                <div class="col-md-2 col-sm-3 col-4 align-items-center ">
-                                    <img class="fav_title" src="assets/images/text.png" alt="">
-                                    <span class="smallTextGrey">{{ $event['events']->comment->count() }}</span>
-                                </div>
+                                        <div class="col-md-2 col-sm-3 col-4 align-items-center ">
+                                            <img class="fav_title" src="assets/images/text.png" alt="">
+                                            <span class="smallTextGrey">{{ $event['events']->comment->count() }}</span>
+                                        </div>
 
-                                {{-- <div class="col-md-3 col-sm-3 col-4 align-items-center">
+                                        {{-- <div class="col-md-3 col-sm-3 col-4 align-items-center">
                                     <img class="fav_title" src="assets/images/forword.png" alt="">
                                     <span class="smallTextGrey">20</span>
                                 </div> --}}
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-
-                    </div>
-                </div>
+                    </a>
+                @endforeach
 
             </div>
 
