@@ -387,9 +387,9 @@
 
             if (condition.innerText == 'Add Conditions') {
                 var conditionText = prompt("Condition", "");
-                $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" +
+                $("<P onclick='removeConditions(this)' id=" + conditionText + " class='event_tagg mt-2'>" +
                     conditionText +
-                    "</button>").insertAfter(
+                    "</P>").insertAfter(
                     '.eventCond');
                 eventConditionsArray.push(conditionText);
 
