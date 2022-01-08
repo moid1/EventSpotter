@@ -5,20 +5,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9 img-fluid">
-                <div class="eventsNearYouSection img-fluid">
-                    <div class="eventsNearYouBG img-fluid">
-                        <div class="eventsNearYou img-fluid">
+                <div class="eventsNearYouSection ">
+                    <div class="eventsNearYouBG ">
+                        <div class="eventsNearYou ">
 
                             @if (count($eventDetails['event']->eventPictures) > 0)
                                 @if (Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($eventDetails['event']->eventPictures[0]->image_path, -3) == 'mov')
-                                    <video class="eventBgImage mr-3 img-fluid"
+                                    <video class="eventBgImage mr-3 "
                                         src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}" controls>
                                         <source src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
                                             type="video/mp4">
                                     </video>
                                 @else
                                     <img src="{{ asset($eventDetails['event']->eventPictures[0]->image_path) }}"
-                                        class="eventBgImage img-fluid" height="100" width="100" alt="" srcset="">
+                                        class="eventBgImage" height="100" width="100" alt="" srcset="">
                                 @endif
                             @else
                                 <img src="{{ asset('placeholder.jpg') }}" class="eventBgImage " alt="" srcset="">
