@@ -26,21 +26,16 @@
                     @if (count($nearEvents) > 0)
                         @foreach ($nearEvents as $event)
                             @if (count($event['events']->eventPictures) > 0)
-                                <div class="eventsNearYouBG img-fluid"
-                                    style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);                                                                                                                                                                                          ">
-                                    <div class="eventsNearYou img-fluid">
+                                <div class="eventsNearYouBG " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);                                                                                                                                                                                          ">
+                                    <div class="eventsNearYou ">
                                         <a href="{{ url('eventDetails/' . $event['events']->id) }}">
                                             @if (Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mp4' || Str::substr($event['events']->eventPictures[0]->image_path, -3) == 'mov')
-                                                <video class="eventBgImage img-fluid mr-3"
-                                                    src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
-                                                    controls>
-                                                    <source
-                                                        src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
-                                                        type="video/mp4">
+                                                <video class="eventBgImage  mr-3" src="{{ asset($event['events']->eventPictures[0]->image_path) }}" controls>
+                                                    <source src="{{ asset($event['events']->eventPictures[0]->image_path) }}" type="video/mp4">
                                                 </video>
                                             @else
                                                 <img src="{{ asset($event['events']->eventPictures[0]->image_path) }}"
-                                                    class="eventBgImage img-fluid" alt="" srcset="">
+                                                    class="eventBgImage " alt="" srcset="">
                                             @endif
                                         </a>
                                         <div class="options">
@@ -393,9 +388,9 @@
 
             if (condition.innerText == 'Add Conditions') {
                 var conditionText = prompt("Condition", "");
-                $("<button onclick='removeConditions(this)' id=" + conditionText + " class='event_tag mt-2'>" +
+                $("<P onclick='removeConditions(this)' id=" + conditionText + " class='event_tagg mt-2'>" +
                     conditionText +
-                    "</button>").insertAfter(
+                    "</P>").insertAfter(
                     '.eventCond');
                 eventConditionsArray.push(conditionText);
 

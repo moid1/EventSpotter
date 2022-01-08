@@ -883,7 +883,7 @@
         }
 
         .eventBgImage {
-            height: 250px;
+            height: 480px;
             width: 100%;
             background-repeat: no-repeat;
             background-position: center;
@@ -1317,6 +1317,18 @@
             margin-top: 12px;
         }
 
+        .event_tagg {
+            width: 100%;
+            height: 57.34px;
+            left: 320.92px;
+            top: 853.41px;
+            background: #38888F;
+            border-radius: 6px;
+            margin-left: 20px;
+            border: none;
+            color: white;
+            padding: 14px;
+        } 
         .event_tag {
             width: 118.65px;
             height: 57.34px;
