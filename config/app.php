@@ -142,7 +142,7 @@ return [
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
-
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
@@ -231,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Chatify' => Chatify\Facades\ChatifyMessenger::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
 
 
     ],

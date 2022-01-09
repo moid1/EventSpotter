@@ -127,13 +127,13 @@
 
 
 
-                                            {{-- <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
+                                            <div class="col-md-3 col-sm-3 col-3  mediumTextGrey ">
                                             <i class="fa fa-share">
                                             </i>
-                                            <span class="eventsDetailsHome"> 20 Shares</span>
+                                            <a href="{{url('/social-media-share')}}"><span class="eventsDetailsHome"> 20 Shares</span></a>
                                             <span class="vertical"></span>
 
-                                        </div> --}}
+                                        </div>
                                             <a href="{{ url('eventSnap/' . $event['events']->id) }}"
                                                 class="nowrap">
                                                 <div class="col-md-3 col-sm-3 col-3 mediumTextGrey">
