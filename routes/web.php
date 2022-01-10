@@ -19,6 +19,7 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialShareButtonsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,7 +150,7 @@ Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessages'])
 Route::get('/makeAllNotificationReadable', [NotificationsController::class, 'makeAllNotificationReadable']);
 
 
-
+Route::get('/social-media-share', [SocialShareButtonsController::class,'ShareWidget']);
 
 // admin
 Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
