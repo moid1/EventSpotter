@@ -150,7 +150,7 @@ Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessages'])
 Route::get('/makeAllNotificationReadable', [NotificationsController::class, 'makeAllNotificationReadable']);
 
 
-Route::get('/social-media-share', [SocialShareButtonsController::class,'ShareWidget']);
+Route::get('social-media-share/{id}', [SocialShareButtonsController::class,'ShareWidget']);
 
 // admin
 Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
