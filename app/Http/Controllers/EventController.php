@@ -231,7 +231,7 @@ class EventController extends Controller
         if ($user->lat_lng != null)
             $latLng = explode(',', $user->lat_lng); // user lat lng
         $eventDetails = null;
-        if (is_array($latLng)) {
+        if (isset($latlng) || is_array($latLng)) {
             $km = $this->distance($latLng[0], $latLng[1], $event->lat, $event->lng);
             $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $event->id)->first();
             $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $event->id)->first();
