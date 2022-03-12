@@ -12,6 +12,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\API\\AuthController' => $baseDir . '/app/Http/Controllers/API/AuthController.php',
     'App\\Http\\Controllers\\API\\EventController' => $baseDir . '/app/Http/Controllers/API/EventController.php',
+    'App\\Http\\Controllers\\API\\FollowingController' => $baseDir . '/app/Http/Controllers/API/FollowingController.php',
     'App\\Http\\Controllers\\API\\NotificationsController' => $baseDir . '/app/Http/Controllers/API/NotificationsController.php',
     'App\\Http\\Controllers\\AddressController' => $baseDir . '/app/Http/Controllers/AddressController.php',
     'App\\Http\\Controllers\\Admin' => $baseDir . '/app/Http/Controllers/Admin.php',

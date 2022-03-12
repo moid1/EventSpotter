@@ -66,6 +66,7 @@ class AuthController extends Controller
         }
         $user = User::find(Auth::user()->id);
         $user->is_online = true;
+        $user->firebase_token=$request->token;
         $user->update();
         $user = User::where('id', Auth::id())->with('profilePicture')->first();
         return response()->json([
