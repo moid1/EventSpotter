@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Password;
 Route::post('/create-account', [AuthController::class, 'createAccount']);
 Route::post('/login', [AuthController::class, 'functionLogin']);
 Route::get('/getEventTypes', [EventController::class, 'getEventTypes']);
-
+Route::post('send-notification', [NotificationsController::class, 'sendSingleNotification']);
 Route::get('/eventsdetails/{id}', [EventController::class, 'getEventDetail']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
