@@ -107,4 +107,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/load-latest-messages', [MessagesController::class, 'loadLatestMessages']);
     Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessagesAPI']);
     Route::post('/checkUserOnline', [UserController::class, 'checkUserOnline']);
+
+    Route::get('/getUserDetailsById/{id}', [AuthController::class, 'getUserDetailsById']);
 });

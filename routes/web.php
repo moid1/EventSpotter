@@ -108,7 +108,7 @@ Route::get('getFavouriteUserPastEvents', [FavrouiteController::class, 'getFavour
 Route::get('getFavouriteUpcomingEvents', [FavrouiteController::class, 'getFavouriteUpcomingEvents']);
 
 //YOUR EVENTS
-Route::get('/userEvents', [EventController::class,'yourEvents']);
+Route::get('/userEvents', [EventController::class, 'yourEvents']);
 // Route::get('/yourEvents', [EventController::class, 'yourEvents']);
 Route::get('/yourPastEvents', [EventController::class, 'yourPastEvents']);
 Route::get('/yourDraftEvents', [EventController::class, 'yourDraftEvents']);
@@ -150,7 +150,7 @@ Route::get('/fetch-old-messages', [MessagesController::class, 'getOldMessages'])
 Route::get('/makeAllNotificationReadable', [NotificationsController::class, 'makeAllNotificationReadable']);
 
 
-Route::get('social-media-share/{id}', [SocialShareButtonsController::class,'ShareWidget']);
+Route::get('social-media-share/{id}', [SocialShareButtonsController::class, 'ShareWidget']);
 
 // admin
 Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
@@ -169,6 +169,7 @@ Route::group(['middleware' => ['auth:web', 'checkAdmin']], function () {
     Route::post('addBugType', [Admin::class, 'addBugType']);
     Route::get('deleteBugType/{id}', [Admin::class, 'deleteBugType']);
 });
+
 
 // Route::get('/emit', function () {
 //     \App\Events\MessageSent::broadcast(\App\Models\User::find(1));
