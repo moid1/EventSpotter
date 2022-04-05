@@ -27,7 +27,7 @@ class NotificationsController extends Controller
 
         $SERVER_API_KEY = 'AAAAV0DCJ4I:APA91bGCijvnYnQgphS7rUTDtpfXtVqGcJxWXM8O-nAOZSp3rE9DOUDJav8-B3oaZpZgjI3Engzj_Y3wkxJ26c0X16hv8HOrceP3NVolYel8rE55IHUvVZzD8s-fqQsXasijSUVxJLHn';
         $data = [
-            'registration_ids' => $request->token,
+            'registration_ids' => array($request->token),
             "notification" => [
                 'title' => $request->title,
                 "body" => $request->body,
