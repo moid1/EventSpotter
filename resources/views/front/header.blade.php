@@ -44,7 +44,6 @@
                     <input class="" id="search" name="search" type="text" placeholder="Search">
 
                 </div>
-                <div class="searchResults"></div>
 
 
             </div>
@@ -115,47 +114,7 @@
             });
 
         });
-        $(document).ready(function() {
-            $('#search').on('keyup', function() {
-                var text = $('#search').val();
-                if (text == '')
-                    $('.searchResults').addClass('d-none');
-                else
-                    $('.searchResults').removeClass('d-none');
-                if (text.length >= 3) {
-                    $.ajax({
-                        type: "GET",
-                        url: '/search',
-                        data: {
-                            text: text,
-                        },
-                        success: function(data) {
-                            $('.searchResults').html("");
-                            if (data.profile_picture !== null)
-                                var img =
-                                    "<img class='circularImage pic mr-3' src=" + data[0]
-                                    .profile_picture.image + " />"
-                            else
-                                var img =
-                                    "<img class='circularImage pic mr-3 mb-3' src='{{ asset('assets/images/usersImages/userPlaceHolder.png') }}' />"
-                            if (data.length == 0)
-                                $('.searchResults').append(
-                                    '<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>'
-                                );
-                            $.each(data, function(key, value) {
-                                var url = "{{ url('profile') }}" + "/" + value.id;
 
-                                $('.searchResults').append(
-                                    '<a class="aWithoutDec" href="' + url +
-                                    '"> <div class="w-100  justify-content-center " style="background:white">' +
-                                    img + value
-                                    .name + '</a></div> ');
-                            })
-                        }
-                    }).done(function() {})
-                }
-            });
-        });
     </script>
 </body>
 

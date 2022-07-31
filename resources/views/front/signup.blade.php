@@ -92,7 +92,7 @@
                                 </div>
                                 {{-- <img src="{{ url('assets/images/icons/eyeDark.png') }}" class="> --}}
                                 <span toggle="#password-field"
-                                    class="fa fa-eye   
+                                    class="fa fa-eye
                             toggle-password"
                                     style="margin-right: 15px;"></span>
 

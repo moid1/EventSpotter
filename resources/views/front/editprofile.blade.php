@@ -1,105 +1,125 @@
 @extends('layouts.main')
-@section('title', 'Notifications')
+@section('title', 'Profile')
 @section('content')
-    <div class="container-fluid">
-        <div class="d-flex">
-            @include('front.partials.sidebar')
-            <div class="custom_main_contents pt-5">
-                <div class="live_feed_section d-flex flex-column pb-2">
-                    <div class="d-flex pb-3 e_live_feed_container border-bottom">
-                        <span class="order-2">Notifications</span>
-                        <img class="back_arrow order-1" id="account_options"
-                            src="{{ asset('assets/newimages/sidebaricons/chevronicon.svg') }}" alt="arrow">
+<div class="container-fluid">
+    <div class="d-flex">
+        @include('front.partials.sidebar')
+        <div class="custom_main_contents pt-5">
+            <div class="live_feed_section d-flex flex-column pb-2">
+                <div class="d-flex pb-3 e_live_feed_container border-bottom">
+                    <span class="order-2">Edit profile</span>
+                    <img class="p-1 back_arrow order-1" id="account_options"
+                        src="{{asset('assets/newimages/sidebaricons/chevronicon.svg')}}" alt="arrow">
+                </div>
+                <div class="row mt-5 pb-4 px-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="showprofilephoto">
+                            <input type="file" class="d-none" name="" id="uploadImage">
+                            <img id="updateImageShow" class="showprofilephoto" class="img-fluid"
+                                src="{{asset($profilePicture->image ?? 'assets/newimages/thumbnail.svg')}}" alt="photo">
+                            <label for="uploadImage" id="showProfilePhotoShadow"
+                                class="showprofilephoto_shadow">Change</label>
+                        </div>
                     </div>
-                    @if (count($notifications) > 0)
-                        @foreach ($notifications as $item)
-                            @php
-                                $routeURL = $item->route_name ?? 'follower';
-                                $url = $item->id . '/' . $item->route_name;
-                            @endphp
-                            <div class="row">
-                                <div class="col-12 d-flex notification_item_container mt-4">
-                                    @if ($item->user->profilePicture != null)
-                                        <img src="{{ $item->user->profilePicture->image }}" class="profilePhoto_thumbnail">
-                                    @else
-                                        <img src="{{ asset('assets/newimages/thumbnail.svg') }}"
-                                            class="profilePhoto_thumbnail" alt="">
-                                    @endif
-                                    <div class="d-flex flex-column ml-2">
-                                        <span class="title_message">{{ $item->message }}</span>
-                                        <span class="time_ago">{{ $item->created_at->diffForHumans() }}</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex notification_item_container mt-4">
-                                    <img src="{{ asset('assets/newimages/thumbnail.svg') }}"
-                                        class="profilePhoto_thumbnail" alt="">
-                                    <div class="d-flex flex-column ml-2">
-                                        <span class="title_message">You have a follow request from John Dereek</span>
-                                        <span class="time_ago">2 hours ago</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex notification_item_container mt-4">
-                                    <img src="{{ asset('assets/newimages/thumbnail.svg') }}"
-                                        class="profilePhoto_thumbnail" alt="">
-                                    <div class="d-flex flex-column ml-2">
-                                        <span class="title_message">You have a follow request from John Dereek</span>
-                                        <span class="time_ago">2 hours ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-
-
-            {{-- Right bar --}}
-            {{-- @include('newfront.partials.rightbar') --}}
-            <div class="custom_rightbar pt-5 pl-4 pb-5">
-                @include('front.partials.search')
-
-                <div class="sponsored_ads mt-4 p-3">
-                    <span class="">Sponsored ads</span>
-                </div>
-                <div class="show_requests mt-4 p-3">
-                    <div class="d-flex justify-content-end mb-4"><a href="{{ url('/notifications') }}"
-                            class="primary_color seeAllRequests">See
-                            all</a>
+                    <div class="d-flex align-items-center mt-5 px-0">
+                        <div class="col-6 px-0 mr-2">
+                            <input type="text" placeholder="Email address" value="{{$user->email}}" id="emailAddress" class="event_name_field" />
+                        </div>
+                        <div class="col-6 px-0">
+                            <input type="tel" placeholder="Phone number" value="{{$user->phone_number}}" id="phoneNumber" class="event_name_field" />
+                        </div>
                     </div>
-                    @foreach (\App\Models\Notifications::where('user_id', Auth::id())->take(5)->orderBy('created_at', 'DESC')->get()
-        as $noti)
-                        <a href="{{ url($noti->route_name) }}">
-                            <div class="friend_list_container d-flex align-items-center mb-3">
-                                @if ($noti->user->profilePicture != null)
-                                    <img class="profilePhoto_thumbnail" src="{{ $noti->user->profilePicture->image }}"
-                                        alt="thumbnail">
-                                @else
-                                    <img class="profilePhoto_thumbnail"
-                                        src="{{ asset('assets/newimages/thumbnail.svg') }}" alt="thumbnail">
-                                @endif
-                                <span class="description ml-2">{{ $noti->message }}</span>
-                                <span class="time_ago">{{ $noti->created_at->diffForHumans() }}</span>
-                            </div>
-                    @endforeach
-                </div>
-                <div class="d-flex align-items-center flex-wrap">
-                    <a href="{{ url('privacy_policy') }}" class="bottom_links">Privacy Policy</a>
-                    <div class="dot_separator mx-3"></div>
-                    <a href="{{ url('terms_of_service') }}" class="bottom_links">Terms of service</a>
-                    <div class="dot_separator mx-3"></div>
-                    <a href="{{ url('disclamier') }}" class="bottom_links">Disclaimer</a>
-                </div>
-                <div class="mt-2 pb-3 bottom_links_border"><a href="#" class="primary_color">More...</a></div>
-                <div class="footer_notes d-flex align-items-center justify-content-between mt-4">
-                    <span class="">© Event Spotter. 2022</span>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <img class="getApp" src="{{ asset('assets/newimages/rightbaricons/getapp.svg') }}"
-                            alt="searchicon">
-                    </a>
+                    <div class="mt-4 px-0 col-12 d-flex justify-content-between align-items-center">
+                        <div class="details_private">Set contact details private?</div>
+                        <div class="">
+                            <label class="switch">
+                                <input type="checkbox" {{$user->mobile_is_private ? 'checked' : ''}}>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mt-4 col-12 px-0">
+                        <div class="venue_container">
+                            <input type="text" placeholder="Address" id="eventVenue"
+                            value="{{isset($address) ? $address->address : ''}}"
+                                class="event_name_field col-12 mr-1 pr-4" />
+                            <i class="bi bi-geo-alt venue_icon"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 col-12 px-0">
+                        <select class="inputFieldGreenBG d-flex even_type new_event_type" name="eventType"
+                            id="eventType">
+                            <option selected disabled>Country</option>
+                            <option>Select</option>
+                            {{-- <option selected disabled>Select</option>
+                            @foreach ($eventTypes as $type)
+                            <option value="{{ $type->type }}">{{ $type->type }}</option>
+                            @endforeach --}}
+                        </select>
+                    </div>
+                    <div class="mt-3 px-0 col-12">
+                        <input type="text" placeholder="City" id="city"
+                        value="{{isset($address) ? $address->city : ''}}"
+                            class="event_city_field col-12 mr-1 pr-4" />
+                    </div>
+                    <div class="mt-4 col-12 px-0">
+                        <button type="submit"
+                            class="btn col-12 d-flex align-items-center justify-content-center submit_create_event py-4">Update
+                            profile</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+        {{-- Right bar --}}
+        {{-- @include('newfront.partials.rightbar') --}}
+        <div class="custom_rightbar pt-5 pl-4 pb-5">
+            @include('front.partials.search')
+            <div class="sponsored_ads mt-4 p-3">
+                <span class="">Sponsored ads</span>
+            </div>
+            <div class="show_requests mt-4 p-3">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <span class="rightbar_heading_title">Notifications</span>
+                    <div class="d-flex justify-content-end"><a href="#seeAll" class="primary_color seeAllRequests">See
+                            all</a>
+                    </div>
+                </div>
+                <div class="">
+                    <a class="friend_list_container d-flex align-items-center mb-2">
+                        <img class="profilePhoto_thumbnail" src="{{asset('assets/newimages/thumbnail.svg')}}"
+                            alt="thumbnail">
+                        <span class="description ml-2">You have a follow request
+                            from John Dereek</span>
+                        <span class="time_ago">2 hours ago</span>
+                    </a>
+                    <a class="friend_list_container d-flex align-items-center mb-2">
+                        <img class="profilePhoto_thumbnail" src="{{asset('assets/newimages/thumbnail.svg')}}"
+                            alt="thumbnail">
+                        <span class="description ml-2">You have a follow request
+                            from John Dereek</span>
+                        <span class="time_ago">2 hours ago</span>
+                    </a>
+                </div>
+            </div>
+            <div class="d-flex align-items-center flex-wrap">
+                <a href="#" class="bottom_links">Privacy Policy</a>
+                <div class="dot_separator mx-3"></div>
+                <a href="#" class="bottom_links">Terms of service</a>
+                <div class="dot_separator mx-3"></div>
+                <a href="#" class="bottom_links">Disclaimer</a>
+            </div>
+            <div class="mt-2 pb-3 bottom_links_border"><a href="#" class="primary_color">More...</a></div>
+            <div class="footer_notes d-flex align-items-center justify-content-between mt-4">
+                <span class="">© Event Spotter. 2022</span>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                    <img class="getApp" src="{{asset('assets/newimages/rightbaricons/getapp.svg')}}" alt="searchicon">
+                </a>
+            </div>
+        </div>
     </div>
+</div>
 @endsection
 
 
@@ -117,8 +137,8 @@
 
 
 @section('script')
-    <script type="text/javascript">
-        var eventConditionsArray = [];
+<script type="text/javascript">
+    var eventConditionsArray = [];
         let is_public = 1;
         var lat, lng;
         var geocoder;
@@ -449,5 +469,5 @@
 
             })
         }
-    </script>
+</script>
 @endsection

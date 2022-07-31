@@ -1,309 +1,494 @@
-@include('layouts.head')
+@extends('layouts.main')
+@section('title', 'Profile')
+@section('content')
+    <div class="container-fluid">
+        <div class="d-flex">
+            @include('front.partials.sidebar')
 
-<body>
-    @include('front.header')
-    <div class="container-fluid ">
-        <div class="row ">
-            <div class="col-md-9 col-sm-12 col-12 mx-auto ">
-                <div id="loaderPic" style="text-align:center;"><img id="loading" class="d-none"
-                        src="{{ asset('loader.gif') }}" alt="" /></div>
-                <div class="profileSection">
-                    <h6 class="mb-3 medium-text ml-4">Profile</h6>
-                    <div class="profileInfo  align-items-center mt-2 ml-3">
-                        <div class="w-100 row justify-content-center">
-                            <img class="circularImage" id="profileImage"
-                                src={{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }} />
-                            <input type="file" name="image" id="ownProfilePic" class="d-none" />
-                            <div class="personInfo ml-3 ">
-                                <span>{{ $user->name }}</span>
-                                <br>
-                                <span
-                                    class="light-grey normal-text">{{ $address ? $address->city : 'Not-Available' }}</span>
+
+            <div class="custom_main_contents pt-5">
+                <div class="live_feed_section d-flex flex-column pb-2">
+                    <div class="d-flex pb-3 e_live_feed_container border-bottom">
+                        <span class="order-2">Your profile</span>
+                        <img class="p-1 back_arrow order-1" id="account_options"
+                            src="{{ asset('assets/newimages/sidebaricons/chevronicon.svg') }}" alt="arrow">
+                    </div>
+                    <div class="row mt-5 px-3">
+                        <div class="col-12 d-flex py-3 profile_card">
+                            <div class="d-flex flex-column align-items-center mr-5">
+                                <img class="user_photo"
+                                    src="{{ $profilePicture ? asset($profilePicture->image) : asset('assets/images/usersImages/userPlaceHolder.png') }}"
+                                    alt="">
+                                <span class="user_name mt-2">{{ $user->name }}</span>
+                                <span class="user_handle">@ {{ $user->name }}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex">
+                                    <div class="d-flex flex-column pr-5 tag_border_right">
+                                        <span class="tag_count_number">{{ $following }}</span>
+                                        <span class="tag_count_label">Following</span>
+                                    </div>
+                                    <div class="d-flex flex-column pl-5 pr-4 tag_border_right">
+                                        <span class="tag_count_number">{{ $followers }}</span>
+                                        <span class="tag_count_label">Following</span>
+                                    </div>
+                                    <div class="d-flex flex-column pl-5">
+                                        <span class="tag_count_number">{{ $totalEvents ?? '0' }}</span>
+                                        <span class="tag_count_label">Events</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mt-4">
+                                    <a href="#" class="d-flex align-items-center mr-5">
+                                        <div class="edit_profile_icon_container mr-2">
+                                            <img class="p-1 edit_profile_icon" id=""
+                                                src="{{ asset('assets/newimages/editicon.svg') }}" alt="editicon">
+                                        </div>
+                                        <span class="edit_profile_text">Edit profile</span>
+                                    </a>
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div class="edit_profile_icon_container mr-2">
+                                            <img class="p-1 edit_profile_icon" id=""
+                                                src="{{ asset('assets/newimages/settingsicon.svg') }}" alt="settingsicon">
+                                        </div>
+                                        <span class="edit_profile_text">Settings</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="personFollowersInfo  mx-auto justify-content-center align-items-center">
-                            <a href="{{ url('/follower') }}">
-                                <div class="grey-background pro margin-left-20 borderRadius5 text-center pl-3 pr-3">
-                                    <span class="large-text">{{ $followers }}</span>
-                                    <br>
-                                    <span class="notifications-primary-text">Followers</span>
-                                </div>
-                            </a>
-                            <a href="{{ url('/following') }}">
-                                <div class="grey-background pro borderRadius5 margin-left-20 text-center pl-3 pr-3 ">
-                                    <span class="large-text">{{ $following }}</span>
-                                    <br>
-                                    <span class="notifications-primary-text">Following</span>
-                                </div>
-                            </a>
-                            <div class="grey-background pro borderRadius5  margin-left-20 text-center pl-3 pr-3">
-                                <span class="large-text">{{ $totalEvents ?? '0' }}</span>
-                                <br>
-                                <span class="notifications-primary-text">Events</span>
+                        <div class="mt-4 tab_container col-12 px-0">
+                            <ul class="tab_header_container d-flex align-items-center justify-content-center col-12 px-2">
+                                <li data-item='upcomingTabContainer' class="col-4 text-center active_tab">Upcoming</li>
+                                <li data-item='pastEventsTabContainer' class="col-4 text-center">Past events</li>
+                                <li data-item='draftTabContainer' class="col-4 text-center ">Draft</li>
+                            </ul>
+                            <div id="upcomingTabContainer" class="tab_items ">
+                                @foreach ($upcomingEvents as $event)
+                                    <div style="border-bottom: 1px solid #F0F0F0;"
+                                        class="pb-4 d-flex justify-content-between align-items-between pl-0">
+                                        <div class="d-flex flex-column align-items-start">
+                                            <div class="d-flex align-items-center">
+                                                <span class="mr-1 pl-0 title">{{$event->event_name}}</span>
+                                                <span class="label">New</span>
+                                            </div>
+                                            <div class="date_distance">{{$event->event_date}} | {{$event->location}}</div>
+                                            <div class="d-flex align-items-center mt-3">
+                                                <div class="d-flex align-items-center mr-4">
+                                                    <img onclick="alert('toggle like')"
+                                                        src="{{ asset('assets/newimages/unlikedheart.svg') }}"
+                                                        class="cursor_pointer" alt="">
+                                                    <span class="text-dark ml-1">71</span>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="{{ asset('assets/newimages/comment.svg') }}"
+                                                        class="cursor_pointer" alt="">
+                                                    <span class="text-dark ml-1">71</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="event_image_container">
+                                            <img class="event_image" id=""
+                                                src="{{ asset($event->eventPictures[0]->image_path) }}"
+                                                alt="userprofilephoto">
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            @if (Auth::User()->id == $user->id)
-                                <div class="w-100 text-center">
-                                    <button class="logout" onclick="window.location='{{ url('/logout') }}'">
-                                        <img src="{{ asset('assets/images/logout.png') }}" alt="logout" srcset="">
-                                        <span class="ml-2">Logout</span>
-                                    </button>
+                            <div id="pastEventsTabContainer" class="tab_items d-none">
+                                @foreach ($pastEvents as $event)
+                                    <div style="border-bottom: 1px solid #F0F0F0;"
+                                        class="pb-4 d-flex justify-content-between align-items-between pl-0">
+                                        <div class="d-flex flex-column align-items-start">
+                                            <div class="d-flex align-items-center">
+                                                <span class="mr-1 pl-0 title">{{$event->event_name}}</span>
+                                                <span class="label">New</span>
+                                            </div>
+                                            <div class="date_distance">{{$event->event_date}} | {{$event->location}}</div>
+                                            <div class="d-flex align-items-center mt-3">
+                                                <div class="d-flex align-items-center mr-4">
+                                                    <img onclick="alert('toggle like')"
+                                                        src="{{ asset('assets/newimages/unlikedheart.svg') }}"
+                                                        class="cursor_pointer" alt="">
+                                                    <span class="text-dark ml-1">71</span>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="{{ asset('assets/newimages/comment.svg') }}"
+                                                        class="cursor_pointer" alt="">
+                                                    <span class="text-dark ml-1">71</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="event_image_container">
+                                            <img class="event_image" id=""
+                                                src="{{ asset($event->eventPictures[0]->image_path) }}"
+                                                alt="userprofilephoto">
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div id="draftTabContainer" class="tab_items d-none">
+                                @foreach ($draftEvents as $event)
+                                <div style="border-bottom: 1px solid #F0F0F0;"
+                                    class="pb-4 d-flex justify-content-between align-items-between pl-0">
+                                    <div class="d-flex flex-column align-items-start">
+                                        <div class="d-flex align-items-center">
+                                            <span class="mr-1 pl-0 title">{{$event->event_name}}</span>
+                                        </div>
+                                        <div class="date_distance">{{$event->event_date}} | {{$event->location}}</div>
+                                        <div class="d-flex align-items-center mt-3">
+                                            <div class="d-flex align-items-center mr-4">
+                                                <img onclick="alert('toggle like')"
+                                                    src="{{ asset('assets/newimages/unlikedheart.svg') }}"
+                                                    class="cursor_pointer" alt="">
+                                                <span class="text-dark ml-1">71</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ asset('assets/newimages/comment.svg') }}"
+                                                    class="cursor_pointer" alt="">
+                                                <span class="text-dark ml-1">71</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="event_image_container">
+                                        <img class="event_image" id=""
+                                            src="{{ asset($event->eventPictures[0]->image_path) }}"
+                                            alt="userprofilephoto">
+                                    </div>
                                 </div>
-                            @else
-                                <button class="logout" id="followBtn">
-                                    <span id="isFollowing" class="followClass ml-2"> Follow</span>
-                                </button>
-                            @endif
+                            @endforeach
 
+                            </div>
                         </div>
                     </div>
                 </div>
-                @if (Auth::User()->id == $user->id)
-
-                    <div class="yourEvents">
-                        <div class=" align-items-center">
-                            <h6 class=" medium-text ml-4 mt-2">Your Events</h6>
-                            <button id="upcomingEventsBtn" class="upcomingProfile ml-3">Upcoming</button>
-                            <button id="pastEventsBtn" class="pastOutlineButton proo ml-3">Past Events</button>
-                            <button id="draftEventsBtn" class="pastOutlineButton pro ml-3">Drafts</button>
-                        </div>
-
-                        <div class="d-flex scroll " id="events">
-
-
-                        </div>
-
-                    </div>
-                @endif
-                <div class="personalDetailsBg mb-5 ">
-                    <div class="ml-4 mb-5">
-                        <div class="mt-3">
-                            <button id="personDetailsBtn" class="upcomingProfile ml-3  medium-text">Personal
-                                Details</button>
-                            @if (Auth::User()->id == $user->id)
-                                <button id="settingButton" onclick="openSettings()"
-                                    class="pastOutlineButton pro ml-3">Settings</button>
-                            @endif
-                        </div>
-                        <div class="w-100  justify-content-center ">
-                            <div id="editSuccessMsg" class="alert alert-success w-50 mt-3 text-center d-none "
-                                role="alert">
-                                You can edit the details now
-                            </div>
-                        </div>
-                        <div class="personalDetailsContent ml-3 ">
-                            <label for="email" class="normal-text mt-3">Email</label>
-                            <div class="inputFieldGreenBG ">
-                                <input type="email" class="headerSearchColor ml-3" name="email"
-                                    value={{ $user->email }} id="email" disabled style="margin-top: 10px;">
-                            </div>
-                            @if (Auth::User()->id == $user->id || $user->mobile_is_private == 0)
-                                <label for="phoneNumber" class=" normal-text mt-3">Phone Number</label>
-                                <div class="inputFieldGreenBG  ">
-                                    <input type="text" class="headerSearchColor ml-3 inputDisabled" name="phoneNumber"
-                                        value={{ $user->phone_number }} id="phoneNumber" disabled
-                                        style="margin-top: 10px;">
-                                </div>
-                            @endif
-
-                            @if (Auth::User()->id == $user->id)
-                                <div class=" w-50 align-items-center mt-2">
-                                    Make Private
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="makePhonePrivate"
-                                            style="margin-top: 10px;">
-                                        <label class="labelSwitch" for="makePhonePrivate"></label>
-                                    </div>
-                                </div>
-                            @endif
-
-
-                            <div class="">
-                                <div class="field">
-                                    <label for="address" class="normal-text mt-3">Address</label>
-                                    <div class="inputFieldGreenBG  ">
-                                        <input type="text" class="headerSearchColor ml-3 inputDisabled" name="address"
-                                            value={{ $address ? $address->address : 'Not-Available' }} id="address"
-                                            disabled style="margin-top: 10px;">
-                                    </div>
-                                </div>
-                                <div class="field ">
-                                    <label for="city" class="normal-text mt-3">City</label>
-                                    <div class="smallInputFieldGreenBG  ">
-                                        <input type="text" class="headerSearchColor ml-3 inputDisabled" name="city"
-                                            value={{ $address ? $address->city : 'Not-Available' }} id="city"
-                                            disabled style="margin-top: 10px;">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="country" class="normal-text mt-3">Country</label>
-                                    <div class="smallInputFieldGreenBG  ">
-                                        <input type="text" class="headerSearchColor ml-3 inputDisabled" name="country"
-                                            value={{ $address ? $address->country : 'Not-Available' }} id="country"
-                                            disabled style="margin-top: 10px;">
-                                    </div>
-                                </div>
-                            </div>
-                            @if (Auth::User()->id == $user->id)
-                                <Button id="edit" class="upcoming mt-5 mb-5">
-                                    Edit Details
-                                </Button>
-                            @endif
-
-                            <Button id="saveBtn" class="upcoming mt-5 mb-5 d-none">
-                                Save Details
-                            </Button>
-                        </div>
-
-                        {{-- settingContent --}}
-                        @if (Auth::User()->id == $user->id)
-                            <div class="settingContent ml-3 mt-3 " style="display: none">
-                                @if (Auth::User()->id == $user->id)
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class=" w-50  align-items-center mt-2">
-                                                Use Your Location
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="useYourLocation">
-                                                    <label class="labelSwitch" for="useYourLocation"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-5">
-                                            <div class=" w-50 align-items-center mt-2">
-                                                Allow Direct Message
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="allowDirectMessage">
-                                                    <label class="labelSwitch" for="allowDirectMessage"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2"></div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-md-5">
-                                            <div class=" w-50 align-items-center mt-2">
-                                                Make your profile private
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="makeProfilePrivate">
-                                                    <label class="labelSwitch" for="makeProfilePrivate"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                @endif
-                                <Button id="saveBtn" class="upcoming mt-5 mb-5 d-none">
-                                    Save Details
-                                </Button>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-
             </div>
-            @include('front.right_side')
+
+
+            {{-- Right bar --}}
+            {{-- @include('newfront.partials.rightbar') --}}
+            <div class="custom_rightbar pt-5 pl-4 pb-5">
+                @include('front.partials.search')
+
+                <div class="sponsored_ads mt-4 p-3">
+                    <span class="">Sponsored ads</span>
+                </div>
+                <div class="show_requests mt-4 p-3">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <span class="rightbar_heading_title">Notifications</span>
+                        <div class="d-flex justify-content-end"><a href="#seeAll" class="primary_color seeAllRequests">See
+                                all</a>
+                        </div>
+                    </div>
+                    <div class="">
+                        <a class="friend_list_container d-flex align-items-center mb-2">
+                            <img class="profilePhoto_thumbnail" src="{{ asset('assets/newimages/thumbnail.svg') }}"
+                                alt="thumbnail">
+                            <span class="description ml-2">You have a follow request
+                                from John Dereek</span>
+                            <span class="time_ago">2 hours ago</span>
+                        </a>
+                        <a class="friend_list_container d-flex align-items-center mb-2">
+                            <img class="profilePhoto_thumbnail" src="{{ asset('assets/newimages/thumbnail.svg') }}"
+                                alt="thumbnail">
+                            <span class="description ml-2">You have a follow request
+                                from John Dereek</span>
+                            <span class="time_ago">2 hours ago</span>
+                        </a>
+                    </div>
+                </div>
+                @include('front.partials.doclinks')
+
+                <div class="mt-2 pb-3 bottom_links_border"><a href="#" class="primary_color">More...</a></div>
+                <div class="footer_notes d-flex align-items-center justify-content-between mt-4">
+                    <span class="">© Event Spotter. 2022</span>
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img class="getApp" src="{{ asset('assets/newimages/rightbaricons/getapp.svg') }}"
+                            alt="searchicon">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
-
-    <script>
-        $(document).ready(function() {
-
-            $("#upcomingEventsBtn").click();
-        });
-        var user = {!! json_encode($user->toArray()) !!};
-        if (user.mobile_is_private == 1)
-            $('#makePhonePrivate').prop("checked", true);
-        else
-            $('#makePhonePrivate').prop("checked", false);
-
-        if (user.use_location == '1')
-            $('#useYourLocation').prop("checked", true);
-        else
-            $('#useYourLocation').prop("checked", false);
-
-        if (user.allow_direct_message == '1')
-            $('#allowDirectMessage').prop("checked", true);
-        else
-            $('#allowDirectMessage').prop("checked", false);
-
-        if (user.profile_private == '1')
-            $('#makeProfilePrivate').prop("checked", true);
-        else
-            $('#makeProfilePrivate').prop("checked", false);
+@endsection
 
 
 
 
 
-        // var isFollowing = {!! json_encode($isFollowing) !!};
-        var isFollowing = {!! json_encode($isFollowing ? $isFollowing->toArray() : null) !!};
-        if (isFollowing != null) {
-            if (isFollowing.is_accepted == true)
-                $('#isFollowing').html('Un-Follow');
-            else
-                $('#isFollowing').html('Pending');
 
+
+
+
+
+
+
+
+
+
+@section('script')
+    <script type="text/javascript">
+        var eventConditionsArray = [];
+        let is_public = 1;
+        var lat, lng;
+        var geocoder;
+
+        var bar = $('.bar');
+        var percent = $('.percent');
+        var status = $('#status');
+
+        var myDate = document.querySelector('event_date');
+        var today = new Date();
+        $('#event_date').val(today.toISOString().substr(0, 10));
+
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+        }
+        //Get the latitude and the longitude;
+        function successFunction(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            codeLatLng(lat, lng);
         }
 
-        $("#edit").click(function(event) {
+        function errorFunction(error) {
+            alert('Please enable location');
+        }
+
+        function initialize() {
+            var places = new google.maps.places.Autocomplete(document.getElementById('venue'));
+            console.log(places);
+            google.maps.event.addListener(places, 'place_changed', function() {
+                var place = places.getPlace();
+                console.log(place);
+                var address = place.formatted_address;
+                lat = place.geometry.location.lat();
+                lng = place.geometry.location.lng();
 
 
+            });
+            geocoder = new google.maps.Geocoder();
+        }
+
+        function codeLatLng(lat, lng) {
+            var latlng = new google.maps.LatLng(lat, lng);
+            console.log(lat + '  ' + lng);
+            $.ajax({
+                type: 'POST',
+                url: '/save-lat-lng',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    "lat": lat,
+                    'lng': lng,
+                }
+            }).done(function(msg) {
+
+            })
+        }
+
+        function myfunction() {
+            location.replace("your_event.html")
+        }
+
+        function eventConditions(condition) {
+
+            if (condition.innerText == 'Add Conditions') {
+                var conditionText = prompt("Condition", "");
+                $("<P onclick='removeConditions(this)' id=" + conditionText + " class='event_tagg mt-2'>" +
+                    conditionText +
+                    "</P>").insertAfter(
+                    '.eventCond');
+                eventConditionsArray.push(conditionText);
+
+            } else {
+
+            }
+        }
+
+        function removeConditions(condition) {
+            $('#' + condition.innerText).remove();
+            eventConditionsArray = eventConditionsArray.filter(item => item !== condition.innerText)
+        }
+
+        function makeEventPublic(val) {
+            is_public = val;
+            if (val == 1) {
+                $('#publicBtn').addClass('event_tag');
+                $('#publicBtn').removeClass('event_t')
+                $('#privateBtn').addClass('event_t');
+                $('#privateBtn').removeClass('event_tag');
+                $('#eventMsg').html(
+                    'This event will be public. Everyone on Event Spotter will be able to see this event details.');
+
+            } else {
+                $('#publicBtn').addClass('event_t');
+                $('#publicBtn').removeClass('event_tag');
+                $('#privateBtn').addClass('event_tag');
+                $('#privateBtn').removeClass('event_t');
+                $('#eventMsg').html('This event can only be viewed by your followers Or people you are following.');
+            }
+        }
+
+
+        $('#createEventButton').click(function(event) {
             event.preventDefault();
-            $(this).hide();
-            $('#saveBtn').removeClass('d-none');
-            $('#editSuccessMsg').removeClass('d-none');
+            var form_data = new FormData();
+            if (eventImages1 == null) {
+                showToaster('Image is required', '');
+                return;
+            }
+            form_data.append("image", eventImages1.files[0]);
+            form_data.append('event_name', $('#eventName').val());
+            form_data.append('event_description', $('#eventDescription').val());
+            form_data.append('event_type', $('#eventType :selected').text());
+            form_data.append('location', $('#venue').val());
+            form_data.append('event_date', $('#event_date').val());
+            form_data.append('ticket_link', $('#ticket_link').val());
+            form_data.append('conditions', eventConditionsArray);
+            form_data.append('is_public', is_public);
+            if (lat)
+                form_data.append('lat', lat);
+            if (lng)
+                form_data.append('lng', lng);
+            $.ajax({
+                type: 'POST',
+                url: '/createEvent',
+                mimeType: "multipart/form-data",
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                beforeSend: function() {
+                    // $("#uploadSnap").prop('disabled', true); //disable.
+                    $('.progress').removeClass('d-none');
+                    $('#uploadPictureBtn').hide();
+                },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+
+                    xhr.upload.addEventListener("progress", function(evt) {
+
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+
+                            var percentVal = percentComplete + '%';
+                            bar.width(percentVal);
+                            bar.css("background", "#314648");
+                            percent.html(percentVal);
+
+                        }
+                    }, false);
+
+                    return xhr;
+                },
+                error: function(res) {
+                    var errors = JSON.parse(res.responseText);
+                    console.log(errors);
+                    if (errors.errors.event_date) {
+                        showToaster('Date is not valid.', 'error');
+                    } else if (errors.errors.lat) {
+                        showToaster('Location is not valid.', 'error');
+                    } else if (errors.errors.lng) {
+                        showToaster('Location is not valid.', 'error');
+                    }
+                    $('#uploadPictureBtn').show();
 
 
-            $('.inputDisabled').prop("disabled", false); // Element(s) are now enabled.
+                }
+            }).done(function(msg) {
+                showToaster('Your event has been created successfully', 'success');
+                $('.progress').addClass('d-none');
+
+                $('#createEventModal').modal('toggle');
+                location.reload();
+
+            })
         });
 
+        //draft event
+
+        $('#draftEvent').click(function(event) {
+            event.preventDefault();
+            var form_data = new FormData();
+            if (eventImages1.files[0] != null)
+                form_data.append("image", eventImages1.files[0]);
+            form_data.append('event_name', $('#eventName').val());
+            form_data.append('event_description', $('#eventDescription').val());
+            form_data.append('event_type', $('#eventType :selected').text());
+            form_data.append('location', $('#venue').val());
+            form_data.append('ticket_link', $('#ticket_link').val());
+            form_data.append('event_date', $('#event_date').val());
+            form_data.append('conditions', eventConditionsArray);
+            form_data.append('is_public', is_public);
+
+            $.ajax({
+                type: 'POST',
+                url: '/draftEvent',
+                mimeType: "multipart/form-data",
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data
+            }).done(function(msg) {
+                showToaster('Your event has been drafted', 'success');
+                $('#createEventModal').modal('toggle');
+
+
+            })
+        });
+
+        //upload Event Pictures & Videos
+
+        function getImages() {
+            $('#uploadEventPicture').click();
+        }
+        var eventImages1 = null;
         $(function() {
-            $('#ownProfilePic').change(function() {
+            $('#uploadEventPicture').change(function() {
                 var input = this;
+                eventImages1 = input;
                 var url = $(this).val();
                 var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
                 if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" ||
                         ext == "jpg")) {
                     var reader = new FileReader();
-                    $("#loading").css("display", "block");
-                    var form_data = new FormData();
-                    var property = document.getElementById('ownProfilePic').files[0];
-                    var form_data = new FormData();
-                    form_data.append("image", property);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/update-profile-picture',
-                        mimeType: "multipart/form-data",
-                        data: form_data,
-                        processData: false,
-                        contentType: false,
-                        enctype: 'multipart/form-data',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: form_data
-                    }).done(function() {
-                        reader.onload = function(e) {
-                            $('#profileImage').attr('src', e.target.result);
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                        $("#loading").css("display", "none");
+                    reader.onload = function(e) {
+                        $('#eventVideoSrc').hide();
+                        $('#eventPictureSrc').attr('src', e.target.result);
+                        $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                        $('#eventPictureSrc').show();
 
-                        showToaster('Uploaded Successfully', 'success');
-                    })
+                    }
+                    $('.uploadCatchyText').addClass('d-none');
+                    reader.readAsDataURL(input.files[0]);
+
+
+                } else if (input.files && input.files[0] && (ext == "mp4" || ext == "mov")) {
+                    $('#eventPictureSrc').toggle();
+                    var reader = new FileReader();
+                    let file = input.files[0];
+                    let blobURL = URL.createObjectURL(file);
+                    document.querySelector("video").style.display = 'block';
+                    document.querySelector("video").src = blobURL;
+                    reader.onload = function(e) {
+                        $('#eventVideoSrc').show();
+                        // var $source = $('#eventVideoSrc');
+                        // $source[0].src = URL.createObjectURL(input.files[0]);
+                        // $source.parent().load();
+                        $('#eventPictureSrc').hide();
+
+                        // $('#eventPictureSrc').addClass('img-fluid mb-5 mt-3');
+                    }
+                    // $('.uploadCatchyText').addClass('d-none');
+                    reader.readAsDataURL(input.files[0]);
                 } else {
                     alert('Invalid Image type');
                 }
@@ -311,360 +496,66 @@
 
         });
 
-        $('#profileImage').click(function(event) {
-            var currUser = {!! auth()->user()->toJson() !!};
-            if (currUser.id == user.id)
-                $('#ownProfilePic').click();
-        });
+        function favroute(icon, eventId) {
+            var id = $(icon).attr('data-id');
+            if ($(icon).hasClass("light-grey")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/saveFavrouite',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'event_id': id,
+                    }
+                }).done(function(msg) {
+                    showToaster(msg.message, 'success');
+                    $(icon).removeClass('light-grey');
+                    $(icon).addClass('red');
+                })
+            } else if ($(icon).hasClass('red')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/deleteFavrouite',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'event_id': id,
+                    }
+                }).done(function(msg) {
+                    showToaster(msg.message, 'success');
+                    $(icon).addClass('light-grey');
+                    $(icon).removeClass('red');
+                })
+            }
+        }
 
-        $('#saveBtn').click(function(event) {
-            event.preventDefault();
+        function like(event) {
+            var id = $(event).attr('data-id');
+            if ($(event).hasClass('nothing')) {
+                $(event).removeClass('nothing');
+                $(event).addClass('blue');
+            } else {
+                $(event).removeClass('blue');
+                $(event).addClass('nothing');
+            }
             $.ajax({
                 type: 'POST',
-                url: '/save-address',
+                url: '/like',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    "address": $('#address').val(),
-                    'city': $('#city').val(),
-                    'country': $('#country').val(),
+                    'event_id': id,
                 }
             }).done(function(msg) {
-                $('.inputDisabled').prop("disabled", true); // Element(s) are now enabled.
-                $('#editSuccessMsg').html('Information has been updated successfully');
-                $('#saveBtn').addClass('d-none');
-                $('#edit').toggle();
-                $('#editSuccessMsg').addClass('d-none');
-                showToaster('Information has been updated successfully', 'success');
+                // showToaster(msg.message, 'success');
+                $('#totalLikes' + id).html(msg.totalLikes + ' Likes');
+                $(event).removeClass('blue');
+                $(event).addClass(msg.className);
+
             })
-        });
-
-        $('#followBtn').click(function(event) {
-            event.preventDefault();
-            $.ajax({
-                    type: 'POST',
-                    url: '/following',
-                    async: true,
-
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        "following_id": user.id,
-                    },
-                    success: function(response) {
-                        showToaster(response.message, 'success');
-                        $('.followClass').html(response.ButtonText);
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-        $('#makePhonePrivate').change(function() {
-            $.ajax({
-                    type: 'POST',
-                    url: '/makeNoPrivate',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        "isPrivate": this.checked ? 1 : 0,
-                    },
-                    success: function(response) {
-                        showToaster(response.message, 'success');
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-
-        //useYourLocation
-
-        $('#useYourLocation').change(function() {
-            $.ajax({
-                    type: 'POST',
-                    url: '/useLocation',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        "use_location": this.checked ? '1' : '0',
-                    },
-                    success: function(response) {
-                        showToaster(response.message, 'success');
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-
-        //allowDirectMsg
-        $('#allowDirectMessage').change(function() {
-            $.ajax({
-                    type: 'POST',
-                    url: '/allowDirectMessage',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        "allow_direct_message": this.checked ? '1' : '0',
-                    },
-                    success: function(response) {
-                        showToaster(response.message, 'success');
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-
-        //makeProfilePrivate
-        $('#makeProfilePrivate').change(function() {
-            $.ajax({
-                    type: 'POST',
-                    url: '/makeProfilePrivate',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        "profile_private": this.checked ? '1' : '0',
-                    },
-                    success: function(response) {
-                        showToaster(response.message, 'success');
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-
-
-        //UPCOMING EVENTS BUTTON
-        $('#upcomingEventsBtn').click(function(event) {
-            event.preventDefault();
-            $(this).addClass('upcomingProfile');
-            $(this).removeClass('pastOutlineButton');
-            $('#pastEventsBtn').addClass('pastOutlineButton');
-            $('#pastEventsBtn').removeClass('upcomingProfile');
-            $('#draftEventsBtn').removeClass('upcomingProfile');
-            $('#draftEventsBtn').addClass('pastOutlineButton');
-            $.ajax({
-                type: 'GET',
-                url: '/getUpcomingEvents',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    console.log(response.data);
-                    $('#events').html('');
-                    if (response.data.length > 0) {
-                        response.data.forEach(function(event) {
-
-                            var img = event.events.event_pictures[0]
-                                .image_path.split('.').pop() == 'mp4' || event.events
-                                .event_pictures[0]
-                                .image_path.split('.').pop() == 'mov' ?
-                                '{{ asset('download.png') }}' :
-                                window.location.origin + '/' + event.events.event_pictures[0]
-                                .image_path;
-                            var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
-
-
-                            $('#events').append("<a href=" + url +
-                                "> <div class='eventsCard'>" +
-                                "<div class ='mx-auto d-flex  align-items-center justify-content-center'> " +
-                                "<img class='profileEvents' style='border-radius:10px' src=" +
-                                img + " >" +
-                                "<div class ='ml-3'>" +
-                                "<h6 class='eventsTitleProfile'>" + event.events
-                                .event_name +
-                                "</h6>" +
-                                "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
-                                "<span class='smallTextGrey'> " + event.events.event_date +
-                                "</span>" +
-                                "<br>" +
-                                "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
-                                "<span class='smallTextGrey'> " + event.km +
-                                " Miles away</span> " +
-                                "</div>" +
-                                "</div>" +
-                                "</div></a>"
-                            );
-
-                        });
-                    } else {
-
-                        $('#events').append(
-                            "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Upcoming Events </h6>"
-                        );
-                    }
-                }
-            })
-
-        });
-        //PAST EVENTS BUTTON
-        $('#pastEventsBtn').click(function(event) {
-
-            event.preventDefault();
-            $(this).addClass('upcomingProfile');
-            $(this).removeClass('pastOutlineButton');
-            $('#upcomingEventsBtn').removeClass('upcomingProfile');
-            $('#upcomingEventsBtn').addClass('pastOutlineButton');
-            $('#draftEventsBtn').removeClass('upcomingProfile');
-            $('#draftEventsBtn').addClass('pastOutlineButton');
-
-
-            $.ajax({
-                    type: 'GET',
-                    url: '/getPastEvents',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-                        $('#events').html('');
-
-                        if (response.data.length > 0) {
-                            response.data.forEach(function(event) {
-                                var img = event.events?.event_pictures[0]
-                                    .image_path.split('.').pop() == 'mp4' || event.events
-                                    .event_pictures[0]
-                                    .image_path.split('.').pop() == 'mov' ?
-                                    '{{ asset('download.png') }}' :
-                                    window.location.origin + '/' + event.events.event_pictures[0]
-                                    .image_path;
-                                var url = "{{ url('eventDetails') }}" + "/" + event.events.id;
-                                $('#events').append("<a href=" + url +
-                                    "> <div class='eventsCard'>" +
-                                    "<div class ='mx-auto d-flex  align-items-center justify-content-center'> " +
-                                    "<img class='profileEvents' style='border-radius:10px' src=" +
-                                    img + " >" +
-                                    "<div class ='ml-3'>" +
-                                    "<h6 class='eventsTitleProfile'>" + event.events
-                                    .event_name +
-                                    "</h6>" +
-                                    "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
-                                    "<span class='smallTextGrey'> " + event.events.event_date +
-                                    "</span>" +
-                                    "<br>" +
-                                    "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
-                                    "<span class='smallTextGrey'> " + event.km +
-                                    " Miles away</span> " +
-                                    "</div>" +
-                                    "</div>" +
-                                    "</div></a>"
-                                );
-
-                            });
-                        } else {
-                            $('#events').append(
-                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Past Events </h6>"
-                            );
-
-                        }
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-        //DRAFT EVENTS BUTTON
-        $('#draftEventsBtn').click(function(event) {
-            event.preventDefault();
-            $(this).addClass('upcomingProfile');
-            $(this).removeClass('pastOutlineButton');
-            $('#upcomingEventsBtn').removeClass('upcomingProfile');
-            $('#upcomingEventsBtn').addClass('pastOutlineButton');
-            $('#pastEventsBtn').addClass('pastOutlineButton');
-            $('#pastEventsBtn').removeClass('upcomingProfile');
-
-            $.ajax({
-                    type: 'GET',
-                    url: '/getDraftEvents',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-                        $('#events').html('');
-
-                        if (response.data.length > 0) {
-                            response.data.forEach(function(event) {
-                                var img = event.events?.event_pictures[0]
-                                    .image_path.split('.').pop() == 'mp4' || event.events
-                                    ?.event_pictures[0]
-                                    .image_path.split('.').pop() == 'mov' ?
-                                    '{{ asset('download.png') }}' :
-                                    window.location.origin + '/' + event.events?.event_pictures[0]
-                                    .image_path;
-
-                                var url = "{{ url('eventDetails') }}" + "/" + event.events?.id;
-
-                                $('#events').append("<a href=" + url +
-                                    "> <div class='eventsCard'>" +
-                                    "<div class ='mx-auto d-flex  align-items-center justify-content-center'> " +
-                                    "<img class='profileEvents' style='border-radius:10px' src=" +
-                                    img + " >" +
-                                    "<div class ='ml-3'>" +
-                                    "<h6 class='eventsTitleProfile'>" + event.events
-                                    .event_name +
-                                    "</h6>" +
-                                    "<img class ='fav_title' src='{{ asset('assets/images/date.png') }}'>" +
-                                    "<span class='smallTextGrey'> " + event.events.event_date +
-                                    "</span>" +
-                                    "<br>" +
-                                    "<image class='fav_title' src ='{{ asset('assets/images/location.png') }}'>" +
-                                    "<span class='smallTextGrey'> " + event.km +
-                                    " Miles away</span> " +
-                                    "</div>" +
-                                    "</div>" +
-                                    "</div></a>"
-                                );
-
-
-                            });
-                        } else {
-                            $('#events').append(
-                                "<h6 class='eventsCard text-center' style='margin:0 auto;margin-top:20px;margin-bottom:20px'>No Drafted Events Events </h6>"
-                            );
-
-                        }
-                    }
-                })
-                .done(function() {
-
-                })
-        });
-
-        //setting oopen 
-
-        $('#settingButton').click(function(event) {
-            event.preventDefault();
-            $(this).addClass('upcomingProfile');
-            $(this).removeClass('pastOutlineButton');
-            $('#personDetailsBtn').removeClass('upcomingProfile');
-            $('#personDetailsBtn').addClass('pastOutlineButton');
-            $('.personalDetailsContent').hide();
-            $('.settingContent').show();
-
-        });
-
-        $('#personDetailsBtn').click(function(event) {
-            event.preventDefault();
-            $('#settingButton').addClass('pastOutlineButton');
-            $('#settingButton').removeClass('upcomingProfile');
-            $('#personDetailsBtn').removeClass('pastOutlineButton');
-            $('#personDetailsBtn').addClass('upcomingProfile');
-            $('.personalDetailsContent').show()
-            $('.settingContent').hide();
-        });
+        }
     </script>
-
-
-</body>
-
-</html>
+@endsection

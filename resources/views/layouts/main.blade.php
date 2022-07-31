@@ -11,10 +11,12 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="{{ asset('assets/style/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/style/style2.css') }}">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/libraries/css/bootstrap.min.css') }}">
-        {{-- <link rel="stylesheet" href="{{ asset('css/chat.css') }}" /> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    {{-- <link rel="stylesheet" href="{{ asset('css/chat.css') }}" /> --}}
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -38,7 +40,7 @@
             ->where('is_read', '!=', 1)
             ->get();
     @endphp
-    <div class="header">
+    {{-- <div class="header">
         <div class="row">
             <div class="col-md-2 ">
                 <div class="headerlogo">
@@ -96,55 +98,8 @@
         <div style="text-align:center;"><img id="loading" style="display: none" src="{{ asset('loader.gif') }}"
                 alt="" /></div>
 
-    </div>
+    </div> --}}
     @yield('content')
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#search').on('keyup', function() {
-                var text = $('#search').val();
-                if (text == '')
-                    $('.searchResults').addClass('d-none');
-                else
-                    $('.searchResults').removeClass('d-none');
-                if (text.length >= 3) {
-                    $.ajax({
-                        type: "GET",
-                        url: '/search',
-                        data: {
-                            text: text,
-                        },
-                        success: function(data) {
-                            $('.searchResults').html("");
-                            if (data[0].profile_picture !== null)
-                                var img =
-                                    "<img class='circularImage pic mr-3' src=" + data[0]
-                                    .profile_picture.image + " />"
-                            else
-                                var img =
-                                    "<img class='circularImage pic mr-3 mb-3' src='{{ asset('assets/images/usersImages/userPlaceHolder.png') }}' />"
-                            if (data.length == 0)
-                                $('.searchResults').append(
-                                    '<div class="w-100 justify-content-center " style="background:white;padding:20px">No Result Found</div>'
-                                );
-                            $.each(data, function(key, value) {
-                                var url = "{{ url('profile') }}" + "/" + value.id;
-
-                                $('.searchResults').append(
-                                    '<a class="aWithoutDec" href="' + url +
-                                    '"> <div class="w-100  justify-content-center " style="background:white">' +
-                                    img + value
-                                    .name + '</a></div> ');
-                            })
-                        }
-                    }).done(function() {})
-                }
-            });
-        });
-    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
@@ -153,8 +108,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous">
     </script>
-
     <script src="{{ asset('assets/dist/jquery.toast.min.js') }}"></script>
+    <script src="{{ asset('assets/newjs/app.js') }}"></script>
     @yield('script')
 </body>
 

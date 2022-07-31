@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventFeeds;
 use App\Models\EventsPictures;
+use App\Models\EventTypes;
 use App\Models\Favrouite;
 use App\Models\Following;
 use App\Models\Likes;
@@ -48,10 +49,9 @@ class EventController extends Controller
             'event_description' => 'required',
             'event_type' => 'required',
             'event_date' => 'required|date|after_or_equal:today',
-            'location' => 'required',
-            'is_public' => 'required',
             'lat' => 'required',
             'lng' => 'required',
+            'conditions' => 'required'
         ]);
 
         $event =    Event::create([
@@ -61,18 +61,24 @@ class EventController extends Controller
             'event_date' => $request->event_date,
             'conditions' => serialize($request->conditions),
             'location' => $request->location,
-            'lat' => $request->lat,
-            'lng' => $request->lng,
-            'is_public' => intVal($request->is_public),
+            'is_public' => $request->is_public,
             'user_id' => Auth::user()->id,
             'ticket_link' => $request->ticket_link,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
         ]);
 
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(('images/eventImage'), $imageName);
-        $profileImage =  EventsPictures::create([
-            'event_id' => $event->id,
-            'image_path' => ('images/eventImage') . '/' . $imageName,
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(('images/eventImage'), $imageName);
+            $profileImage =  EventsPictures::create([
+                'event_id' => $event->id,
+                'image_path' => ('images/eventImage') . '/' . $imageName,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true
         ]);
     }
 
@@ -226,7 +232,7 @@ class EventController extends Controller
     public function getEventDetail($id)
     {
         $event = Event::where('id', $id)->with(['eventPictures', 'user', 'like', 'comment', 'livefeed'])->first();
-
+        // dd($event);
         $user = Auth::user();
         if ($user->lat_lng != null)
             $latLng = explode(',', $user->lat_lng); // user lat lng
@@ -235,11 +241,11 @@ class EventController extends Controller
             $km = $this->distance($latLng[0], $latLng[1], $event->lat, $event->lng);
             $fav = Favrouite::where('user_id', Auth::id())->where('event_id', $event->id)->first();
             $isLiked = Likes::where('user_id', Auth::id())->where('event_id', $event->id)->first();
-
+            $eventTypes = EventTypes::all();
             $isFollowing = Following::where('user_id', Auth::id())->where('following_id', $event->user_id)->where('is_accepted', 1)->first();
             $eventDetails = array('event' => $event, 'km' => number_format($km, 1), 'isFavroute' => $fav ? 1 : 0, 'Following' => $isFollowing ? 1 : 0, 'isLiked' => $isLiked ? 1 : 0);
         }
-        return view('front.event_details')->with(compact('eventDetails', 'user'));
+        return view('front.event_details')->with(compact('eventDetails', 'user', 'eventTypes'));
     }
 
 

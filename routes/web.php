@@ -52,11 +52,14 @@ Route::view('left', 'front.left');
 Route::view('right', 'front.right');
 Route::view('header', 'front.header');
 Route::view('community', 'front.community')->name('community');
+
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth');
 Route::get('profile/{id}', [ProfileController::class, 'userProfile']);
 Route::get('/', [UserController::class, 'create'])->middleware('auth');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('user', [UserController::class, 'store'])->name('user');
+Route::get('edit-profile', [ProfileController::class, 'currentUserProfile'])->middleware('auth');;
+
 // Route::get('/',[HomeController::class,'create']);
 // Route::get('/post', [PostController::class, 'create'])->name('home');
 // Route::post('/add-post',[PostController::class,'store'])->name('add-post');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Event;
+use App\Models\EventTypes;
 use App\Models\Follower;
 use App\Models\Following;
 use App\Models\Profile;
@@ -39,7 +40,10 @@ class ProfileController extends Controller
         $totalEvents = Event::where('user_id', Auth::id())->where('is_drafted', 0)->get()->count();
         $isFollowing = [];
         $upcomingEvents = Event::where('user_id', Auth::id())->where('event_date', '>', date('Y-m-d'))->where('is_drafted', 0)->with('eventPictures')->get();
-        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'isFollowing', 'profilePicture', 'upcomingEvents', 'totalEvents'));
+        $pastEvents = Event::where('user_id', Auth::id())->where('event_date', '<', date('Y-m-d'))->where('is_drafted', 0)->with(['eventPictures'])->get();
+        $draftEvents = Event::where('user_id', Auth::id())->where('is_drafted', 1)->with(['eventPictures'])->get();
+        $eventTypes = EventTypes::all();
+        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'isFollowing', 'profilePicture', 'upcomingEvents', 'totalEvents', 'pastEvents', 'draftEvents','eventTypes'));
     }
 
     /**
@@ -97,6 +101,16 @@ class ProfileController extends Controller
         //
     }
 
+    public function currentUserProfile()
+    {
+        $user = Auth::user();
+        $followers = Follower::where('user_id', $user->id)->count();
+        $following = Following::where('user_id', $user->id)->where('is_accepted', 1)->count();
+        $address = Address::where('user_id', $user->id)->latest()->first();
+        $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
+        return view('front.editProfile')->with(compact('user', 'address', 'profilePicture'));
+    }
+
     public function userProfile($id)
     {
         $user = User::find($id);
@@ -106,6 +120,6 @@ class ProfileController extends Controller
         $address = Address::where('user_id', $user->id)->latest()->first();
         $profilePicture = ProfileImage::where('user_id', $user->id)->latest()->first();
         $isFollowing = Following::where('user_id', $currentUser)->where('following_id', $user->id)->first();
-        return view('front.profile')->with(compact('user', 'followers', 'following', 'address', 'profilePicture', 'isFollowing'));
+        return view('front.editprofile')->with(compact('user', 'followers', 'following', 'address', 'profilePicture', 'isFollowing'));
     }
 }
